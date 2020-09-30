@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>Bharatoff - Location</title>
+      <meta content="" name="descriptison">
+      <meta content="" name="keywords">
+      <!-- Favicons -->
+      <link href="{% static 'offer/img/logo.jpg' %}" rel="icon">
+      <link href="{% static 'offer/img/logo.jpg' %}" rel="apple-touch-icon">
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Vendor CSS Files -->
+      <link href="{% static 'offer/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/venobox/venobox.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/aos/aos.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/css/style.css' %}" rel="stylesheet">
+   </head>
+   <style>
+      #gsid:hover{
+         background-color: #ff5a00;
+         color: #ffffff;
+      }
+   </style>
+   <body>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top d-flex align-items-center">
+         <div class="container d-flex align-items-center">
+            <div class="logo mr-auto">
+               <a href="/"><img src="{% static 'offer/img/logo.jpg' %}" alt="" class="img-fluid"><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#FF5A00; margin-left: 5px; margin-top:5px;">Bharat</span><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#000; margin-top:5px;">off</span></a>
+            </div>
+            <nav class="nav-menu d-none d-lg-block">
+               <ul>
+                  <li class="drop-down">
+                     <a href="">Nearby locations</a>
+                     <ul>
+                        {%for location in nearby_location%}
+                        <li class="">
+                           <a href="#">{{location.name}}</a>
+                        </li>
+                        {%endfor%}
+                     </ul>
+                  </li>
+                  <li class="drop-down">
+                     <a href="">State/City</a>
+                     <ul>
+                        {%for state in states%}
+                        <li class="drop-down">
+                           <a href="#">{{state.state_name}}</a>
+                           <ul>
+                              {% for city in state.all_city%}
+                              <li><a href="/city/{{city.id}}">{{city.city_name}}</a></li>
+                              {%endfor%}
+                           </ul>
+                        </li>
+                        {%endfor%}
+                     </ul>
+                  </li>
+                  {%if user.is_authenticated %}
+                  <li class="get-started"><a href="/logout" style="background-color: #ff5a00;">Logout</a></li>
+                  {%else%}
+                  <li class="get-started"><a href="/register">Register/Login</a></li>
+                  {%endif%}
+               </ul>
+            </nav>
+            <!-- .nav-menu -->
+         </div>
+      </header>
+      <!-- End Header -->
+      <!-- ======= Hero Section ======= -->
+      <section id="hero" class="d-flex align-items-center">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                  <h1 data-aos="fade-up">Find the best offers in {{city}} with Bharatoff</h1>
+                  <br>
+                  <h2 data-aos="fade-up" data-aos-delay="400">We are aiming to provide the best available offers to you.</h2>
+                  <div data-aos="fade-up" data-aos-delay="800">
+                     <a href="#portfolio" class="btn-get-started scrollto" style="border-color:#ff5a00; color: #ff5a00;" id="gsid">Get Started</a>
+                  </div>
+               </div>
+               <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
+                  <img src="{% static 'offer/img/girl.svg' %}" class="img-fluid animated" alt="">
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- End Hero -->
+      <main id="main">
+         <!-- ======= Portfolio Section ======= -->
+         <section id="portfolio" class="portfolio">
+         <div class="container">
+            <div class="section-title" data-aos="fade-up">
+               <h2>Offers</h2>
+               <p>Best available offers for your city.</p>
+            </div>
+            <br>
+               {% for offer in offers %}
+                  <div class="d-flex justify-content-center text-center">
+                     <div class="col-lg-7 col-md-6 portfolio-item filter-app shadow-lg p-2 bg-white rounded">
+                        <div class="portfolio-wrap">
+                        <img src="{{offer.img.url}}" class="img-fluid" alt="" style="width: 100%;">
+                        <div class="portfolio-info">
+                           <div class="portfolio-links text-center">
+                              <a href="{{offer.img.url}}" data-gall="portfolioGallery" class="venobox" title="More details"><i class="bx bx-plus"></i></a>
+                              <a href="/location/broad/{{offer.id}}" title="share on whatsapp"><i class="bx bx-link"></i></a>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="member-info mt-2">
+                        <h4>{{offer.heading}}</h4>
+                        <hr>
+                        <span>
+                              <a href="tel:+91-{{offer.phone_number}}" class="mr-5"><i class="fa fa-phone"  data-toggle="tooltip" data-placement="right" title="Call Now" style="font-size:2rem;color:blue"></i></a>
+                              <a href="{{offer.whatsapp_link}}" class="ml-5 mr-5"><i style="font-size:2rem;color: green" class="fa fa-whatsapp"  data-toggle="tooltip" data-placement="bottom" title="Whatsapp Now"></i></a>
+                              <a data-toggle="modal" data-target="#exampleModalCenter" id="shareid" value={{offer.id}} class="ml-5 mr-5"><i style="font-size:1.8rem;color: green" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="Share on whatsapp"></i></a>
+                              <a href="{{offer.location}}" class="ml-5 mr-5"><i style="font-size:2rem;color: red" class="fa fa-marker"  data-toggle="tooltip" data-placement="bottom" title="Click to navigate">&#xf041;</i></a>
+
+                              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                 <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                       <div class="modal-header">
+                                       <h5 class="modal-title text-center" id="exampleModalLongTitle">Share this offer across various plateforms</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                       </button>
+                                       </div>
+                                       <div class="modal-body">
+                                             <a href="https://www.facebook.com/sharer/sharer.php?u=https://bharatoff.com/location/broad/{{offer.id}}" class="facebook ml-2"><i class="icofont-facebook" style="font-size:2rem;"></i></a>
+                                             <a href="http://www.reddit.com/submit?url=https://bharatoff.com/location/broad/{{offer.id}}/&title=Checkout%20this%20offer%20on%20Bharatoff" class="instagram ml-3"><i class="icofont-reddit" style="font-size:2.5rem;"></i></a>
+                                             <a href="whatsapp://send?text=https://bharatoff.com/location/broad/{{offer.id}}" class="whatsapp ml-4"><i class="icofont-whatsapp" style="font-size:2rem;"></i></a>
+                                             <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://bharatoff.com/location/broad/{{offer.id}}" class="linkedin ml-4"><i class="icofont-linkedin" style="font-size:2rem;"></i></a>
+                                             <a href="#" onclick="copyfunction({{offer.id}})" class="linkedin ml-4"><i class="icofont-copy" style="font-size:2rem;"></i></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                        </span>
+                        </div>
+                     </div>
+                  </div>
+               {%endfor%}
+         </div>
+         </section>
+         <!-- End Portfolio Section -->
+         <!-- ======= Contact Section ======= -->
+         <section id="contact" class="contact">
+            <div class="container">
+               <div class="section-title" data-aos="fade-up">
+                  <h2>Contact Us</h2>
+               </div>
+               <div class="row">
+                  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                     <div class="contact-about">
+                        <h3>Bharatoff</h3>
+                        <p>We are aiming to provide the best offers/deals to you at the earliest in your local market around the city.</p>
+                        <div class="social-links">
+                           <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+                           <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
+                           <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
+                           <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
+                     <div class="info">
+                        <div>
+                           <i class="ri-map-pin-line"></i>
+                           <p>{{address.address}}</p>
+                        </div>
+                        <div>
+                           <i class="ri-mail-send-line" style="color:#e75a4d;"></i>
+                           <p>{{address.mail}}</p>
+                        </div>
+                        <div>
+                           <a href="http://wa.me/91{{address.phone_number}}"><i class="icofont-whatsapp" style="color:#4dcb5b;"></i></a>
+                           <p>{{address.phone_number}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-5 col-md-12" data-aos="fade-up" data-aos-delay="300">
+                     <form action="/contact/" method="post" role="form">
+                     {% csrf_token %}
+                        <div class="form-group">
+                           <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                           <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                           <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                           <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                           <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                           <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                           <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                           <div class="validate"></div>
+                        </div>
+                        <div class="text-center"><button type="submit" style="background-color: #ff5a00; border-color: #ff5a00;">Send Message</button></div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <!-- End Contact Section -->
+      </main>
+      <!-- End #main -->
+      <!-- ======= Footer ======= -->
+      <footer id="footer">
+         <div class="container">
+            <div class="row d-flex align-items-center">
+               <div class="col-lg-6 text-lg-left text-center">
+                  <div class="copyright">
+                     &copy; Copyright <strong>Bharatoff</strong>. All Rights Reserved
+                  </div>
+                  <div class="credits">
+                     <!-- All the links in the footer should remain intact. -->
+                     <!-- You can delete the links only if you purchased the pro version. -->
+                     <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                     <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/vesperr-free-bootstrap-template/ -->
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+                     <a href="#intro" class="scrollto">Home</a>
+                     <a href="#about" class="scrollto">offers</a>
+                     <a href="#">Register/Login</a>
+                     <a href="#">Visitor Count: {{counter.visit}}</a>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- End Footer -->
+      <a href="#" class="back-to-top"><i class="icofont-simple-up"  style="background-color: #ff5a00;"></i></a>
+      <!-- Vendor JS Files -->
+      <script src="{% static 'offer/vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/php-email-form/validate.js' %}"></script>
+      <script src="{% static 'offer/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/counterup/counterup.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/venobox/venobox.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/aos/aos.js' %}"></script>
+      <!-- Template Main JS File -->
+      <script src="{% static 'offer/js/main.js' %}"></script>
+
+      <script>
+        function copyfunction(id)
+        {
+         var copyText = 'http://bharatoff.com/location'+'/broad/'+id.toString();
+
+         navigator.clipboard.writeText(copyText).then(function() 
+         {
+            alert('Link copied to clipboard.')
+         }, function()
+         {
+            alert('Please share the link.')
+         });
+        }
+      </script>
+   </body>
+</html>
