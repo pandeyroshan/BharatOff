@@ -6,7 +6,7 @@
 * $ pip3 install -r requirements.txt
 
 ## Additional Note
-* database dump is already available in dump.sql
+* database dump is already available in the dump.sql file
 
 ## Todo
 * Admin Panel for individual staff users
