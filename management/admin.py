@@ -37,7 +37,7 @@ admin.site.register(CityData,CityAdmin)
 admin.site.register(Files)
 
 # admin.site.unregister(User)
-# admin.site.unregister(Group)
+admin.site.unregister(Group)
 
 admin.site.register(StateData)
 admin.site.register(Address)
