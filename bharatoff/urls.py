@@ -17,8 +17,11 @@ urlpatterns = [
     path('',management_views.home,name='home'),
     path('location',management_views.location_based, name='location-based'),
     path('city/<int:id>/',management_views.city_ad, name='city_add'),
+    path('minilocations/<int:id>/', management_views.minilocations, name='minilocations'),
     path('location/broad/<int:id>/',management_views.single, name='single'),
-    path('contact/', management_views.contact, name='contact')
+    path('contact/', management_views.contact, name='contact'),
+
+    path('dashboard/',management_views.dashboard, name='dashboard')
 ]
 
 if settings.DEBUG:
