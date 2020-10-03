@@ -1,7 +1,7 @@
 -- MySQL dump 10.13  Distrib 5.7.30, for Linux (x86_64)
 --
 -- Host: localhost    Database: BF
--- -----------------------------------------------------
+-- ------------------------------------------------------
 -- Server version	5.7.30-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -91,7 +91,7 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add Address and Details',7,'add_address'),(26,'Can change Address and Details',7,'change_address'),(27,'Can delete Address and Details',7,'delete_address'),(28,'Can view Address and Details',7,'view_address'),(29,'Can add Messages',8,'add_messages'),(30,'Can change Messages',8,'change_messages'),(31,'Can delete Messages',8,'delete_messages'),(32,'Can view Messages',8,'view_messages'),(33,'Can add Counter',9,'add_visitcount'),(34,'Can change Counter',9,'change_visitcount'),(35,'Can delete Counter',9,'delete_visitcount'),(36,'Can view Counter',9,'view_visitcount'),(37,'Can add Website Count',10,'add_webcounter'),(38,'Can change Website Count',10,'change_webcounter'),(39,'Can delete Website Count',10,'delete_webcounter'),(40,'Can view Website Count',10,'view_webcounter'),(41,'Can add Mini Locations',11,'add_minilocation'),(42,'Can change Mini Locations',11,'change_minilocation'),(43,'Can delete Mini Locations',11,'delete_minilocation'),(44,'Can view Mini Locations',11,'view_minilocation'),(45,'Can add State',12,'add_statedata'),(46,'Can change State',12,'change_statedata'),(47,'Can delete State',12,'delete_statedata'),(48,'Can view State',12,'view_statedata'),(49,'Can add Category',13,'add_category'),(50,'Can change Category',13,'change_category'),(51,'Can delete Category',13,'delete_category'),(52,'Can view Category',13,'view_category'),(53,'Can add Cities',14,'add_citydata'),(54,'Can change Cities',14,'change_citydata'),(55,'Can delete Cities',14,'delete_citydata'),(56,'Can view Cities',14,'view_citydata'),(57,'Can add Offers',15,'add_files'),(58,'Can change Offers',15,'change_files'),(59,'Can delete Offers',15,'delete_files'),(60,'Can view Offers',15,'view_files'),(61,'Can add Visitor Counts',16,'add_visitors'),(62,'Can change Visitor Counts',16,'change_visitors'),(63,'Can delete Visitor Counts',16,'delete_visitors'),(64,'Can view Visitor Counts',16,'view_visitors'),(65,'Can add Profiles',17,'add_userprofile'),(66,'Can change Profiles',17,'change_userprofile'),(67,'Can delete Profiles',17,'delete_userprofile'),(68,'Can view Profiles',17,'view_userprofile');
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add Cities',7,'add_citydata'),(26,'Can change Cities',7,'change_citydata'),(27,'Can delete Cities',7,'delete_citydata'),(28,'Can view Cities',7,'view_citydata'),(29,'Can add Category',8,'add_category'),(30,'Can change Category',8,'change_category'),(31,'Can delete Category',8,'delete_category'),(32,'Can view Category',8,'view_category'),(33,'Can add Mini Locations',9,'add_minilocation'),(34,'Can change Mini Locations',9,'change_minilocation'),(35,'Can delete Mini Locations',9,'delete_minilocation'),(36,'Can view Mini Locations',9,'view_minilocation'),(37,'Can add State',10,'add_statedata'),(38,'Can change State',10,'change_statedata'),(39,'Can delete State',10,'delete_statedata'),(40,'Can view State',10,'view_statedata'),(41,'Can add Offers',11,'add_files'),(42,'Can change Offers',11,'change_files'),(43,'Can delete Offers',11,'delete_files'),(44,'Can view Offers',11,'view_files'),(45,'Can add Address and Details',12,'add_address'),(46,'Can change Address and Details',12,'change_address'),(47,'Can delete Address and Details',12,'delete_address'),(48,'Can view Address and Details',12,'view_address'),(49,'Can add Visitor Counts',13,'add_visitors'),(50,'Can change Visitor Counts',13,'change_visitors'),(51,'Can delete Visitor Counts',13,'delete_visitors'),(52,'Can view Visitor Counts',13,'view_visitors'),(53,'Can add Counter',14,'add_visitcount'),(54,'Can change Counter',14,'change_visitcount'),(55,'Can delete Counter',14,'delete_visitcount'),(56,'Can view Counter',14,'view_visitcount'),(57,'Can add Messages',15,'add_messages'),(58,'Can change Messages',15,'change_messages'),(59,'Can delete Messages',15,'delete_messages'),(60,'Can view Messages',15,'view_messages'),(61,'Can add Website Count',16,'add_webcounter'),(62,'Can change Website Count',16,'change_webcounter'),(63,'Can delete Website Count',16,'delete_webcounter'),(64,'Can view Website Count',16,'view_webcounter'),(65,'Can add Profiles',17,'add_userprofile'),(66,'Can change Profiles',17,'change_userprofile'),(67,'Can delete Profiles',17,'delete_userprofile'),(68,'Can view Profiles',17,'view_userprofile');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,7 +125,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$180000$wqkhlEpATZ1r$Qchwu6t178/rKBMvzkxPsy/2THDvZs8Wyd/fYKIlM60=','2020-09-30 17:37:06.577897',1,'admin','','','admin@gmail.com',1,1,'2020-09-30 14:30:12.611712'),(2,'pbkdf2_sha256$180000$YCFT8zLYmnLh$aUn0ASWM7EQbpeZiwytYOT2dfLcpwAag98o5TI+Tk4g=','2020-09-30 17:36:55.014620',0,'roshan','','','pandeyroshan556@gmail.com',0,1,'2020-09-30 17:36:48.514043'),(3,'pbkdf2_sha256$180000$lwXGhWRVZV68$2WWXgCB0i6+vmlg0QSiHeu8+5hHmb+tdbVJ0DCUxic0=',NULL,0,'staff_1','Staff','Name','staff@gmail.com',1,1,'2020-09-30 17:37:38.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$180000$dqvZkOr1MQDU$dcvNeAR9HUtm2xBj9SEPyIQeMFYZJ9N2NQpkOabbAdI=','2020-10-03 14:08:25.798570',1,'admin','','','admin@gmail.com',1,1,'2020-10-03 12:50:59.959571'),(3,'pbkdf2_sha256$180000$f6aaIH2jqEnX$wb6PaGT9M9eXJX1U+2NjaVNKvxW9t0bBNkvgpUdmaQc=','2020-10-03 14:08:48.747677',0,'staff1','','','',1,1,'2020-10-03 13:01:15.000000'),(4,'pbkdf2_sha256$180000$5snde5LtxH5p$90qTGYy97P7X80GSiRgfQtqxLtmIWdDC6onLB4buiuk=','2020-10-03 13:57:58.310453',0,'staff2','','','',1,1,'2020-10-03 13:57:00.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +206,7 @@ CREATE TABLE `django_admin_log` (
   KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +215,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2020-09-30 14:33:17.881276','1','Address and Detail',1,'[{\"added\": {}}]',7,1),(2,'2020-09-30 17:11:17.958439','1','Bhopal',1,'[{\"added\": {}}]',14,1),(3,'2020-09-30 17:11:23.421912','1','Madhya Pradesh',1,'[{\"added\": {}}]',12,1),(4,'2020-09-30 17:16:22.623581','1','Bhopal',1,'[{\"added\": {}}]',16,1),(5,'2020-09-30 17:16:30.083244','1','Counter',1,'[{\"added\": {}}]',9,1),(6,'2020-09-30 17:18:21.824635','1','Click to change',1,'[{\"added\": {}}]',10,1),(7,'2020-09-30 17:25:07.989841','1','Bhopal',2,'[{\"added\": {\"name\": \"Mini Locations\", \"object\": \"Upper Lake\"}}]',14,1),(8,'2020-09-30 17:26:02.496665','1','Bhopal',2,'[{\"added\": {\"name\": \"Mini Locations\", \"object\": \"Moti Masjid\"}}]',14,1),(9,'2020-09-30 17:37:38.377889','3','staff_1',1,'[{\"added\": {}}]',4,1),(10,'2020-09-30 17:38:02.633092','3','staff_1',2,'[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Email address\", \"Staff status\"]}}]',4,1),(11,'2020-09-30 17:40:00.268165','1','Fashion',1,'[{\"added\": {}}]',13,1),(12,'2020-09-30 17:41:30.786804','1','Bhopal - 1',1,'[{\"added\": {}}]',15,1),(13,'2020-09-30 17:50:18.218551','1','Bhopal - 1',2,'[{\"changed\": {\"fields\": [\"Google Location URL\"]}}]',15,1);
+INSERT INTO `django_admin_log` VALUES (1,'2020-10-03 12:52:34.944823','1','Bhopal',1,'[{\"added\": {}}]',7,1),(2,'2020-10-03 12:52:38.457831','1','Madhya Pradesh',1,'[{\"added\": {}}]',10,1),(3,'2020-10-03 12:54:31.855916','1','Bhopal',2,'[{\"added\": {\"name\": \"Mini Locations\", \"object\": \"Upper lake\"}}]',7,1),(4,'2020-10-03 12:55:07.755054','1','Bhopal',2,'[{\"added\": {\"name\": \"Mini Locations\", \"object\": \"Moti Masjid\"}}]',7,1),(5,'2020-10-03 12:55:20.377788','1','Counter',1,'[{\"added\": {}}]',14,1),(6,'2020-10-03 12:55:28.891314','1','Click to change',1,'[{\"added\": {}}]',16,1),(7,'2020-10-03 12:55:49.921240','1','Bhopal',1,'[{\"added\": {}}]',13,1),(8,'2020-10-03 12:56:35.940792','2','Indore',1,'[{\"added\": {}}]',7,1),(9,'2020-10-03 12:57:30.684038','2','staff1',1,'[{\"added\": {}}]',4,1),(10,'2020-10-03 12:57:48.893685','1','Fashion',1,'[{\"added\": {}}]',8,1),(11,'2020-10-03 13:01:01.008503','2','staff1',3,'',4,1),(12,'2020-10-03 13:01:15.779763','3','staff1',1,'[{\"added\": {}}]',4,1),(13,'2020-10-03 13:01:22.775428','3','staff1',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1),(14,'2020-10-03 13:03:03.162306','2','Fashion Sale 101',1,'[{\"added\": {}}]',11,1),(15,'2020-10-03 13:03:55.330235','1','Address and Detail',1,'[{\"added\": {}}]',12,1),(16,'2020-10-03 13:05:35.330692','1','Madhya Pradesh',2,'[{\"changed\": {\"fields\": [\"Cities\"]}}]',10,1),(17,'2020-10-03 13:45:10.469396','2','Indore',1,'[{\"added\": {}}]',13,1),(18,'2020-10-03 13:57:01.085424','4','staff2',1,'[{\"added\": {}}]',4,1),(19,'2020-10-03 13:57:28.873635','4','staff2',2,'[{\"changed\": {\"fields\": [\"Staff status\"]}}]',4,1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +241,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(7,'management','address'),(13,'management','category'),(14,'management','citydata'),(15,'management','files'),(8,'management','messages'),(11,'management','minilocation'),(12,'management','statedata'),(9,'management','visitcount'),(16,'management','visitors'),(10,'management','webcounter'),(6,'sessions','session'),(17,'users','userprofile');
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(12,'management','address'),(8,'management','category'),(7,'management','citydata'),(11,'management','files'),(15,'management','messages'),(9,'management','minilocation'),(10,'management','statedata'),(14,'management','visitcount'),(13,'management','visitors'),(16,'management','webcounter'),(6,'sessions','session'),(17,'users','userprofile');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +258,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +267,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-09-30 13:55:55.364400'),(2,'auth','0001_initial','2020-09-30 13:55:55.541065'),(3,'admin','0001_initial','2020-09-30 13:55:55.920919'),(4,'admin','0002_logentry_remove_auto_add','2020-09-30 13:55:56.023055'),(5,'admin','0003_logentry_add_action_flag_choices','2020-09-30 13:55:56.044572'),(6,'contenttypes','0002_remove_content_type_name','2020-09-30 13:55:56.138645'),(7,'auth','0002_alter_permission_name_max_length','2020-09-30 13:55:56.159250'),(8,'auth','0003_alter_user_email_max_length','2020-09-30 13:55:56.181960'),(9,'auth','0004_alter_user_username_opts','2020-09-30 13:55:56.191101'),(10,'auth','0005_alter_user_last_login_null','2020-09-30 13:55:56.228002'),(11,'auth','0006_require_contenttypes_0002','2020-09-30 13:55:56.233620'),(12,'auth','0007_alter_validators_add_error_messages','2020-09-30 13:55:56.266038'),(13,'auth','0008_alter_user_username_max_length','2020-09-30 13:55:56.283957'),(14,'auth','0009_alter_user_last_name_max_length','2020-09-30 13:55:56.297665'),(15,'auth','0010_alter_group_name_max_length','2020-09-30 13:55:56.311569'),(16,'auth','0011_update_proxy_permissions','2020-09-30 13:55:56.321493'),(17,'sessions','0001_initial','2020-09-30 13:55:56.339637'),(18,'management','0001_initial','2020-09-30 14:16:56.427611'),(19,'users','0001_initial','2020-09-30 14:17:45.408845'),(20,'management','0002_files_minilocation','2020-09-30 17:29:24.417034'),(21,'management','0003_files_user','2020-09-30 17:30:27.586157'),(22,'management','0004_auto_20200930_2313','2020-09-30 17:43:11.395689');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2020-09-30 13:55:55.364400'),(2,'auth','0001_initial','2020-09-30 13:55:55.541065'),(3,'admin','0001_initial','2020-09-30 13:55:55.920919'),(4,'admin','0002_logentry_remove_auto_add','2020-09-30 13:55:56.023055'),(5,'admin','0003_logentry_add_action_flag_choices','2020-09-30 13:55:56.044572'),(6,'contenttypes','0002_remove_content_type_name','2020-09-30 13:55:56.138645'),(7,'auth','0002_alter_permission_name_max_length','2020-09-30 13:55:56.159250'),(8,'auth','0003_alter_user_email_max_length','2020-09-30 13:55:56.181960'),(9,'auth','0004_alter_user_username_opts','2020-09-30 13:55:56.191101'),(10,'auth','0005_alter_user_last_login_null','2020-09-30 13:55:56.228002'),(11,'auth','0006_require_contenttypes_0002','2020-09-30 13:55:56.233620'),(12,'auth','0007_alter_validators_add_error_messages','2020-09-30 13:55:56.266038'),(13,'auth','0008_alter_user_username_max_length','2020-09-30 13:55:56.283957'),(14,'auth','0009_alter_user_last_name_max_length','2020-09-30 13:55:56.297665'),(15,'auth','0010_alter_group_name_max_length','2020-09-30 13:55:56.311569'),(16,'auth','0011_update_proxy_permissions','2020-09-30 13:55:56.321493'),(17,'sessions','0001_initial','2020-09-30 13:55:56.339637'),(18,'management','0001_initial','2020-09-30 14:16:56.427611'),(19,'users','0001_initial','2020-09-30 14:17:45.408845'),(20,'management','0002_files_minilocation','2020-09-30 17:29:24.417034'),(21,'management','0003_files_user','2020-09-30 17:30:27.586157'),(22,'management','0004_auto_20200930_2313','2020-09-30 17:43:11.395689'),(23,'management','0005_auto_20201003_1748','2020-10-03 12:18:32.171069'),(24,'management','0006_auto_20201003_1816','2020-10-03 12:46:51.840954');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +293,6 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('y8eado9c1dn1swsu6st9oj0afymheedu','ZjM1MjBiMWI2N2ZmYzU3YmZkOWIxYjYxNWU3MGQ5OTg5ODQyYjI1NDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIyNTFiNGU5YmMyYTYxMTI2OTAzYTllZTY1ZjNhOWY5MjMzZTRlNThhIn0=','2020-10-14 17:37:06.582252');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +318,7 @@ CREATE TABLE `management_address` (
 
 LOCK TABLES `management_address` WRITE;
 /*!40000 ALTER TABLE `management_address` DISABLE KEYS */;
-INSERT INTO `management_address` VALUES (1,'Rewa, Madhya Pradesh - 486450','pandeyroshan556@gmail.com','9752315423');
+INSERT INTO `management_address` VALUES (1,'Insappa layout Sister’s Convent road behind charles school Kamanahalli main road Bangalore-560048 - INDIA','contact@bharatoff.com','+91 7477012700');
 /*!40000 ALTER TABLE `management_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,7 +359,7 @@ CREATE TABLE `management_citydata` (
   `lat` double NOT NULL,
   `lon` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +368,7 @@ CREATE TABLE `management_citydata` (
 
 LOCK TABLES `management_citydata` WRITE;
 /*!40000 ALTER TABLE `management_citydata` DISABLE KEYS */;
-INSERT INTO `management_citydata` VALUES (1,'Bhopal',23.2599,77.4126);
+INSERT INTO `management_citydata` VALUES (1,'Bhopal',23.2599,77.4126),(2,'Indore',22.7196,75.8577);
 /*!40000 ALTER TABLE `management_citydata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,20 +387,16 @@ CREATE TABLE `management_files` (
   `img` varchar(100) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `city_id` int(11) NOT NULL,
-  `MiniLocation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `location` varchar(50000) NOT NULL,
+  `company_name` varchar(300) NOT NULL,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `management_files_category_id_dd455d15_fk_management_category_id` (`category_id`),
-  KEY `management_files_city_id_230f1b97_fk_management_citydata_id` (`city_id`),
-  KEY `management_files_MiniLocation_id_7d89fafb_fk_managemen` (`MiniLocation_id`),
   KEY `management_files_user_id_ee788d7d_fk_auth_user_id` (`user_id`),
-  CONSTRAINT `management_files_MiniLocation_id_7d89fafb_fk_managemen` FOREIGN KEY (`MiniLocation_id`) REFERENCES `management_minilocation` (`id`),
   CONSTRAINT `management_files_category_id_dd455d15_fk_management_category_id` FOREIGN KEY (`category_id`) REFERENCES `management_category` (`id`),
-  CONSTRAINT `management_files_city_id_230f1b97_fk_management_citydata_id` FOREIGN KEY (`city_id`) REFERENCES `management_citydata` (`id`),
   CONSTRAINT `management_files_user_id_ee788d7d_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,8 +405,66 @@ CREATE TABLE `management_files` (
 
 LOCK TABLES `management_files` WRITE;
 /*!40000 ALTER TABLE `management_files` DISABLE KEYS */;
-INSERT INTO `management_files` VALUES (1,'Heading','9752315423','https://wa.me/919752315423','img/pachori.jpg',0,1,1,1,3,'https://goo.gl/maps/NtpHBL8cAS81EEwf8');
+INSERT INTO `management_files` VALUES (2,'Fashion Sale 101','9752315423','https://wa.me/919752315423','img/hvsv_ysfhjEl.jpg',0,1,3,'https://goo.gl/maps/zSBzuzgndq1wo5FGA','Nyka Collection','2020-10-03');
 /*!40000 ALTER TABLE `management_files` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `management_files_MiniLocation`
+--
+
+DROP TABLE IF EXISTS `management_files_MiniLocation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `management_files_MiniLocation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `files_id` int(11) NOT NULL,
+  `minilocation_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `management_files_MiniLoc_files_id_minilocation_id_d288a3b1_uniq` (`files_id`,`minilocation_id`),
+  KEY `management_files_Min_minilocation_id_b828e9d4_fk_managemen` (`minilocation_id`),
+  CONSTRAINT `management_files_Min_files_id_d92add40_fk_managemen` FOREIGN KEY (`files_id`) REFERENCES `management_files` (`id`),
+  CONSTRAINT `management_files_Min_minilocation_id_b828e9d4_fk_managemen` FOREIGN KEY (`minilocation_id`) REFERENCES `management_minilocation` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `management_files_MiniLocation`
+--
+
+LOCK TABLES `management_files_MiniLocation` WRITE;
+/*!40000 ALTER TABLE `management_files_MiniLocation` DISABLE KEYS */;
+INSERT INTO `management_files_MiniLocation` VALUES (2,2,1);
+/*!40000 ALTER TABLE `management_files_MiniLocation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `management_files_city`
+--
+
+DROP TABLE IF EXISTS `management_files_city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `management_files_city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `files_id` int(11) NOT NULL,
+  `citydata_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `management_files_city_files_id_citydata_id_a3852048_uniq` (`files_id`,`citydata_id`),
+  KEY `management_files_cit_citydata_id_fd9951fa_fk_managemen` (`citydata_id`),
+  CONSTRAINT `management_files_cit_citydata_id_fd9951fa_fk_managemen` FOREIGN KEY (`citydata_id`) REFERENCES `management_citydata` (`id`),
+  CONSTRAINT `management_files_city_files_id_9f2232cb_fk_management_files_id` FOREIGN KEY (`files_id`) REFERENCES `management_files` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `management_files_city`
+--
+
+LOCK TABLES `management_files_city` WRITE;
+/*!40000 ALTER TABLE `management_files_city` DISABLE KEYS */;
+INSERT INTO `management_files_city` VALUES (3,2,1),(4,2,2);
+/*!40000 ALTER TABLE `management_files_city` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -465,7 +518,7 @@ CREATE TABLE `management_minilocation` (
 
 LOCK TABLES `management_minilocation` WRITE;
 /*!40000 ALTER TABLE `management_minilocation` DISABLE KEYS */;
-INSERT INTO `management_minilocation` VALUES (1,'Upper Lake',23.2532,77.3382,1),(2,'Moti Masjid',23.2556,77.399,1);
+INSERT INTO `management_minilocation` VALUES (1,'Upper lake',23.2532,77.3382,1),(2,'Moti Masjid',23.2556,77.399,1);
 /*!40000 ALTER TABLE `management_minilocation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -509,7 +562,7 @@ CREATE TABLE `management_statedata_cities` (
   KEY `management_statedata_citydata_id_b9e6a290_fk_managemen` (`citydata_id`),
   CONSTRAINT `management_statedata_citydata_id_b9e6a290_fk_managemen` FOREIGN KEY (`citydata_id`) REFERENCES `management_citydata` (`id`),
   CONSTRAINT `management_statedata_statedata_id_15ba7139_fk_managemen` FOREIGN KEY (`statedata_id`) REFERENCES `management_statedata` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +571,7 @@ CREATE TABLE `management_statedata_cities` (
 
 LOCK TABLES `management_statedata_cities` WRITE;
 /*!40000 ALTER TABLE `management_statedata_cities` DISABLE KEYS */;
-INSERT INTO `management_statedata_cities` VALUES (1,1,1);
+INSERT INTO `management_statedata_cities` VALUES (1,1,1),(2,1,2);
 /*!40000 ALTER TABLE `management_statedata_cities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +613,7 @@ CREATE TABLE `management_visitors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `city_id` (`city_id`),
   CONSTRAINT `management_visitors_city_id_aefc5cf9_fk_management_citydata_id` FOREIGN KEY (`city_id`) REFERENCES `management_citydata` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +622,7 @@ CREATE TABLE `management_visitors` (
 
 LOCK TABLES `management_visitors` WRITE;
 /*!40000 ALTER TABLE `management_visitors` DISABLE KEYS */;
-INSERT INTO `management_visitors` VALUES (1,27,1);
+INSERT INTO `management_visitors` VALUES (1,75,1),(2,2,2);
 /*!40000 ALTER TABLE `management_visitors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -593,7 +646,7 @@ CREATE TABLE `management_webcounter` (
 
 LOCK TABLES `management_webcounter` WRITE;
 /*!40000 ALTER TABLE `management_webcounter` DISABLE KEYS */;
-INSERT INTO `management_webcounter` VALUES (1,59);
+INSERT INTO `management_webcounter` VALUES (1,174);
 /*!40000 ALTER TABLE `management_webcounter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -615,7 +668,7 @@ CREATE TABLE `users_userprofile` (
   KEY `users_userprofile_city_id_957df051_fk_management_citydata_id` (`city_id`),
   CONSTRAINT `users_userprofile_city_id_957df051_fk_management_citydata_id` FOREIGN KEY (`city_id`) REFERENCES `management_citydata` (`id`),
   CONSTRAINT `users_userprofile_user_id_87251ef1_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -624,7 +677,6 @@ CREATE TABLE `users_userprofile` (
 
 LOCK TABLES `users_userprofile` WRITE;
 /*!40000 ALTER TABLE `users_userprofile` DISABLE KEYS */;
-INSERT INTO `users_userprofile` VALUES (1,'9752315423','Linux@123',1,2);
 /*!40000 ALTER TABLE `users_userprofile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -637,4 +689,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-01 19:21:48
+-- Dump completed on 2020-10-03 21:01:28
