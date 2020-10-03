@@ -90,12 +90,20 @@ def city_ad(request, id):
         states[i].all_city = states[i].cities.all()
     
     offers = Files.objects.all().filter(city = CityData.objects.get(id=int(id)))
+    nearby_location = MiniLocation.objects.all().filter(main_city=CityData.objects.get(id=int(id)))
+
+    counter = WebCounter.objects.get(id=1)
+    counter.visit += random.randint(0,5)
+    counter.save()
+
     context = {
         'offers' : offers,
         'cities' : CityData.objects.all(),
         'city' : CityData.objects.get(id=int(id)),
         'address' : Address.objects.all()[0],
-        'states' : states
+        'states' : states,
+        'counter' : counter,
+        'nearby_location' : nearby_location
     }
 
     visitor_object = Visitors.objects.get(city = CityData.objects.get(id=int(id)))
@@ -103,6 +111,30 @@ def city_ad(request, id):
     visitor_object.save()
 
     return render(request,'management/location.html',context)
+
+
+def minilocations(request,id):
+    minilocation = MiniLocation.objects.get(id=id)
+    all_ads = Files.objects.all().filter(MiniLocation = minilocation)
+
+    counter = WebCounter.objects.get(id=1)
+    counter.visit += random.randint(0,5)
+    counter.save()
+
+    print(minilocation.main_city)
+
+    nearby_location = MiniLocation.objects.all().filter(main_city = minilocation.main_city)
+
+    context = {
+        'offers' : all_ads,
+        'cities' : CityData.objects.all(),
+        'city' : CityData.objects.get(id=int(id)),
+        'address' : Address.objects.all()[0],
+        'states' : StateData.objects.all(),
+        'counter' : counter,
+        'nearby_location' : nearby_location
+    }
+    return render(request, 'management/location.html',context)
 
 def single(reqeust, id):
     ad = Files.objects.get(id=id)
@@ -114,6 +146,7 @@ def single(reqeust, id):
     context = {
         'ad': ad,
         'states' : states,
+        'address' : Address.objects.all()[0],
     }
     return render(reqeust,'management/single.html', context)
 
@@ -127,3 +160,35 @@ def contact(request):
     )
     msg_obj.save()
     return redirect('/')
+
+def dashboard(request):
+    if request.user.is_staff:
+        my_ads = Files.objects.all().filter(user=request.user)
+        my_city = []
+
+        for ad in my_ads:
+            all_city = ad.city.all()
+            for city in all_city:
+                if city not in my_city:
+                    my_city.append(city)
+        
+        print(my_city)
+
+        counter = 0
+
+        for city in my_city:
+            counter += Visitors.objects.get(city=city).counter
+        
+        print(counter)
+
+        context = {
+            'total_ads' : len(my_ads),
+            'active_ads' : len(Files.objects.all().filter(user=request.user, active=True)),
+            'city_count' : len(my_city),
+            'counter' : counter,
+            'ads' : my_ads,
+            'my_city' : my_city
+        }
+        return render(request,'management/dashboard.html', context)
+    else:
+        return redirect('/')
