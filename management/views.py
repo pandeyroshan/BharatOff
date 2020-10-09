@@ -24,23 +24,20 @@ def home(request):
 @csrf_exempt
 def location_based(request):
     if request.method == 'POST':
-        print(request.POST)
         lat = request.POST.get('lat')
         lon = request.POST.get('lon')
 
         min_distance = 100000005
 
-        print(lat,lon)
-
-        all_city = CityData.objects.all()
+        all_mini_locations = MiniLocation.objects.all()
 
         R = 6373.0
 
-        for city in all_city:
+        for mini_location in all_mini_locations:
             lat1 = radians(float(lat))
             lon1 = radians(float(lon))
-            lat2 = radians(city.lat)
-            lon2 = radians(city.lon)
+            lat2 = radians(mini_location.lat)
+            lon2 = radians(mini_location.lon)
 
             dlon = lon2 - lon1
             dlat = lat2 - lat1
@@ -51,9 +48,12 @@ def location_based(request):
 
             if distance < min_distance:
                 min_distance = distance
-                nearest_city = city
-        print(nearest_city)
+                nearest_location = mini_location
     
+    print(nearest_location)
+
+    nearest_city = nearest_location.main_city
+
     address = Address.objects.all()[0]
 
     nearby_location = MiniLocation.objects.all().filter(main_city=nearest_city)
@@ -68,6 +68,7 @@ def location_based(request):
     counter.save()
 
     context = {
+        'nearest_location' : nearest_location,
         'offers' : Files.objects.all().filter(city = nearest_city),
         'cities' : CityData.objects.all(),
         'city' : nearest_city,
