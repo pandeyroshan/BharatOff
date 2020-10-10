@@ -49,6 +49,8 @@ def location_based(request):
             if distance < min_distance:
                 min_distance = distance
                 nearest_location = mini_location
+    else:
+        return redirect('/')
     
     print(nearest_location)
 
