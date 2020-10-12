@@ -129,28 +129,8 @@
                         <span>
                               <a href="tel:+91-{{offer.phone_number}}" class="mr-3"><i class="fa fa-phone"  data-toggle="tooltip" data-placement="right" title="Call Now" style="font-size:2rem;color:blue"></i></a>
                               <a href="{{offer.whatsapp_link}}" class="ml-3 mr-3"><i style="font-size:2rem;color: green" class="fa fa-whatsapp"  data-toggle="tooltip" data-placement="bottom" title="Whatsapp Now"></i></a>
-                              <a data-toggle="modal" data-target="#exampleModalCenter" id="shareid" value={{offer.id}} class="ml-3 mr-3"><i style="font-size:1.8rem;color: green" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="Share on whatsapp"></i></a>
                               <a href="{{offer.location}}" class="ml-3 mr-3"><i style="font-size:2rem;color: red" class="fa fa-marker"  data-toggle="tooltip" data-placement="bottom" title="Click to navigate">&#xf041;</i></a>
-
-                              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                       <h5 class="modal-title text-center" id="exampleModalLongTitle">Share this offer across various plateforms</h5>
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                       </button>
-                                       </div>
-                                       <div class="modal-body">
-                                             <a href="https://www.facebook.com/sharer/sharer.php?u=https://bharatoff.com/location/broad/{{offer.id}}" class="facebook ml-2"><i class="icofont-facebook" style="font-size:2rem;"></i></a>
-                                             <a href="http://www.reddit.com/submit?url=https://bharatoff.com/location/broad/{{offer.id}}/&title=Checkout%20this%20offer%20on%20Bharatoff" class="instagram ml-3"><i class="icofont-reddit" style="font-size:2.5rem;"></i></a>
-                                             <a href="whatsapp://send?text=https://bharatoff.com/location/broad/{{offer.id}}" class="whatsapp ml-4"><i class="icofont-whatsapp" style="font-size:2rem;"></i></a>
-                                             <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://bharatoff.com/location/broad/{{offer.id}}" class="linkedin ml-4"><i class="icofont-linkedin" style="font-size:2rem;"></i></a>
-                                             <a href="#" onclick="copyfunction({{offer.id}})" class="linkedin ml-4"><i class="icofont-copy" style="font-size:2rem;"></i></a>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
+                              <a href="whatsapp://send?text=https://bharatoff.com/location/broad/{{offer.id}}" id="shareid" value={{offer.id}} class="ml-3 mr-3"><i style="font-size:1.8rem;color: green" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="Share on whatsapp"></i></a>
                         </span>
                         </div>
                      </div>
