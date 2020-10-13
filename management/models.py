@@ -66,6 +66,7 @@ class Files(models.Model):
     location = models.URLField('Google Location URL', max_length=50000, blank=True)
     date = models.DateField(default=django.utils.timezone.now)
     active = models.BooleanField(default=False)
+    activated_till = models.DateField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.heading

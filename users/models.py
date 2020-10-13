@@ -5,7 +5,6 @@ from management.models import CityData
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    city = models.ForeignKey(CityData,on_delete=models.CASCADE)
     mobile_number = models.CharField(max_length=15,blank=False)
     pwd = models.CharField(max_length=500,blank=False)
 

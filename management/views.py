@@ -169,20 +169,20 @@ def dashboard(request):
         my_ads = Files.objects.all().filter(user=request.user)
         my_city = []
 
+        for i in range(0,len(my_ads)):
+            my_ads[i].all_minor = my_ads[i].MiniLocation.all()
+            my_ads[i].all_city = my_ads[i].city.all()
+
         for ad in my_ads:
             all_city = ad.city.all()
             for city in all_city:
                 if city not in my_city:
                     my_city.append(city)
-        
-        print(my_city)
 
         counter = 0
 
         for city in my_city:
             counter += Visitors.objects.get(city=city).counter
-        
-        print(counter)
 
         context = {
             'total_ads' : len(my_ads),

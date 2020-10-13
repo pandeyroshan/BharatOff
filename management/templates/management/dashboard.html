@@ -94,7 +94,9 @@
                                             <tr>
                                                 <th class="text-center">Name</th>
                                                 <th class="text-center">Date Posted</th>
-                                                <th class="text-center">City Coverage</th>
+                                                <th class="text-center">City</th>
+                                                <th class="text-center">Localities</th>
+                                                <th class="text-center">Status</th>
                                                 <th class="text-center">Direct Link</th>
                                             </tr>
                                         </thead>
@@ -102,7 +104,9 @@
                                             <tr>
                                                 <th class="text-center">Name</th>
                                                 <th class="text-center">Date Posted</th>
-                                                <th class="text-center">City Coverage</th>
+                                                <th class="text-center">City</th>
+                                                <th class="text-center">Localities</th>
+                                                <th class="text-center">Status</th>
                                                 <th class="text-center">Direct Link</th>
                                             </tr>
                                         </tfoot>
@@ -112,10 +116,20 @@
                                                     <td class="text-center">{{ad.heading}}</td>
                                                     <td class="text-center">{{ad.date}}</td>
                                                     <td class="text-center">
-                                                        {%for city in my_city%}
+                                                        {%for city in ad.all_city%}
                                                             {{city}},
                                                         {%endfor%}
-                                                    </td class="text-center">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {%for loc in ad.all_minor%}
+                                                            {{loc}},
+                                                        {%endfor%}
+                                                    </td>
+                                                    {% if ad.active %}
+                                                        <td class="text-center text-success">Active</td>
+                                                    {%else%}
+                                                        <td class="text-center text-danger">Deactive</td>
+                                                    {%endif%}
                                                     <td class="text-center"><a href="/location/broad/{{ad.id}}" target="_blank">Click here</a></td>
                                                 </tr>
                                             {%endfor%}
