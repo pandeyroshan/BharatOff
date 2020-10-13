@@ -100,6 +100,7 @@ def city_ad(request, id):
     counter.save()
 
     context = {
+        'nearest_location' : CityData.objects.get(id=int(id)),
         'offers' : offers,
         'cities' : CityData.objects.all(),
         'city' : CityData.objects.get(id=int(id)),
