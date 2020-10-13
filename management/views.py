@@ -118,6 +118,11 @@ def city_ad(request, id):
 
 
 def minilocations(request,id):
+    states = StateData.objects.all()
+
+    for i in range(len(states)):
+        states[i].all_city = states[i].cities.all()
+    
     minilocation = MiniLocation.objects.get(id=id)
     all_ads = Files.objects.all().filter(MiniLocation = minilocation)
 
@@ -130,11 +135,12 @@ def minilocations(request,id):
     nearby_location = MiniLocation.objects.all().filter(main_city = minilocation.main_city)
 
     context = {
+        'nearest_location': minilocation,
         'offers' : all_ads,
         'cities' : CityData.objects.all(),
         'city' : CityData.objects.get(id=int(id)),
         'address' : Address.objects.all()[0],
-        'states' : StateData.objects.all(),
+        'states' : states,
         'counter' : counter,
         'nearby_location' : nearby_location
     }
