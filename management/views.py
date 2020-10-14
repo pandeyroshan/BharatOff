@@ -10,7 +10,6 @@ import random
 def home(request):
     address = Address.objects.all()[0]
     states = StateData.objects.all()
-    print(states.query)
 
     for i in range(len(states)):
         states[i].all_city = states[i].cities.all()
@@ -51,8 +50,6 @@ def location_based(request):
                 nearest_location = mini_location
     else:
         return redirect('/')
-    
-    print(nearest_location)
 
     nearest_city = nearest_location.main_city
 
@@ -130,8 +127,6 @@ def minilocations(request,id):
     counter.visit += random.randint(0,5)
     counter.save()
 
-    print(minilocation.main_city)
-
     nearby_location = MiniLocation.objects.all().filter(main_city = minilocation.main_city)
 
     context = {
@@ -161,7 +156,6 @@ def single(reqeust, id):
     return render(reqeust,'management/single.html', context)
 
 def contact(request):
-    print(request.POST)
     msg_obj = Messages.objects.create(
         name=request.POST['name'],
         email=request.POST['email'],
