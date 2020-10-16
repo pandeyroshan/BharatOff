@@ -13,7 +13,6 @@ from management.models import (
     WebCounter
 )
 
-
 admin.site.site_header = "Bharatoff Administration"
 
 

@@ -43,7 +43,7 @@ class MiniLocation(models.Model):
 
 class StateData(models.Model):
     state_name = models.CharField('State Name', max_length=300, blank=False)
-    cities = models.ManyToManyField(CityData)
+    cities = models.ManyToManyField(CityData, blank=True)
 
     def __str__(self):
         return self.state_name
