@@ -18,6 +18,8 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="{% static 'offer/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -46,8 +48,8 @@
     <div class="container d-flex align-items-center">
 
       <div class="logo mr-auto">
-        <a href="/"><img src="{% static 'offer/img/logo.jpg' %}" alt="" class="img-fluid"></a>
-      </div>
+        <a href="/"><img src="{% static 'offer/img/logo.jpg' %}" alt="" class="img-fluid"><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#FF5A00; margin-left: 5px; margin-top:5px;">Bharat</span><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#000; margin-top:5px;">off</span></a>
+     </div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
@@ -71,7 +73,7 @@
 
         <br>
         <br>
-        <div class="content-section">
+        <div class="content-section" data-aos="fade-up">
             <form method="POST">
                 {% csrf_token %}
                 <fieldset class='form-group'>
@@ -118,21 +120,18 @@
           <div class="col-lg-3 col-md-6 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
             <div class="info">
               <div>
-                <i class="ri-map-pin-line"></i>
-                <p>{{address.address}}</p>
+                 <i class="ri-map-pin-line"></i>
+                 <p>{{address.address}}</p>
               </div>
-
               <div>
-                <i class="ri-mail-send-line"></i>
-                <p>{{address.mail}}</p>
+                 <i class="ri-mail-send-line" style="color:#e75a4d;"></i>
+                 <p>{{address.mail}}</p>
               </div>
-
               <div>
-                <i class="ri-phone-line"></i>
-                <p>{{address.phone_number}}</p>
+                 <a href="http://wa.me/91{{address.phone_number}}"><i class="icofont-whatsapp" style="color:#4dcb5b;"></i></a>
+                 <p>{{address.phone_number}}</p>
               </div>
-
-            </div>
+           </div>
           </div>
 
           <div class="col-lg-5 col-md-12" data-aos="fade-up" data-aos-delay="300">
