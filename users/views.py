@@ -1,15 +1,14 @@
 from django.shortcuts import render,redirect
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ShopkeeperRegisterForm
 from management.models import CityData
 from django.contrib.auth.models import User
-from users.models import UserProfile
+from users.models import UserProfile, Shopkeeper
 from management.models import Address
 
 # Create your views here.
 
 def register(request):
     if request.method == 'POST':
-        print(request.POST)
         pwd1 = request.POST.get('password1')
         pwd2 = request.POST.get('password2')
         phone = request.POST.get('phone')
@@ -27,3 +26,26 @@ def register(request):
         'address' : Address.objects.all()[0]
     }
     return render(request,'users/register.html',context)
+
+def register_shopkeepers(request):
+    if request.method == 'POST':
+        print(request.POST)
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        city = CityData.objects.get(id=int(request.POST.get('city')))
+        phone = request.POST.get('phone')
+        comment = request.POST.get('comment')
+
+        user = User.objects.create_user(username=username, email=email, password=password1)
+        user.save()
+        user_profile = Shopkeeper.objects.create(user=user, mobile_number=phone, pwd=password1, city=city, comment=comment)
+        user.is_staff=True 
+        user_profile.save()
+        return redirect('/login')
+    form = ShopkeeperRegisterForm()
+    context = {
+        'form' : form,
+        'address' : Address.objects.all()[0]
+    }
+    return render(request,'users/register_shopkeeper.html', context)
