@@ -134,3 +134,14 @@ class WebCounter(models.Model):
     class Meta:
         verbose_name = 'Website Count'
         verbose_name_plural = 'Website Count'
+
+class MarketingSources(models.Model):
+    source = models.CharField(max_length=200, blank=False)
+    counter = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.source
+    
+    class Meta:
+        verbose_name = 'Marketing Sources'
+        verbose_name_plural = 'Marketing Sources'
