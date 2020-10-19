@@ -13,7 +13,7 @@ class UserRegisterForm(UserCreationForm):
 CITY_CHOICE = []
 
 all_city = CityData.objects.all()
-i = 0
+i = CityData.objects.all()[0].id
 
 for city in all_city:
     CITY_CHOICE.append([i,city.city_name])
