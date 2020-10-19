@@ -10,7 +10,8 @@ from management.models import (
     Messages,
     MiniLocation,
     Category,
-    WebCounter
+    WebCounter,
+    MarketingSources
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -62,6 +63,11 @@ class StateAdmin(admin.ModelAdmin):
     model = StateData
     search_fields = ('state_name',)
 
+class MarketingSourcesAdmin(admin.ModelAdmin):
+    model = MarketingSources
+    list_display = ('source','counter')
+    search_fields = ('source',)
+
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)
 
@@ -74,3 +80,4 @@ admin.site.register(Visitors,VisitorAdmin)
 admin.site.register(Category)
 admin.site.register(WebCounter)
 admin.site.register(Messages,MessageAdmin)
+admin.site.register(MarketingSources,MarketingSourcesAdmin)
