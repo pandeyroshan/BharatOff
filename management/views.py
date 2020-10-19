@@ -4,7 +4,7 @@ from .models import CityData, Address, StateData, Visitors, Files, Messages, Web
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
-# Create your views here.
+# Create your views here
 
 @csrf_exempt
 def home(request):
