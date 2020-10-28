@@ -4,7 +4,7 @@
    <head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
-      <title>Best offer in {{nearest_location}}</title>
+      <title>Best offer in {{nearest_location.main_city}}</title>
       <meta content="" name="descriptison">
       <meta content="" name="keywords">
       <!-- Favicons -->
@@ -106,16 +106,20 @@
                            </button>
                          </div>
                          <div class="modal-body">
-                           <form>
+                           <form method="POST" action="/search/">
+                              {% csrf_token %}
                              <div class="form-group">
                                <label for="recipient-name" class="col-form-label">Keywords:</label>
-                               <input type="text" class="form-control" id="recipient-name" placeholder="Provide keywords here. Ex - Fashion, Coat">
+                               <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Provide keywords here. Ex - Fashion, Coat">
+                               <input type="hidden" id="minilocation" name="minilocation" value="{{nearest_location.id}}">
                              </div>
-                           </form>
-                         </div>
+
+
                          <div class="modal-footer">
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-primary">Search</button>
+                           <button type="submit" class="btn btn-primary" style="background-color: #ff5a00; border-color: #ff5a00;">Search</button>
+                         </div>
+                           </form>
                          </div>
                        </div>
                      </div>

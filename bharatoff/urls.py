@@ -21,8 +21,9 @@ urlpatterns = [
     path('minilocations/<int:id>/', management_views.minilocations, name='minilocations'),
     path('location/broad/<int:id>/', management_views.single, name='single'),
     path('contact/', management_views.contact, name='contact'),
+    path('search/', management_views.search, name='search'),
 
-    path('dashboard/', management_views.dashboard, name='dashboard')
+    path('dashboard/', management_views.dashboard, name='dashboard'),
 ]
 
 if settings.DEBUG:

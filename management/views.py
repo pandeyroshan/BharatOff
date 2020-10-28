@@ -199,3 +199,61 @@ def dashboard(request):
         return render(request,'management/dashboard.html', context)
     else:
         return redirect('/')
+
+def search(request):
+
+    nearest_location = MiniLocation.objects.get(id=int(request.POST.get('minilocation')))
+    nearest_city = nearest_location.main_city
+
+    nearby_location = MiniLocation.objects.all().filter(main_city=nearest_city)
+
+    states = StateData.objects.all()
+
+    counter = WebCounter.objects.get(id=1)
+    counter.visit += random.randint(0,5)
+    counter.save()
+
+    for i in range(len(states)):
+        states[i].all_city = states[i].cities.all()
+
+    raw_keywords = request.POST.get('keyword')
+
+    keywords = raw_keywords.split(",")
+
+    for i in range(len(keywords)):
+        keywords[i] = keywords[i].strip()
+
+    keywords = [x.lower() for x in keywords]
+    
+    all_offers = Files.objects.all().filter(city = nearest_city)
+
+    searched_offers = []
+
+    for offer in all_offers:
+        raw_keywords = offer.keywords
+
+        available_keywords = raw_keywords.split(",")
+
+        available_keywords = [x.lower() for x in available_keywords]
+
+        for i in range(len(available_keywords)):
+            available_keywords[i] = available_keywords[i].strip()
+        
+        for key in keywords:
+            if key in available_keywords:
+                searched_offers.append(offer)
+                break
+
+
+    context = {
+        'nearest_location' : nearest_location,
+        'offers' : searched_offers,
+        'cities' : CityData.objects.all(),
+        'city' : nearest_city,
+        'address' : Address.objects.all()[0],
+        'states' : states,
+        'counter' : counter,
+        'nearby_location' : nearby_location,
+        'category' : Category.objects.all()
+    }
+    return render(request,'management/location.html', context)
