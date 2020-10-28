@@ -257,3 +257,61 @@ def search(request):
         'category' : Category.objects.all()
     }
     return render(request,'management/location.html', context)
+
+def get_base_context(id):
+
+    states = StateData.objects.all()
+
+    counter = WebCounter.objects.get(id=1)
+    counter.visit += random.randint(0,5)
+    counter.save()
+
+    for i in range(len(states)):
+        states[i].all_city = states[i].cities.all()
+    
+
+    nearest_location = MiniLocation.objects.get(id=int(id))
+    nearest_city = nearest_location.main_city
+
+    nearby_location = MiniLocation.objects.all().filter(main_city=nearest_city)
+
+    context = {
+        'cities' : CityData.objects.all(),        
+        'states' : states,
+        'counter' : counter,
+        'category' : Category.objects.all(),
+        'address' : Address.objects.all()[0],
+        'nearest_location' : nearest_location,
+        'nearby_location' : nearby_location
+    }
+    return context
+
+def fashion(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
+
+def property(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
+
+def MobileElectronic(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
+
+def RestBakery(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
+
+def supermarket(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
+
+def service(request, id):
+    context = get_base_context(id)
+
+    return render(request,'management/location.html', context)
