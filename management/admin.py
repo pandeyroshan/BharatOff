@@ -38,6 +38,8 @@ class FilesAdmin(admin.ModelAdmin):
     list_display = ('company_name','user','heading','category','date','activated_till','active')
     search_fields = ('company_name',)
     list_filter = ('active',)
+    radio_fields = {"category": admin.HORIZONTAL,"user" : admin.HORIZONTAL}
+    filter_horizontal = ['city','MiniLocation']
 
 class AddressAdmin(admin.ModelAdmin):
     model = Address

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Files
-from .models import CityData, Address, StateData, Visitors, Files, Messages, WebCounter, MiniLocation
+from .models import CityData, Address, StateData, Visitors, Files, Messages, WebCounter, MiniLocation, Category
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
@@ -74,12 +74,15 @@ def location_based(request):
         'address' : address,
         'states' : states,
         'counter' : counter,
-        'nearby_location' : nearby_location
+        'nearby_location' : nearby_location,
+        'category' : Category.objects.all()
     }
 
     visitor_object = Visitors.objects.get(city = nearest_city)
     visitor_object.counter += 1
     visitor_object.save()
+
+    request.nearest_location = nearest_location  # bind the location with the request object
 
     return render(request,'management/location.html',context)
 

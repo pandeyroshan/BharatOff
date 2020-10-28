@@ -89,27 +89,85 @@
          <div class="container">
             <div class="row">
                <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                  <h1 data-aos="fade-up">Find the best offers in {{nearest_location}} with Bharatoff</h1>
+                  <h1 data-aos="fade-up">Find the best offers in <span style="color: #ff5a00;">{{nearest_location}}</span> with Bharatoff</h1>
                   <br>
                   <h2 data-aos="fade-up" data-aos-delay="400">We are aiming to provide the best available offers to you.</h2>
                   <div data-aos="fade-up" data-aos-delay="800">
-                     <a href="#portfolio" class="btn-get-started scrollto" style="border-color:#ff5a00; color: #ff5a00;" id="gsid">Get Started</a>
+                     <a href="#portfolio" class="btn-get-started scrollto" style="border-color:#ff5a00; color: #000000; background-color: #ff5a00;">Get Started</a>
+                     <a href="#portfolio" class="btn-get-started ml-3"  data-toggle="modal" data-target="#exampleModal" style="border-color:#ff5a00; color: #000000; background-color: #ff5a00;">Search Now</a>
                   </div>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog modal-dialog-centered" role="document">
+                       <div class="modal-content">
+                         <div class="modal-header">
+                           <h5 class="modal-title text-center" id="exampleModalLabel">Search with <span style="font-family: 'Abril Fatface', cursive; color:#FF5A00;">Bharat<span style="font-family: 'Abril Fatface', cursive; color:#000;">off</span></h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                           </button>
+                         </div>
+                         <div class="modal-body">
+                           <form>
+                             <div class="form-group">
+                               <label for="recipient-name" class="col-form-label">Keywords:</label>
+                               <input type="text" class="form-control" id="recipient-name" placeholder="Provide keywords here. Ex - Fashion, Coat">
+                             </div>
+                           </form>
+                         </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                           <button type="button" class="btn btn-primary">Search</button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>                   
                </div>
-               <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
-                  <img src="{% static 'offer/img/girl.svg' %}" class="img-fluid animated" alt="">
+               <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="400">
+                  <img src="{% static 'offer/img/girl.svg' %}" class="img-fluid animated" alt="">                 
                </div>
             </div>
          </div>
       </section>
       <!-- End Hero -->
       <main id="main">
+         <section id="clients" class="clients clients" data-aos="fade-right" data-aos-delay="400">
+            <div class="container">
+      
+              <div class="row">
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/dress.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/building.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/mobile.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/food.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/cart.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+      
+                <div class="col-lg-2 col-md-4 col-6">
+                  <img src="{% static 'offer/img/service.png' %}" class="img-fluid" alt="" data-aos="zoom-in">
+                </div>
+                
+              </div>
+      
+            </div>
+
+          </section>
          <!-- ======= Portfolio Section ======= -->
          <section id="portfolio" class="portfolio">
          <div class="container">
             <div class="section-title" data-aos="fade-up">
                <h2>Offers</h2>
-               <p>Best available offers for your city.</p>
             </div>
             <br>
                {% for offer in offers %}

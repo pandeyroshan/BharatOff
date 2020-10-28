@@ -67,6 +67,7 @@ class Files(models.Model):
     date = models.DateField(default=django.utils.timezone.now)
     active = models.BooleanField(default=False)
     activated_till = models.DateField(default=django.utils.timezone.now)
+    keywords = models.TextField(blank=True)
 
     def __str__(self):
         return self.heading
