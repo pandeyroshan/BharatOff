@@ -40,6 +40,16 @@
             <nav class="nav-menu d-none d-lg-block">
                <ul>
                   <li class="drop-down">
+                     <a href="">Category</a>
+                     <ul>
+                        {%for data in category%}
+                        <li class="">
+                           <a href="/category/{{nearest_location.id}}/{{data.id}}/">{{data}}</a>
+                        </li>
+                        {%endfor%}
+                     </ul>
+                  </li>
+                  <li class="drop-down">
                      <a href="">Nearby locations</a>
                      <ul>
                         {%for location in nearby_location%}
@@ -92,7 +102,7 @@
                   <h1 data-aos="fade-up">Find the best offers in <span style="color: #ff5a00;">{{nearest_location}}</span> with Bharatoff</h1>
                   <br>
                   <h2 data-aos="fade-up" data-aos-delay="400">We are aiming to provide the best available offers to you.</h2>
-                  <div data-aos="fade-up" data-aos-delay="800" class="text-center" style="padding: 0px !important;">
+                  <div data-aos="fade-up" data-aos-delay="800" class="" style="padding: 0px !important;">
                      <a href="#portfolio" class="btn-get-started scrollto" style="border-color:#ff5a00; color: #000000; background-color: #ff5a00;">Get Started</a>
                      <a href="#portfolio" class="btn-get-started mt-2"  data-toggle="modal" data-target="#exampleModal" style="border-color:#ff5a00; color: #000000; background-color: #ff5a00;">Search Now</a>
                   </div>

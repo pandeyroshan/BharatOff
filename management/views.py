@@ -84,6 +84,8 @@ def location_based(request):
 
     request.nearest_location = nearest_location  # bind the location with the request object
 
+    print(nearest_location.id)
+
     return render(request,'management/location.html',context)
 
 def city_ad(request, id):
@@ -315,3 +317,8 @@ def service(request, id):
     context = get_base_context(id)
 
     return render(request,'management/location.html', context)
+
+def category(request, cid, mlid):
+    print(mlid)
+    context = get_base_context(cid)
+    return render(request, 'management/location.html', context)

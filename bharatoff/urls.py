@@ -31,6 +31,8 @@ urlpatterns = [
     path('category/food/<int:id>/', management_views.RestBakery, name='food'),
     path('category/supermarket/<int:id>/', management_views.supermarket, name='supermarket'),
     path('category/service/<int:id>/', management_views.service, name='service'),
+
+    path('category/<int:cid>/<int:mlid>/', management_views.category, name='category')
 ]
 
 if settings.DEBUG:
