@@ -212,10 +212,11 @@
                         <h4>{{offer.heading}}</h4>
                         <hr>
                         <span>
-                              <a href="tel:+91-{{offer.phone_number}}" class="mr-3"><i class="fa fa-phone"  data-toggle="tooltip" data-placement="right" title="Call Now" style="font-size:2rem;color:blue"></i></a>
-                              <a href="{{offer.whatsapp_link}}" class="ml-3 mr-3"><i style="font-size:2rem;color: green" class="fa fa-whatsapp"  data-toggle="tooltip" data-placement="bottom" title="Whatsapp Now"></i></a>
-                              <a href="{{offer.location}}" class="ml-3 mr-3"><i style="font-size:2rem;color: red" class="fa fa-marker"  data-toggle="tooltip" data-placement="bottom" title="Click to navigate">&#xf041;</i></a>
-                              <a href="whatsapp://send?text=https://bharatoff.com/location/broad/{{offer.id}}" id="shareid" value={{offer.id}} class="ml-3 mr-3"><i style="font-size:1.8rem;color: green" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="Share on whatsapp"></i></a>
+                              <a href="tel:+91-{{offer.phone_number}}" class="mr-2"><img src="{% static 'offer/img/call.png' %}"></a>
+                              <a href="{{offer.whatsapp_link}}" class="ml-2 mr-2"><img src="{% static 'offer/img/whatsapp.png' %}"></a>
+                              <a href="{{offer.location}}" class="ml-2 mr-2"><img src="{% static 'offer/img/location.png' %}"></a>
+                              <a href="{{offer.location}}" class="ml-2 mr-2"><img src="{% static 'offer/img/youtube.png' %}"></a>
+                              <a href="whatsapp://send?text=https://bharatoff.com/location/broad/{{offer.id}}" id="shareid" value={{offer.id}} class="ml-2 mr-2"><img src="{% static 'offer/img/share.png' %}"></a>
                         </span>
                         </div>
                      </div>

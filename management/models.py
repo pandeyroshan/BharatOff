@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 import django
 # Create your models here.
 
+CHOICES_CATEGORY = [
+    ('1' , 'Fashion'),
+    ('2' , 'Property'),
+    ('3' , 'Electronics'),
+    ('4' , 'Food & Restaurant'),
+    ('5' , 'Supermarket'),
+    ('6' , 'Service'),
+]
+
 class CityData(models.Model):
     city_name = models.CharField('City Name',max_length=300,blank=True)
     lat = models.FloatField('Lattitude',blank=True,default=0.0000)
@@ -59,6 +68,7 @@ class Files(models.Model):
     user = models.ForeignKey(User,limit_choices_to={'is_staff': True}, on_delete = models.CASCADE)
     company_name = models.CharField(max_length=300,blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    icon_category = models.CharField(max_length=50, choices=CHOICES_CATEGORY, default="1")
     heading = models.CharField('Heading', max_length=300)
     phone_number = models.CharField('Phone Number', max_length=1000)
     whatsapp_link = models.URLField('Whatsapp URL', max_length=1000, blank=True)
