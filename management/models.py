@@ -77,6 +77,9 @@ class Files(models.Model):
     date = models.DateField(default=django.utils.timezone.now)
     active = models.BooleanField(default=False)
     activated_till = models.DateField(default=django.utils.timezone.now)
+    facebook_link = models.URLField('Facebook Link',max_length=2000, blank=True)
+    instagram_link = models.URLField('Instagram Link',max_length=2000, blank=True)
+    youtube_link = models.URLField('Youtube Link',max_length=2000, blank=True)
     keywords = models.TextField(blank=True)
 
     def __str__(self):
