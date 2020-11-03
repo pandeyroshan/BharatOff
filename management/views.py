@@ -290,35 +290,44 @@ def get_base_context(id):
 
 def fashion(request, id):
     context = get_base_context(id)
-
+    context['offers'] = Files.objects.all().filter(icon_category = '1')
     return render(request,'management/location.html', context)
 
 def property(request, id):
     context = get_base_context(id)
 
+    context['offers'] = Files.objects.all().filter(icon_category = '2')
+
     return render(request,'management/location.html', context)
 
 def MobileElectronic(request, id):
     context = get_base_context(id)
+    context['offers'] = Files.objects.all().filter(icon_category = '3')
 
     return render(request,'management/location.html', context)
 
 def RestBakery(request, id):
     context = get_base_context(id)
+    context['offers'] = Files.objects.all().filter(icon_category = '4')
 
     return render(request,'management/location.html', context)
 
 def supermarket(request, id):
     context = get_base_context(id)
+    context['offers'] = Files.objects.all().filter(icon_category = '5')
 
     return render(request,'management/location.html', context)
 
 def service(request, id):
     context = get_base_context(id)
+    context['offers'] = Files.objects.all().filter(icon_category = '6')
 
     return render(request,'management/location.html', context)
 
 def category(request, cid, mlid):
-    print(mlid)
     context = get_base_context(cid)
+
+    category = Category.objects.get(id = mlid)
+
+    context['offers'] = Files.objects.all().filter(category = category)
     return render(request, 'management/location.html', context)
