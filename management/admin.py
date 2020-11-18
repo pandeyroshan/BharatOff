@@ -11,7 +11,8 @@ from management.models import (
     MiniLocation,
     Category,
     WebCounter,
-    MarketingSources
+    MarketingSources,
+    PackageType
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -35,21 +36,22 @@ class VisitorAdmin(admin.ModelAdmin):
 
 class FilesAdmin(admin.ModelAdmin):
     model = Files
-    list_display = ('company_name','user','heading','category','date','activated_till','active')
+    list_display = ('company_name','package_type','user','heading','category','date','activated_till','active')
     search_fields = ('company_name',)
     list_filter = ('active',)
     radio_fields = {"category": admin.HORIZONTAL,"user" : admin.HORIZONTAL}
     filter_horizontal = ['city','MiniLocation']
+    exclude = ('counter',)
 
 class AddressAdmin(admin.ModelAdmin):
     model = Address
     list_display = ('address','mail','phone_number',)
 
     def has_add_permission(self, request):
-        return False
+        return True
     
     def has_delete_permission(self,request,obj=None):
-        return False
+        return True
 
 class MessageAdmin(admin.ModelAdmin):
     model = Messages
@@ -70,6 +72,11 @@ class MarketingSourcesAdmin(admin.ModelAdmin):
     list_display = ('source','counter')
     search_fields = ('source',)
 
+class PackageTypeAdmin(admin.ModelAdmin):
+    model = PackageType
+    list_display = ('name','price','total_phamplet','total_videos')
+    search_fields = ('name',)
+
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)
 
@@ -83,3 +90,4 @@ admin.site.register(Category)
 admin.site.register(WebCounter)
 admin.site.register(Messages,MessageAdmin)
 admin.site.register(MarketingSources,MarketingSourcesAdmin)
+admin.site.register(PackageType,PackageTypeAdmin)

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Bharatoff Dashboard</title>
+        <title>Bharatoff Dashboard</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="{% static 'dashboard/css/styles.css' %}" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
@@ -97,6 +97,7 @@
                                                 <th class="text-center">City</th>
                                                 <th class="text-center">Localities</th>
                                                 <th class="text-center">Status</th>
+                                                <th class="text-center">Setting</th>
                                                 <th class="text-center">Direct Link</th>
                                             </tr>
                                         </thead>
@@ -107,6 +108,7 @@
                                                 <th class="text-center">City</th>
                                                 <th class="text-center">Localities</th>
                                                 <th class="text-center">Status</th>
+                                                <th class="text-center">Setting</th>
                                                 <th class="text-center">Direct Link</th>
                                             </tr>
                                         </tfoot>
@@ -130,6 +132,7 @@
                                                     {%else%}
                                                         <td class="text-center text-danger">Deactive</td>
                                                     {%endif%}
+                                                    <td class="text-center"><a href="/settings/{{ad.id}}/" style="text-decoration: none;"><span class="fa-spin">&#9881;</span></a></td>
                                                     <td class="text-center"><a href="/location/broad/{{ad.id}}" target="_blank">Click here</a></td>
                                                 </tr>
                                             {%endfor%}

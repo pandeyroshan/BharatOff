@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Files
 from .models import CityData, Address, StateData, Visitors, Files, Messages, WebCounter, MiniLocation, Category
@@ -5,6 +6,32 @@ from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
 # Create your views here.
+
+
+def process_active_image(ad):
+
+    if ad.active_image == '0':
+        ad.real_image = ad.img
+    elif ad.active_image == '1':
+        ad.real_image = ad.img1
+    elif ad.active_image == '2':
+        ad.real_image = ad.img2
+    elif ad.active_image == '3':
+        ad.real_image = ad.img3
+    elif ad.active_image == '4':
+        ad.real_image = ad.img4
+    elif ad.active_image == '5':
+        ad.real_image = ad.img5
+    elif ad.active_image == '6':
+        ad.real_image = ad.img6
+    elif ad.active_image == '7':
+        ad.real_image = ad.img7
+    elif ad.active_image == '8':
+        ad.real_image = ad.img8
+    elif ad.active_image == '9':
+        ad.real_image = ad.img9
+    
+    return ad
 
 @csrf_exempt
 def home(request):
@@ -66,9 +93,33 @@ def location_based(request):
     counter.visit += random.randint(0,5)
     counter.save()
 
+    all_ads = Files.objects.all().filter(city=nearest_city)
+
+    for i in range(len(all_ads)):
+        if all_ads[i].active_image == 0:
+            all_ads[i].real_image = all_ads[i].img
+        elif all_ads[i].active_image == 1:
+            all_ads[i].real_image = all_ads[i].img1
+        elif all_ads[i].active_image == 2:
+            all_ads[i].real_image = all_ads[i].img2
+        elif all_ads[i].active_image == 3:
+            all_ads[i].real_image = all_ads[i].img3
+        elif all_ads[i].active_image == 4:
+            all_ads[i].real_image = all_ads[i].img4
+        elif all_ads[i].active_image == 5:
+            all_ads[i].real_image = all_ads[i].img5
+        elif all_ads[i].active_image == 6:
+            all_ads[i].real_image = all_ads[i].img6
+        elif all_ads[i].active_image == 7:
+            all_ads[i].real_image = all_ads[i].img7
+        elif all_ads[i].active_image == 8:
+            all_ads[i].real_image = all_ads[i].img8
+        elif all_ads[i].active_image == 9:
+            all_ads[i].real_image = all_ads[i].img9
+
     context = {
         'nearest_location' : nearest_location,
-        'offers' : Files.objects.all().filter(city = nearest_city),
+        'offers' : all_ads,
         'cities' : CityData.objects.all(),
         'city' : nearest_city,
         'address' : address,
@@ -84,7 +135,7 @@ def location_based(request):
 
     request.nearest_location = nearest_location  # bind the location with the request object
 
-    print(nearest_location.id)
+
 
     return render(request,'management/location.html',context)
 
@@ -153,6 +204,29 @@ def single(reqeust, id):
     for i in range(len(states)):
         states[i].all_city = states[i].cities.all()
     
+
+    if ad.active_image == 0:
+        ad.real_image = ad.img
+    elif ad.active_image == 1:
+        ad.real_image = ad.img1
+    elif ad.active_image == 2:
+        ad.real_image = ad.img2
+    elif ad.active_image == 3:
+        ad.real_image = ad.img3
+    elif ad.active_image == 4:
+        ad.real_image = ad.img4
+    elif ad.active_image == 5:
+        ad.real_image = ad.img5
+    elif ad.active_image == 6:
+        ad.real_image = ad.img6
+    elif ad.active_image == 7:
+        ad.real_image = ad.img7
+    elif ad.active_image == 8:
+        ad.real_image = ad.img8
+    elif ad.active_image == 9:
+        ad.real_image = ad.img9
+    
+
     context = {
         'ad': ad,
         'states' : states,
@@ -198,6 +272,7 @@ def dashboard(request):
             'ads' : my_ads,
             'my_city' : my_city
         }
+        messages.success(request, 'Your password was updated successfully!')
         return render(request,'management/dashboard.html', context)
     else:
         return redirect('/')
@@ -331,3 +406,33 @@ def category(request, cid, mlid):
 
     context['offers'] = Files.objects.all().filter(category = category)
     return render(request, 'management/location.html', context)
+
+
+def ad_setting(request, id):
+    if request.method == 'POST':
+        print(request.POST)
+        file = Files.objects.get(id = int(request.POST.get('file')))
+        if file.user == request.user:
+            file.active_image = int(request.POST.get('img_code'))
+            file.save()
+    file = Files.objects.get(id = int(id))
+    if file.user == request.user:
+        context = {
+            'ad' : file,
+            'city' : len(file.city.all()),
+            'location' : len(file.MiniLocation.all()),
+            'img' : file.img,
+            'img1' : file.img1,
+            'img2' : file.img2,
+            'img3' : file.img3,
+            'img4' : file.img4,
+            'img5' : file.img5,
+            'img6' : file.img6,
+            'img7' : file.img7,
+            'img8' : file.img8,
+            'img9' : file.img9,
+            'active' : str(file.active_image),
+        }
+        return render(request,'management/settings.html',context)
+    else:
+        return redirect('/dashbaord/')

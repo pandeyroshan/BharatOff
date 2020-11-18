@@ -12,6 +12,30 @@ CHOICES_CATEGORY = [
     ('6' , 'Service'),
 ]
 
+TIME_INTERVAL = [
+    ('0', 'Twice a day'),
+    ('1', 'Daily'),
+    ('2', 'Weekly'),
+    ('3', 'Fortnight'),
+    ('4', 'Monthly'),
+    ('5', 'I will handle')
+]
+
+
+
+class PackageType(models.Model):
+    name = models.CharField(max_length=200, blank=False)
+    price = models.IntegerField(default=0)
+    total_phamplet = models.IntegerField(default=0)
+    total_videos = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Packages'
+        verbose_name_plural = 'Packages'
+
 class CityData(models.Model):
     city_name = models.CharField('City Name',max_length=300,blank=True)
     lat = models.FloatField('Lattitude',blank=True,default=0.0000)
@@ -63,6 +87,8 @@ class StateData(models.Model):
 
 
 class Files(models.Model):
+    package_type = models.ForeignKey(PackageType, on_delete = models.CASCADE)
+    change_at = models.CharField('Phamplet will change',max_length=50, choices=TIME_INTERVAL, default='5')
     city = models.ManyToManyField(CityData)
     MiniLocation = models.ManyToManyField(MiniLocation)
     user = models.ForeignKey(User,limit_choices_to={'is_staff': True}, on_delete = models.CASCADE)
@@ -72,7 +98,16 @@ class Files(models.Model):
     heading = models.CharField('Heading', max_length=300)
     phone_number = models.CharField('Phone Number', max_length=1000)
     whatsapp_link = models.URLField('Whatsapp URL', max_length=1000, blank=True)
-    img = models.ImageField(upload_to='img/', blank=False)
+    img = models.ImageField('Image 1',upload_to='img/', blank=False)
+    img1 = models.ImageField('Image 2',upload_to='img/', blank=True)
+    img2 = models.ImageField('Image 3',upload_to='img/', blank=True)
+    img3 = models.ImageField('Image 4',upload_to='img/', blank=True)
+    img4 = models.ImageField('Image 5',upload_to='img/', blank=True)
+    img5 = models.ImageField('Image 6',upload_to='img/', blank=True)
+    img6 = models.ImageField('Image 7',upload_to='img/', blank=True)
+    img7 = models.ImageField('Image 8',upload_to='img/', blank=True)
+    img8 = models.ImageField('Image 9',upload_to='img/', blank=True)
+    img9 = models.ImageField('Image 10',upload_to='img/', blank=True)
     location = models.URLField('Google Location URL', max_length=50000, blank=True)
     date = models.DateField(default=django.utils.timezone.now)
     active = models.BooleanField(default=False)
@@ -81,6 +116,8 @@ class Files(models.Model):
     instagram_link = models.URLField('Instagram Link',max_length=2000, blank=True)
     youtube_link = models.URLField('Youtube Link',max_length=2000, blank=True)
     keywords = models.TextField(blank=True)
+    counter = models.IntegerField(default=0)
+    active_image = models.IntegerField(default=0)
 
     def __str__(self):
         return self.heading
