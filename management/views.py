@@ -433,6 +433,6 @@ def ad_setting(request, id):
             'img9' : file.img9,
             'active' : str(file.active_image),
         }
-        return render(request,'management/settings.html',context)
+        return render(request,'management/settings_page.html',context)
     else:
         return redirect('/dashbaord/')
