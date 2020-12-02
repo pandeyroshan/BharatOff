@@ -5,7 +5,47 @@ from .models import CityData, Address, StateData, Visitors, Files, Messages, Web
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
+import datetime
 # Create your views here.
+
+# TIME_INTERVAL = [
+#     ('0', 'Twice a day'),
+#     ('1', 'Daily'),
+#     ('2', 'Weekly'),
+#     ('3', 'Fortnight'),
+#     ('4', 'Monthly'),
+#     ('5', 'I will handle')
+# ]
+
+
+def refresh_ads(request):
+    x = datetime.datetime.now()
+    all_ads = Files.objects.all()
+    for i in range(len(all_ads)):
+        ad = all_ads[i]
+        if ad.last_date.day != x.day:
+            ad.counter+=1
+            ad.last_date = x
+            if ad.change_at == '0':
+                pass
+            elif ad.change_at == '1':
+                if ad.counter >= 1:
+                    ad.active_image = (ad.active_image+1)%10
+                    ad.counter = 0
+            elif ad.change_at == '2':
+                if ad.counter >= 7:
+                    ad.active_image = (ad.active_image+1)%10
+                    ad.counter = 0
+            elif ad.change_at == '3':
+                if ad.counter >= 15:
+                    ad.active_image = (ad.active_image+1)%10
+                    ad.counter = 0
+            elif ad.change_at == '4':
+                if ad.counter >= 30:
+                    ad.active_image = (ad.active_image+1)%10
+                    ad.counter = 0
+            ad.save()
+    return redirect('/admin')
 
 
 def process_active_image(ad):
@@ -414,6 +454,7 @@ def ad_setting(request, id):
         file = Files.objects.get(id = int(request.POST.get('file')))
         if file.user == request.user:
             file.active_image = int(request.POST.get('img_code'))
+            file.change_at = request.POST.get('auto_option')
             file.save()
     file = Files.objects.get(id = int(id))
     if file.user == request.user:

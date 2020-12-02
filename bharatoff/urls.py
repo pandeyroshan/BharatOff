@@ -33,7 +33,9 @@ urlpatterns = [
     path('category/service/<int:id>/', management_views.service, name='service'),
 
     path('category/<int:cid>/<int:mlid>/', management_views.category, name='category'),
-    path('settings/<int:id>/', management_views.ad_setting, name='setting')
+    path('settings/<int:id>/', management_views.ad_setting, name='setting'),
+
+    path('refresh/',management_views.refresh_ads, name='refresh')
 ]
 
 if settings.DEBUG:

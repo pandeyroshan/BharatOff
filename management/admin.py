@@ -41,7 +41,7 @@ class FilesAdmin(admin.ModelAdmin):
     list_filter = ('active',)
     radio_fields = {"category": admin.HORIZONTAL,"user" : admin.HORIZONTAL}
     filter_horizontal = ['city','MiniLocation']
-    exclude = ('counter',)
+    # exclude = ('counter',)
 
 class AddressAdmin(admin.ModelAdmin):
     model = Address

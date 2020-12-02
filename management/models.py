@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django
-# Create your models here.
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -20,7 +19,6 @@ TIME_INTERVAL = [
     ('4', 'Monthly'),
     ('5', 'I will handle')
 ]
-
 
 
 class PackageType(models.Model):
@@ -118,6 +116,7 @@ class Files(models.Model):
     keywords = models.TextField(blank=True)
     counter = models.IntegerField(default=0)
     active_image = models.IntegerField(default=0)
+    last_date = models.DateField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.heading
