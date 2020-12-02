@@ -23,6 +23,19 @@ def refresh_ads(request):
     all_ads = Files.objects.all()
     for i in range(len(all_ads)):
         ad = all_ads[i]
+
+        img_count = 0
+        img_count += 1 if ad.img else 0
+        img_count += 1 if ad.img1 else 0
+        img_count += 1 if ad.img2 else 0
+        img_count += 1 if ad.img3 else 0
+        img_count += 1 if ad.img4 else 0
+        img_count += 1 if ad.img5 else 0
+        img_count += 1 if ad.img6 else 0
+        img_count += 1 if ad.img7 else 0
+        img_count += 1 if ad.img8 else 0
+        img_count += 1 if ad.img9 else 0
+
         if ad.last_date.day != x.day:
             ad.counter+=1
             ad.last_date = x
@@ -30,19 +43,19 @@ def refresh_ads(request):
                 pass
             elif ad.change_at == '1':
                 if ad.counter >= 1:
-                    ad.active_image = (ad.active_image+1)%10
+                    ad.active_image = (ad.active_image+1)%img_count
                     ad.counter = 0
             elif ad.change_at == '2':
                 if ad.counter >= 7:
-                    ad.active_image = (ad.active_image+1)%10
+                    ad.active_image = (ad.active_image+1)%img_count
                     ad.counter = 0
             elif ad.change_at == '3':
                 if ad.counter >= 15:
-                    ad.active_image = (ad.active_image+1)%10
+                    ad.active_image = (ad.active_image+1)%img_count
                     ad.counter = 0
             elif ad.change_at == '4':
                 if ad.counter >= 30:
-                    ad.active_image = (ad.active_image+1)%10
+                    ad.active_image = (ad.active_image+1)%img_count
                     ad.counter = 0
             ad.save()
     return redirect('/admin')
