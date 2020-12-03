@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import UserProfile,Shopkeeper
+from .models import UserProfile,Shopkeeper, Freelancer
 
 class ShopkeeperAdmin(admin.ModelAdmin):
     model = Shopkeeper
@@ -11,3 +11,4 @@ class ShopkeeperAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)
+admin.site.register(Freelancer)

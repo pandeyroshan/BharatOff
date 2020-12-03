@@ -195,3 +195,15 @@ class MarketingSources(models.Model):
     class Meta:
         verbose_name = 'Marketing Sources'
         verbose_name_plural = 'Marketing Sources'
+
+class Resources(models.Model):
+    img = models.ImageField('Image 1',upload_to='img/', blank=False)
+    code = models.CharField('Codeword', max_length=50, unique=True)
+    keyword = models.TextField()
+
+    def __str__(self):
+        return self.code
+    
+    class Meta:
+        verbose_name = 'Image Resources'
+        verbose_name_plural = 'Image Resources'

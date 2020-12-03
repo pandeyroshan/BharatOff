@@ -12,7 +12,8 @@ from management.models import (
     Category,
     WebCounter,
     MarketingSources,
-    PackageType
+    PackageType,
+    Resources
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -91,3 +92,4 @@ admin.site.register(WebCounter)
 admin.site.register(Messages,MessageAdmin)
 admin.site.register(MarketingSources,MarketingSourcesAdmin)
 admin.site.register(PackageType,PackageTypeAdmin)
+admin.site.register(Resources)
