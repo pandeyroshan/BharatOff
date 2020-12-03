@@ -35,6 +35,9 @@ urlpatterns = [
     path('category/<int:cid>/<int:mlid>/', management_views.category, name='category'),
     path('settings/<int:id>/', management_views.ad_setting, name='setting'),
 
+    path('access/abort/',management_views.abort_admin_access, name='abort'),
+    path('access/allow/',management_views.allow_admin_access, name='allow'),
+
     path('refresh/',management_views.refresh_ads, name='refresh')
 ]
 

