@@ -463,7 +463,6 @@ def category(request, cid, mlid):
 
 def ad_setting(request, id):
     if request.method == 'POST':
-        print(request.POST)
         file = Files.objects.get(id = int(request.POST.get('file')))
         if file.user == request.user:
             file.active_image = int(request.POST.get('img_code'))
