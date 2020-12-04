@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import UserRegisterForm, ShopkeeperRegisterForm, FreelancerRegisterForm
 from management.models import CityData
 from django.contrib.auth.models import User
-from users.models import UserProfile, Shopkeeper, Freelancer
+from users.models import UserProfile, Shopkeeper, Freelancer     
 from management.models import Address
 
 # Create your views here.
