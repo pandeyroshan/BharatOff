@@ -475,6 +475,7 @@ def ad_setting(request, id):
             'img8' : file.img8,
             'img9' : file.img9,
             'active' : str(file.active_image),
+            'active_option' : str(file.change_at),
         }
         return render(request,'management/settings_page.html',context)
     else:

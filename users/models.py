@@ -30,17 +30,6 @@ class Shopkeeper(models.Model):
         verbose_name = 'Shopkeepers Profile'
         verbose_name_plural = 'Shopkeepers Profile'
 
-class Freelancer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    mobile_number = models.CharField(max_length=15, blank=False)
-    pwd = models.CharField('Password', max_length=1000, blank=False)
-
-    def __str__(self):
-        return self.user.username
-    
-    class Meta:
-        verbose_name = 'Freelancer Profile'
-        verbose_name_plural = 'Freelancer Profile'
 
 class SalesPerson(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -54,3 +43,16 @@ class SalesPerson(models.Model):
     class Meta:
         verbose_name = 'Sales Person'
         verbose_name_plural = 'Sales Person'
+
+class Freelancer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    mobile_number = models.CharField(max_length=15, blank=False)
+    pwd = models.CharField('Password', max_length=1000, blank=False)
+    comes_under = models.OneToOneField(SalesPerson, on_delete = models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.user.username
+    
+    class Meta:
+        verbose_name = 'Freelancer Profile'
+        verbose_name_plural = 'Freelancer Profile'

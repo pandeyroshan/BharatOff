@@ -9,6 +9,10 @@ class ShopkeeperAdmin(admin.ModelAdmin):
     search_fields = ('user',)
     list_filter = ('city',)
 
+class FreelancerAdmin(admin.ModelAdmin):
+    model = Freelancer
+    
+
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)
 admin.site.register(Freelancer)
