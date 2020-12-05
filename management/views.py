@@ -1,12 +1,24 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .models import Files
-from .models import CityData, Address, StateData, Visitors, Files, Messages, WebCounter, MiniLocation, Category
+from .models import (
+    CityData, 
+    Address, 
+    StateData, 
+    Visitors, 
+    Files, 
+    Messages, 
+    WebCounter, 
+    MiniLocation, 
+    Category, 
+    Resources)
+
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
 import datetime
 from django.contrib.auth.models import User
+from wsgiref.util import FileWrapper
+import mimetypes
 # Create your views here
 
 def refresh_ads(request):
@@ -498,3 +510,16 @@ def allow_admin_access(request):
         admin.save()
     
     return redirect('/')
+
+def image_resource(request):
+    all_images = Resources.objects.all()
+    return render(request, 'management/image_resources.html', {'all_images': all_images})
+
+def download_image(request,id):
+    img = Resources.objects.get(id = int(id)).img
+    wrapper      = FileWrapper(open(img.file))  # img.file returns full path to the image
+    content_type = mimetypes.guess_type(filename)[0]  # Use mimetypes to get file type
+    response     = HttpResponse(wrapper,content_type=content_type)  
+    response['Content-Length']      = os.path.getsize(img.file)    
+    response['Content-Disposition'] = "attachment; filename=%s" %  img.name
+    return response
