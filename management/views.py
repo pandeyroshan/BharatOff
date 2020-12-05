@@ -512,8 +512,22 @@ def allow_admin_access(request):
     return redirect('/')
 
 def image_resource(request):
-    all_images = Resources.objects.all()
-    return render(request, 'management/image_resources.html', {'all_images': all_images})
+    if request.method == 'POST':
+        keyword = request.POST.get('keyword')
+        images = []
+        all_images = Resources.objects.all()
+
+        for image in all_images:
+            keywords = image.keyword.split(",")
+
+            if keyword in keywords:
+                images.append(image)
+        
+        return render(request, 'management/image_resources.html', {'all_images': images})
+    if request.user.is_staff:
+        all_images = Resources.objects.all()
+        return render(request, 'management/image_resources.html', {'all_images': all_images})
+    return redirect('/')
 
 def download_image(request,id):
     img = Resources.objects.get(id = int(id)).img
