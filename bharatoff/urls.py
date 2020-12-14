@@ -1,10 +1,11 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from users import views as users_views
 from management import views as management_views
 from . import settings
 from django.conf.urls.static import static
+from management import api_views
 
 
 urlpatterns = [
@@ -42,6 +43,8 @@ urlpatterns = [
     path('refresh/',management_views.refresh_ads, name='refresh'),
     path('image/', management_views.image_resource, name='resources'),
     path('download/<int:id>/',management_views.download_image, name='download'),
+
+    path('api/all-categories/',api_views.all_categories),
 ]
 
 if settings.DEBUG:
