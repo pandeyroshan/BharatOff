@@ -40,7 +40,7 @@ urlpatterns = [
     path('access/allow/',management_views.allow_admin_access, name='allow'),
 
     path('refresh/',management_views.refresh_ads, name='refresh'),
-    path('resource/', management_views.image_resource, name='resources'),
+    path('image/', management_views.image_resource, name='resources'),
     path('download/<int:id>/',management_views.download_image, name='download'),
 ]
 
