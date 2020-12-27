@@ -18,9 +18,3 @@ def execute_task():
         time.sleep(1)
 
 execute_task()
-
-
-
-
-
-
