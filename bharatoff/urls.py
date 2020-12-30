@@ -44,7 +44,15 @@ urlpatterns = [
     path('image/', management_views.image_resource, name='resources'),
     path('download/<int:id>/',management_views.download_image, name='download'),
 
+    # api work goes here 
+
     path('api/all-categories/',api_views.all_categories),
+    path('api/all-advertisement/', api_views.all_advertisement),
+    path('api/all-states/',api_views.get_all_states),
+    path('api/all-cities/',api_views.get_cities),
+    path('api/all-minilocations/',api_views.get_minilocation),
+    path('api/individual-ad/',api_views.get_ad_detail),
+    path('api/search/',api_views.get_search_result),
 ]
 
 if settings.DEBUG:
