@@ -6,6 +6,9 @@ from django.core import serializers
 import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+import random
+from users.models import UserProfile
+from django.contrib.auth.models import User
 
 from .models import (
     CityData, 
@@ -383,3 +386,40 @@ def rate_ad(request):
             {"new_rating" : ad.rating}
         ]
     })
+
+@api_view(['POST'])
+def send_otp(request):
+    user_id = request.POST.get("user_id")
+    otp = random.randint(1000,9999)
+
+    user = User.objects.get(id = int(user_id))
+
+    user_profile = UserProfile.objects.get(user = user)
+
+    user_profile.otp = otp
+    user_profile.save()
+
+    URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&response=json".format(user_profile.mobile_number,"Welcome {0}, your OTP for bharatoff account is {1}".format(user.username, user_profile.otp))
+
+    import requests
+
+    response = requests.get(URL)
+
+    return Response({
+        "message" : "success",
+        "text" : "OTP sent successfully"
+    })
+
+@api_view(['POST'])
+def varify_otp(request):
+    user_id = request.POST.get("user_id")
+    otp = request.POST.get("otp")
+
+    if int(otp) == UserProfile.objects.get(user = User.objects.get(id = int(user_id))).otp:
+        user_profile = UserProfile.objects.get(user = User.objects.get(id = int(user_id)))
+        user_profile.is_varified = True
+        user_profile.save()
+        return Response({
+            "message" : "success",
+            "text" : "Account varified."
+        })
