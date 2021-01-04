@@ -53,6 +53,7 @@ urlpatterns = [
     path('api/all-minilocations/',api_views.get_minilocation),
     path('api/individual-ad/',api_views.get_ad_detail),
     path('api/search/',api_views.get_search_result),
+    path('api/rating/',api_views.rate_ad),  # takes ad_id and rating 
 ]
 
 if settings.DEBUG:

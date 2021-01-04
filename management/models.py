@@ -117,6 +117,8 @@ class Files(models.Model):
     counter = models.IntegerField(default=0)
     active_image = models.IntegerField(default=0)
     last_date = models.DateField(default=django.utils.timezone.now)
+    rating = models.FloatField('Rating', default=5)
+    rated_by = models.ManyToManyField(User, related_name='rated_by')
 
     def __str__(self):
         return self.heading

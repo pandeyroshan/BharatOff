@@ -36,10 +36,16 @@ import mimetypes
 def all_categories(request):
     categories = Category.objects.all()
     context = {
-
+        "message" : "success",
+        "data" : []
     }
     for data in categories:
-        context[data.id] = data.name
+        context["data"].append(
+            {
+                "id" : data.id,
+                "name" : data.name
+            }
+        )
     return Response(context)
 
 
@@ -128,10 +134,11 @@ def all_advertisement(request):
         "nearby_locations" : nearby_location_json
     }
 
-    all_ads_json = {}
+    all_ads_json = []
 
     for data in all_ads:
         current_ad = {}
+        current_ad["id"] = data.id
         current_ad["company_name"] = data.company_name
         current_ad["heading"] = data.heading
         current_ad["phone_number"] = data.phone_number
@@ -142,42 +149,68 @@ def all_advertisement(request):
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
 
-        all_ads_json[data.id] = current_ad
+        all_ads_json.append(current_ad)
     
     print(type(all_ads_json))
-    
+
     context = {
-        "all_ads" : all_ads_json,
-        "location_information" : location_information,
+        "message" : "success",
+        "data" : all_ads_json
     }
+    print(all_ads_json)
     return Response(context)
 
 @api_view(['GET'])
 def get_all_states(request):
-    context = {}
+    context = {
+        "message" : "success",
+        "data" : []
+    }
     for data in StateData.objects.all():
-        context[data.id] = data.state_name
+        context["data"].append({
+            "id" : data.id,
+            "name" : data.state_name
+        })
     return Response(context)
 
 @api_view(['POST'])
 def get_cities(request):
-    context = {}
+    context = {
+        "message" : "success",
+        "data" : []
+    }
     cities = StateData.objects.get(id = int(request.POST.get('id'))).cities.all()
     for data in cities:
-        context[data.id] = data.city_name
+        context["data"].append(
+            {
+                "id" : data.id,
+                "name" : data.city_name
+            }
+        )
     return Response(context)
 
 @api_view(['POST'])
 def get_minilocation(request):
-    context = {}
+    context = {
+        "message" : "success",
+        "data" : []
+    }
     minilocations = MiniLocation.objects.all().filter(main_city = CityData.objects.get(id = int(request.POST.get('id'))))
     for data in minilocations:
-        context[data.id] = data.name
+        context["data"].append(
+            {
+                "id" : data.id,
+                "name" : data.name
+            }
+        )
     return Response(context)
 
 @api_view(['POST'])
 def get_ad_detail(request):
-    context = {}
+    context = {
+        "message" : "success",
+        "data" : []
+    }
     ad = Files.objects.get(id=int(request.POST.get("id")))
     if ad.active_image == 0:
         ad.real_image = ad.img
@@ -200,15 +233,18 @@ def get_ad_detail(request):
     elif ad.active_image == 9:
         ad.real_image = ad.img9
     
-    context["company_name"] = ad.company_name
-    context["heading"] = ad.heading
-    context["phone_number"] = ad.phone_number
-    context["whatsapp_link"] = ad.whatsapp_link
-    context["google_location"] = ad.location
-    context["facebook_link"] = ad.facebook_link
-    context["instagram_link"] = ad.instagram_link
-    context["youtube_link"] = ad.youtube_link
-    context["image_link"] = str(ad.real_image)
+    context["data"].append({})
+
+    context["data"][0]["id"] = ad.id
+    context["data"][0]["company_name"] = ad.company_name
+    context["data"][0]["heading"] = ad.heading
+    context["data"][0]["phone_number"] = ad.phone_number
+    context["data"][0]["whatsapp_link"] = ad.whatsapp_link
+    context["data"][0]["google_location"] = ad.location
+    context["data"][0]["facebook_link"] = ad.facebook_link
+    context["data"][0]["instagram_link"] = ad.instagram_link
+    context["data"][0]["youtube_link"] = ad.youtube_link
+    context["data"][0]["image_link"] = str(ad.real_image)
 
     return Response(context)
 
@@ -292,8 +328,14 @@ def get_search_result(request):
 
     all_ads_json = {}
 
+    context = {
+        "message" : "success",
+        "data" : []
+    }
+
     for data in searched_offers:
         current_ad = {}
+        current_ad["id"] = data.id
         current_ad["company_name"] = data.company_name
         current_ad["heading"] = data.heading
         current_ad["phone_number"] = data.phone_number
@@ -303,6 +345,41 @@ def get_search_result(request):
         current_ad["instagram_link"] = data.instagram_link
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
+        
+        context["data"].append(current_ad)
+    return Response(context)
 
-        all_ads_json[data.id] = current_ad
-    return Response(all_ads_json)
+@api_view(['POST'])
+def rate_ad(request):
+    rating = request.POST.get('rating')
+    ad_id = request.POST.get('ad_id')
+    user_id = request.POST.get('user_id')
+
+    if not rating:
+        return Response({"message":"Rating not given"})
+    if not ad_id:
+        return Response({"message":"Ad id not given"})
+    if not user_id:
+        return Response({"message":"User id not given"})
+
+    print(user_id)
+
+    user = User.objects.get(id = int(user_id))
+
+    ad = Files.objects.get(id = int(ad_id))
+    print(ad.rated_by.all())
+    if user not in ad.rated_by.all():
+        ad.rating = (ad.rating+int(rating))/2.0
+        ad.rated_by.add(user)
+    else:
+        return Response({
+            "message" : "Already rated."
+        })
+    ad.save()
+
+    return Response({
+        "message" : "Success",
+        "data" : [
+            {"new_rating" : ad.rating}
+        ]
+    })
