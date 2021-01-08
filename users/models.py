@@ -64,3 +64,17 @@ class Freelancer(models.Model):
     class Meta:
         verbose_name = 'Freelancer Profile'
         verbose_name_plural = 'Freelancer Profile'
+
+class CustomerLogin(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    password = models.CharField(max_length=15, blank=False)
+    mobile = models.CharField(max_length=15, default='XXXXXXXXXX')
+    otp = models.IntegerField(default=0)
+    is_varified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.user)
+    
+    class Meta:
+        verbose_name = 'Customer Login Info'
+        verbose_name_plural = 'Customer Login Info'

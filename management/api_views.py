@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 import random
 from users.models import UserProfile
+from management.models import Category
 from django.contrib.auth.models import User
 
 from .models import (
@@ -23,6 +24,8 @@ from .models import (
     Resources,
     )
 
+from users.models import CustomerLogin
+import string
 
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
@@ -422,4 +425,149 @@ def varify_otp(request):
         return Response({
             "message" : "success",
             "text" : "Account varified."
+        })
+
+@api_view(['POST'])
+def category_wise_ad(request):
+    cat_id = request.POST.get('cat_id')
+    lat = request.POST.get('lat')
+    lon = request.POST.get('lon')
+    
+    min_distance = 100000005
+
+    all_mini_locations = MiniLocation.objects.all()
+
+    R = 6373.0
+
+    for mini_location in all_mini_locations:
+        lat1 = radians(float(lat))
+        lon1 = radians(float(lon))
+        lat2 = radians(mini_location.lat)
+        lon2 = radians(mini_location.lon)
+
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        distance = R * c
+
+        if distance < min_distance:
+            min_distance = distance
+            nearest_location = mini_location
+    
+    category = Category.objects.get(id = int(cat_id))
+    all_offers = Files.objects.all().filter(city = nearest_location.main_city, category = category)
+
+    for i in range(len(all_offers)):
+        if all_offers[i].active_image == 0:
+            all_offers[i].real_image = all_offers[i].img
+        elif all_offers[i].active_image == 1:
+            all_offers[i].real_image = all_offers[i].img1
+        elif all_offers[i].active_image == 2:
+            all_offers[i].real_image = all_offers[i].img2
+        elif all_offers[i].active_image == 3:
+            all_offers[i].real_image = all_offers[i].img3
+        elif all_offers[i].active_image == 4:
+            all_offers[i].real_image = all_offers[i].img4
+        elif all_offers[i].active_image == 5:
+            all_offers[i].real_image = all_offers[i].img5
+        elif all_offers[i].active_image == 6:
+            all_offers[i].real_image = all_offers[i].img6
+        elif all_offers[i].active_image == 7:
+            all_offers[i].real_image = all_offers[i].img7
+        elif all_offers[i].active_image == 8:
+            all_offers[i].real_image = all_offers[i].img8
+        elif all_offers[i].active_image == 9:
+            all_offers[i].real_image = all_offers[i].img9
+        
+    context = {
+        "message" : "success",
+        "data" : []
+    }
+
+    for data in searched_offers:
+        current_ad = {}
+        current_ad["id"] = data.id
+        current_ad["company_name"] = data.company_name
+        current_ad["heading"] = data.heading
+        current_ad["phone_number"] = data.phone_number
+        current_ad["whatsapp_link"] = data.whatsapp_link
+        current_ad["google_location"] = data.location
+        current_ad["facebook_link"] = data.facebook_link
+        current_ad["instagram_link"] = data.instagram_link
+        current_ad["youtube_link"] = data.youtube_link
+        current_ad["image_link"] = str(data.real_image)
+        
+        context["data"].append(current_ad)
+    return Response(context)
+
+@api_view(['POST'])
+def create_user_with_phone_number(request):
+    """
+    This view will get a phone number, and a user will be generated as per CustomerLogin model,
+    and the OTP will be send to the phone number mentioned. The API will return the message that OTP has been sent.
+    """
+    phone_number = request.POST.get("phone_number")
+
+    if not phone_number:
+        return Response({"message" : "Phone number not provided"})
+    
+    if len(phone_number) != 10:
+        return Response({"message" : "Please recheck the phone number"})
+    
+    username = phone_number
+    password = "".join(random.choices(string.ascii_uppercase, k=8))
+    otp = random.randint(1000,9999)
+
+    if not User.objects.all().filter(username=phone_number): # if user does not exist
+        user = User.objects.create_user(username=phone_number, password=password)
+        user.save()
+
+        customer_profile = CustomerLogin.objects.create(user=user, otp=otp, is_varified=False, mobile=phone_number, password=password)
+        customer_profile.save()
+    else: # if user with that phone number exist
+        user = User.objects.get(username=phone_number)
+        customer_profile = CustomerLogin.objects.get(user=user)
+        customer_profile.otp = otp
+        customer_profile.save()
+    
+    URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&response=json".format(customer_profile.mobile,"Welcome {0}, your OTP for bharatoff account is {1}".format(customer_profile.mobile, customer_profile.otp))
+    
+    import requests
+    requests.get(URL)
+
+    return Response({"message":"SUCCESS"})
+
+@api_view(['POST'])
+def verify_otp(request):
+    """
+    INPUT: phone_number and otp
+    OUTPUT: user_id
+
+    This API will verify otp with the phone number
+    """
+    phone_number = request.POST.get('phone_number')
+    otp = request.POST.get('otp')
+
+    if not phone_number:
+        return Response({"message" : "Phone number not provided"})
+    if not otp:
+        return Response({"message" : "OTP not provided"})
+    
+    if len(phone_number) != 10:
+        return Response({"message" : "Please recheck the phone number"})
+
+    customer_profile = CustomerLogin.objects.get(user = User.objects.get(username=phone_number))
+    
+    if int(customer_profile.otp) == int(otp):
+        customer_profile.is_varified = True
+        customer_profile.save()
+        return Response({
+            "message" : "SUCCESS",
+            "user_id" : User.objects.get(username=phone_number).id
+        })
+    else:
+        return Response({
+            "message" : "OTP mismatched"
         })

@@ -54,8 +54,8 @@ urlpatterns = [
     path('api/individual-ad/',api_views.get_ad_detail),
     path('api/search/',api_views.get_search_result),
     path('api/rating/',api_views.rate_ad),  # takes ad_id and rating 
-    path('api/send-otp/',api_views.send_otp), # pass user_id and it will send the OTP to that user
-    path('api/varify-otp/',api_views.varify_otp), # pass user_id and otp (that user entered)
+    path('api/register/', api_views.create_user_with_phone_number), # creates user and sends OTP with given phone number
+    path('api/verify-otp/',api_views.verify_otp), # pass phone number and otp (that user entered)
 ]
 
 if settings.DEBUG:
