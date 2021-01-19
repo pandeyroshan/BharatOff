@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import (
     CityData, 
     Address, 
@@ -10,7 +10,10 @@ from .models import (
     WebCounter, 
     MiniLocation, 
     Category, 
-    Resources)
+    Resources,
+    Coupon,
+    CouponHistory,
+)
 
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
@@ -489,6 +492,10 @@ def ad_setting(request, id):
             'active' : str(file.active_image),
             'active_option' : str(file.change_at),
         }
+        try:
+            context['coupon'] = Coupon.objects.get(offer = Files.objects.get( id = int(id)))
+        except:
+            pass
         return render(request,'management/settings_page.html',context)
     else:
         return redirect('/dashbaord/')
@@ -537,3 +544,18 @@ def download_image(request,id):
     response['Content-Length']      = os.path.getsize(img.file)    
     response['Content-Disposition'] = "attachment; filename=%s" %  img.name
     return response
+
+def save_coupon(request):
+    print(request.POST)
+    coupon, _ = Coupon.objects.get_or_create(user = request.user, offer = Files.objects.get( id = int(request.POST.get('offer_id'))))
+    coupon.code = request.POST.get('code')
+    coupon.start_date = request.POST.get('start-date')
+    coupon.total_coupon = request.POST.get('total-coupon')
+
+    if request.POST.get('active'):
+        coupon.active = True
+    else:
+        coupon.active = False
+
+    coupon.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

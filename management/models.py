@@ -209,3 +209,39 @@ class Resources(models.Model):
     class Meta:
         verbose_name = 'Image Resources'
         verbose_name_plural = 'Image Resources'
+    
+
+class Coupon(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # Shopkeeper
+    code = models.CharField(max_length=10, blank=False)
+    offer = models.ForeignKey(Files, on_delete=models.CASCADE)
+    start_date = models.DateTimeField(auto_now_add=True)
+    total_coupon = models.IntegerField(default=5)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+    
+    class Meta:
+        verbose_name = 'Coupons'
+        verbose_name_plural = 'Coupons'
+
+class CouponHistory(models.Model):
+    coupon = models.ForeignKey(Coupon, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    status = models.BooleanField()
+
+    def __str__(self):
+        return self.status
+    
+    def varify(self, coupon_id, user_id):
+        if CouponHistory.objects.all().filter(coupon = Coupon.objects.get(id = int(coupon_id)), user = User.objects.get(id = int(user_id))):
+            context = {}
+            context['coupon'] = Coupon.objects.get(id = int(coupon_id))
+            coupon_history = CouponHistory.objects.all().filter(coupon = Coupon.objects.get(id = int(coupon_id)), user = User.objects.get(id = int(user_id)))[0]
+            context['status'] = coupon_history.status
+            return context
+    
+    class Meta:
+        verbose_name = 'Coupon History'
+        verbose_name_plural = 'Coupon History'

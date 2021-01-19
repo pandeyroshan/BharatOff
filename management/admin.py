@@ -13,7 +13,9 @@ from management.models import (
     WebCounter,
     MarketingSources,
     PackageType,
-    Resources
+    Resources,
+    Coupon,
+    CouponHistory,
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -78,18 +80,47 @@ class PackageTypeAdmin(admin.ModelAdmin):
     list_display = ('name','price','total_phamplet','total_videos')
     search_fields = ('name',)
 
+class CouponAdmin(admin.ModelAdmin):
+    model = Coupon
+    list_display = ('user','code','offer','start_date','total_coupon','active')
+    search_fields = ('code',)
+
+    def has_add_permission(self, request):
+        return False
+    
+    def has_delete_permission(self, request, obj = None):
+        return False
+    
+    def has_change_permission(self, request, obj = None):
+        return False
+
+class CouponHistoryAdmin(admin.ModelAdmin):
+    model = CouponHistory
+    list_display = ('coupon','user','status')
+
+    def has_add_permission(self, request):
+        return False
+    
+    def has_delete_permission(self, request, obj = None):
+        return False
+    
+    def has_change_permission(self, request, obj = None):
+        return False
+
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)
 
 # admin.site.unregister(User)
 admin.site.unregister(Group)
 
-admin.site.register(StateData,StateAdmin)
-admin.site.register(Address,AddressAdmin)
-admin.site.register(Visitors,VisitorAdmin)
+admin.site.register(StateData, StateAdmin)
+admin.site.register(Address, AddressAdmin)
+admin.site.register(Visitors, VisitorAdmin)
 admin.site.register(Category)
 admin.site.register(WebCounter)
-admin.site.register(Messages,MessageAdmin)
-admin.site.register(MarketingSources,MarketingSourcesAdmin)
-admin.site.register(PackageType,PackageTypeAdmin)
+admin.site.register(Messages, MessageAdmin)
+admin.site.register(MarketingSources, MarketingSourcesAdmin)
+admin.site.register(PackageType, PackageTypeAdmin)
 admin.site.register(Resources)
+admin.site.register(Coupon, CouponAdmin)
+admin.site.register(CouponHistory, CouponHistoryAdmin)

@@ -44,6 +44,8 @@ urlpatterns = [
     path('image/', management_views.image_resource, name='resources'),
     path('download/<int:id>/',management_views.download_image, name='download'),
 
+    path('save-coupon/', management_views.save_coupon, name='save-coupon'),
+
     # api work goes here 
 
     path('api/all-categories/',api_views.all_categories),

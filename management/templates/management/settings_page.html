@@ -82,6 +82,50 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="mt-2 mb-3">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#couponModal">Coupon Settings</button>
+
+                            <div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="couponModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title text-center" id="exampleModalLongTitle">Coupon Setting</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="/save-coupon/">
+                                            {%csrf_token%}
+                                            <input name="offer_id" type="hidden" value="{{ad.id}}">
+                                            <div class="form-group">
+                                              <label for="exampleInputEmail1">Code</label>
+                                              <input required name='code' value="{{coupon.code}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Coupon Code, Ex - FLAT10">
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="exampleInputPassword1">Start Date</label>
+                                              <input required name='start-date' value="{{coupon.start_date}}" type="date" class="form-control" id="exampleInputPassword1" aria-describedby="emailHelp" placeholder="Start Date">
+                                              <small id="emailHelp" class="form-text text-muted">Earlier - {{coupon.start_date}}</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Total Coupons</label>
+                                                <input required name='total-coupon' value="{{coupon.total_coupon}}" type="number" class="form-control" id="exampleInputPassword1" placeholder="Total Coupons">
+                                            </div>
+                                            <div class="form-check">
+                                              <input name='active' type="checkbox" class="form-check-input" id="exampleCheck1">
+                                              <label class="form-check-label" for="exampleCheck1">Active</label>
+                                            </div>
+                                        
+                                    </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
