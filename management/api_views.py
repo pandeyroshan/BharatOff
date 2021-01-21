@@ -154,6 +154,7 @@ def all_advertisement(request):
         current_ad["instagram_link"] = data.instagram_link
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
+        current_ad["rating"] = data.rating
 
         all_ads_json.append(current_ad)
     
