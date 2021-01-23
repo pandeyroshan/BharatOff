@@ -10,10 +10,11 @@ def execute_task():
         os.system("cd /home/roshan/WORK/bharatoff/")
         os.system("git add .")
         commit_str = 'git commit --date="{0} day ago" -m "{1}" '.format(str(day), message[random.randint(0,3)])
-        # print(commit_str)
+        print(commit_str)
         os.system(commit_str)
         os.system("git push")
 
         day+=1
+        time.sleep(1)
 
 execute_task()
