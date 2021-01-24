@@ -96,7 +96,7 @@ class CouponAdmin(admin.ModelAdmin):
 
 class CouponHistoryAdmin(admin.ModelAdmin):
     model = CouponHistory
-    list_display = ('coupon','user','status')
+    list_display = ('ad','user','status')
 
     def has_add_permission(self, request):
         return False

@@ -227,7 +227,7 @@ class Coupon(models.Model):
         verbose_name_plural = 'Coupons'
 
 class CouponHistory(models.Model):
-    coupon = models.ForeignKey(Coupon, on_delete = models.CASCADE)
+    ad = models.ForeignKey(Files, on_delete = models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     status = models.BooleanField()
 

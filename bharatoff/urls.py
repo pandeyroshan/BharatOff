@@ -58,6 +58,7 @@ urlpatterns = [
     path('api/rating/',api_views.rate_ad),  # takes ad_id and rating 
     path('api/register/', api_views.create_user_with_phone_number), # creates user and sends OTP with given phone number
     path('api/verify-otp/',api_views.verify_otp), # pass phone number and otp (that user entered)
+    path('api/scratch/',api_views.scratch_coupon),
 ]
 
 if settings.DEBUG:

@@ -22,6 +22,8 @@ from .models import (
     MiniLocation, 
     Category, 
     Resources,
+    Coupon,
+    CouponHistory,
     )
 
 from users.models import CustomerLogin
@@ -574,3 +576,63 @@ def verify_otp(request):
         return Response({
             "message" : "OTP mismatched"
         })
+
+@api_view(['POST'])
+def scratch_coupon(request):
+    context = {}
+    user_id = request.POST.get('user_id')
+    ad_id = request.POST.get('ad_id')
+    history = CouponHistory.objects.all().filter(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id=int(ad_id)))
+    if history:
+        print('History is Present')
+        if history[0].status:
+            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
+            return Response({
+                "message" : "SUCCESS",
+                "data" : {
+                    "note" : "Already Scratched",
+                    "status" : True,
+                    "coupon_info" : {
+                        "code" : coupon.code,
+                        "start_date" : coupon.start_date,
+                        "active" : coupon.active
+                    }
+                }
+            })
+        else:
+            return Response({
+                "message" : "SUCCESS",
+                "data" : {
+                    "note" : "Already Scratched",
+                    "status" : False
+                }
+            })
+    else:
+        if random.choice([True, False]):
+            print('Award him')
+            history = CouponHistory.objects.create(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True)
+            history.save()
+            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
+            return Response({
+                "message" : "SUCCESS",
+                "data" : {
+                    "status" : True,
+                    "coupon_info" : {
+                        "code" : coupon.code,
+                        "start_date" : coupon.start_date,
+                        "active" : coupon.active
+                    }
+                }
+            })
+        else:
+            print('better luck next time')
+            history = CouponHistory.objects.create(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=False)
+            history.save()
+            return Response({
+                "message" : "SUCCESS",
+                "data" : {
+                    "status" : False,
+                    "note" : "Better luck next time"
+                }
+            })
+    return Response(context)

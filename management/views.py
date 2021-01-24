@@ -546,7 +546,6 @@ def download_image(request,id):
     return response
 
 def save_coupon(request):
-    print(request.POST)
     coupon, _ = Coupon.objects.get_or_create(user = request.user, offer = Files.objects.get( id = int(request.POST.get('offer_id'))))
     coupon.code = request.POST.get('code')
     coupon.start_date = request.POST.get('start-date')
@@ -558,4 +557,9 @@ def save_coupon(request):
         coupon.active = False
 
     coupon.save()
+
+    all_history = CouponHistory.objects.all().filter(ad = coupon.offer)
+
+    for history in all_history:
+        history.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
