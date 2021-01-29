@@ -49,6 +49,7 @@ urlpatterns = [
     # api work goes here 
 
     path('api/all-categories/',api_views.all_categories),
+    path('api/category/',api_views.category_wise_ad),
     path('api/all-advertisement/', api_views.all_advertisement),
     path('api/all-states/',api_views.get_all_states),
     path('api/all-cities/',api_views.get_cities),
