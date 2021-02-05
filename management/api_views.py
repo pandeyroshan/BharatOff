@@ -51,7 +51,8 @@ def all_categories(request):
         context["data"].append(
             {
                 "id" : data.id,
-                "name" : data.name
+                "name" : data.name,
+                "image" : str(data.img)
             }
         )
     return Response(context)
