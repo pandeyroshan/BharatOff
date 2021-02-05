@@ -156,7 +156,7 @@ def all_advertisement(request):
         current_ad["instagram_link"] = data.instagram_link
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
-        current_ad["rating"] = data.rating
+        current_ad["rating"] = str(data.rating)
 
         all_ads_json.append(current_ad)
     
@@ -209,7 +209,9 @@ def get_minilocation(request):
         context["data"].append(
             {
                 "id" : data.id,
-                "name" : data.name
+                "name" : data.name,
+                "lat" : data.lat,
+                "lon" : data.lon,
             }
         )
     return Response(context)
@@ -254,6 +256,15 @@ def get_ad_detail(request):
     context["data"][0]["instagram_link"] = ad.instagram_link
     context["data"][0]["youtube_link"] = ad.youtube_link
     context["data"][0]["image_link"] = str(ad.real_image)
+    context["data"][0]["rating"] = str(ad.rating)
+    
+
+    context["coupon"] = {}
+
+    ad_coupon = Coupon.objects.get(offer = ad)
+    print(ad_coupon)
+
+    context["coupon"]["code"] = ad_coupon.code
 
     return Response(context)
 
@@ -608,7 +619,8 @@ def scratch_coupon(request):
             })
     else:
         if random.choice([True, False]):
-            history = CouponHistory.objects.create(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True)
+            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
+            history = CouponHistory.objects.create(code = coupon.code, user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True)
             history.save()
             coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
             return Response({
@@ -623,7 +635,7 @@ def scratch_coupon(request):
                 }
             })
         else:
-            history = CouponHistory.objects.create(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=False)
+            history = CouponHistory.objects.create(code = "NULL", user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=False)
             history.save()
             return Response({
                 "message" : "SUCCESS",
@@ -632,4 +644,26 @@ def scratch_coupon(request):
                     "note" : "Better luck next time"
                 }
             })
+    return Response(context)
+
+@api_view(["POST"])
+def get_coupon_history(request):
+    user_id = int(request.POST.get('user_id'))
+    history = CouponHistory.objects.all().filter(user = User.objects.get(id=user_id))
+
+    context = {
+        "message" : "SUCCESS",
+        "data" : []
+    }
+
+    for data in history:
+        if data.status:
+            context["data"].append(
+                {
+                    "code" : data.code,
+                    "ad_id" : int(data.ad.id),
+                    "timestamp" : data.timestamp
+                }
+            )
+    
     return Response(context)

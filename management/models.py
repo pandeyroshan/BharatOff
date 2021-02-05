@@ -49,6 +49,7 @@ class CityData(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=1000, blank=False)
+    img = models.ImageField('Image',upload_to='img/', blank=True)
 
     def __str__(self):
         return self.name
@@ -220,19 +221,21 @@ class Coupon(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.code
+        return str(self.code)
     
     class Meta:
         verbose_name = 'Coupons'
         verbose_name_plural = 'Coupons'
 
 class CouponHistory(models.Model):
+    code = models.CharField(max_length=10, blank=True)
     ad = models.ForeignKey(Files, on_delete = models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     status = models.BooleanField()
+    timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.status
+        return str(self.status)
     
     def varify(self, coupon_id, user_id):
         if CouponHistory.objects.all().filter(coupon = Coupon.objects.get(id = int(coupon_id)), user = User.objects.get(id = int(user_id))):
