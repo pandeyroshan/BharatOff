@@ -61,6 +61,7 @@ urlpatterns = [
     path('api/verify-otp/',api_views.verify_otp), # pass phone number and otp (that user entered)
     path('api/scratch/',api_views.scratch_coupon),
     path('api/coupon-history/',api_views.get_coupon_history),
+    path('api/update-profile/', api_views.update_profile)
 ]
 
 if settings.DEBUG:

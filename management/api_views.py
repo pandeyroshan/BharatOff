@@ -668,3 +668,29 @@ def get_coupon_history(request):
             )
     
     return Response(context)
+
+@api_view(["POST"])
+def update_profile(request):
+    user_id = int(request.POST.get('user_id'))
+    new_email = request.POST.get('new_email')
+    
+    if not user_id:
+        return Response({
+            "message" : "FAILURE",
+            "data" : "user_id not provided"
+        })
+    
+    if not new_email:
+        return Response({
+            "message" : "FAILURE",
+            "data" : "new_email not provided"
+        })
+
+    user_object = User.objects.get(id = user_id)
+    user_object.email = request.POST.get('new_email')
+    user_object.save()
+
+    return Response({
+        "message" : "SUCCESS",
+        "data" : "Email changed successfully."
+    })
