@@ -501,7 +501,7 @@ def category_wise_ad(request):
         "data" : []
     }
 
-    for data in searched_offers:
+    for data in all_offers:
         current_ad = {}
         current_ad["id"] = data.id
         current_ad["company_name"] = data.company_name
