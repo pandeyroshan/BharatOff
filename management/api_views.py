@@ -366,6 +366,7 @@ def get_search_result(request):
         current_ad["instagram_link"] = data.instagram_link
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
+        current_ad["rating"] = str(data.rating)
         
         context["data"].append(current_ad)
     return Response(context)
@@ -513,6 +514,7 @@ def category_wise_ad(request):
         current_ad["instagram_link"] = data.instagram_link
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
+        current_ad["rating"] = str(data.rating)
         
         context["data"].append(current_ad)
     return Response(context)
@@ -664,7 +666,9 @@ def get_coupon_history(request):
                 {
                     "code" : data.code,
                     "ad_id" : int(data.ad.id),
-                    "timestamp" : data.timestamp
+                    "timestamp" : data.timestamp,
+                    "shop" : data.ad.company_name,
+                    "location" : data.ad.location,
                 }
             )
     
