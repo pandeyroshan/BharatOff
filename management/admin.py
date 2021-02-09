@@ -102,10 +102,10 @@ class CouponHistoryAdmin(admin.ModelAdmin):
         return False
     
     def has_delete_permission(self, request, obj = None):
-        return True
+        return False
     
     def has_change_permission(self, request, obj = None):
-        return True
+        return False
 
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)

@@ -223,7 +223,17 @@ def get_ad_detail(request):
         "message" : "success",
         "data" : []
     }
-    ad = Files.objects.get(id=int(request.POST.get("id")))
+    ad = Files.objects.get(id=int(request.POST.get("ad_id")))
+    user = User.objects.get(id = int(request.POST.get("user_id")))
+
+    history = CouponHistory.objects.all().filter(user = user, ad = ad)
+
+    if history:
+        context["scratch_status"] = True
+    else:
+        context["scratch_status"] = False
+    
+
     if ad.active_image == 0:
         ad.real_image = ad.img
     elif ad.active_image == 1:
