@@ -580,7 +580,8 @@ def verify_otp(request):
         customer_profile.save()
         return Response({
             "message" : "SUCCESS",
-            "user_id" : User.objects.get(username=phone_number).id
+            "user_id" : User.objects.get(username=phone_number).id,
+            "email" : User.objects.get(username=phone_number).email
         })
     else:
         user = User.objects.get(username=phone_number)
