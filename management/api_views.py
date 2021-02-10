@@ -275,7 +275,8 @@ def get_ad_detail(request):
     ad_coupon = Coupon.objects.get(offer = ad)
     print(ad_coupon)
 
-    context["coupon"]["code"] = ad_coupon.code
+    if ad_coupon:
+        context["coupon"]["code"] = ad_coupon.code
 
     return Response(context)
 
