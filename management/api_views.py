@@ -598,7 +598,7 @@ def verify_otp(request):
         })
     else:
         user = User.objects.get(username=phone_number)
-        user.delete()
+        # user.delete()
         return Response({
             "message" : "OTP mismatched"
         })
