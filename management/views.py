@@ -549,6 +549,7 @@ def save_coupon(request):
     coupon, _ = Coupon.objects.get_or_create(user = request.user, offer = Files.objects.get( id = int(request.POST.get('offer_id'))))
     coupon.code = request.POST.get('code')
     coupon.start_date = request.POST.get('start-date')
+    coupon.end_date = request.POST.get('end-date')
     coupon.total_coupon = request.POST.get('total-coupon')
 
     if request.POST.get('active'):

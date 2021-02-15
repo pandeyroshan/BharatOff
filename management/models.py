@@ -217,6 +217,7 @@ class Coupon(models.Model):
     code = models.CharField(max_length=10, blank=False)
     offer = models.ForeignKey(Files, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(auto_now_add=True)
     total_coupon = models.IntegerField(default=5)
     active = models.BooleanField(default=True)
 
