@@ -680,7 +680,7 @@ def get_coupon_history(request):
                     "timestamp" : data.timestamp,
                     "shop" : data.ad.company_name,
                     "location" : data.ad.location,
-                    "expiry_date" : data.end_date,
+                    "expiry_date" : data.ad.end_date,
                 }
             )
     
