@@ -66,6 +66,48 @@ def refresh_ads(request):
             ad.save()
     return redirect('/admin')
 
+def schedule_refresh():
+    x = datetime.datetime.now()
+    all_ads = Files.objects.all()
+    for i in range(len(all_ads)):
+        ad = all_ads[i]
+
+        img_count = 0
+        img_count += 1 if ad.img else 0
+        img_count += 1 if ad.img1 else 0
+        img_count += 1 if ad.img2 else 0
+        img_count += 1 if ad.img3 else 0
+        img_count += 1 if ad.img4 else 0
+        img_count += 1 if ad.img5 else 0
+        img_count += 1 if ad.img6 else 0
+        img_count += 1 if ad.img7 else 0
+        img_count += 1 if ad.img8 else 0
+        img_count += 1 if ad.img9 else 0
+
+        if ad.last_date.day != x.day:
+            ad.counter+=1
+            ad.last_date = x
+            if ad.change_at == '0':
+                pass
+            elif ad.change_at == '1':
+                if ad.counter >= 1:
+                    ad.active_image = (ad.active_image+1)%img_count
+                    ad.counter = 0
+            elif ad.change_at == '2':
+                if ad.counter >= 7:
+                    ad.active_image = (ad.active_image+1)%img_count
+                    ad.counter = 0
+            elif ad.change_at == '3':
+                if ad.counter >= 15:
+                    ad.active_image = (ad.active_image+1)%img_count
+                    ad.counter = 0
+            elif ad.change_at == '4':
+                if ad.counter >= 30:
+                    ad.active_image = (ad.active_image+1)%img_count
+                    ad.counter = 0
+            ad.save()
+    print('Refreshed Every Fucking thing .. ')
+
 def process_active_image(ad):
 
     if ad.active_image == '0':
@@ -93,6 +135,7 @@ def process_active_image(ad):
 
 @csrf_exempt
 def home(request):
+    schedule_refresh()
     address = Address.objects.all()[0]
     states = StateData.objects.all()
 
@@ -107,6 +150,7 @@ def home(request):
 
 @csrf_exempt
 def location_based(request):
+    schedule_refresh()
     if request.method == 'POST':
         lat = request.POST.get('lat')
         lon = request.POST.get('lon')
@@ -198,6 +242,7 @@ def location_based(request):
     return render(request,'management/location.html',context)
 
 def city_ad(request, id):
+    schedule_refresh()
     states = StateData.objects.all()
 
     for i in range(len(states)):
@@ -229,6 +274,7 @@ def city_ad(request, id):
 
 
 def minilocations(request,id):
+    schedule_refresh()
     states = StateData.objects.all()
 
     for i in range(len(states)):
@@ -256,6 +302,7 @@ def minilocations(request,id):
     return render(request, 'management/location.html',context)
 
 def single(reqeust, id):
+    schedule_refresh()
     ad = Files.objects.get(id=id)
     states = StateData.objects.all()
 
@@ -293,6 +340,7 @@ def single(reqeust, id):
     return render(reqeust,'management/single.html', context)
 
 def contact(request):
+    schedule_refresh()
     msg_obj = Messages.objects.create(
         name=request.POST['name'],
         email=request.POST['email'],
@@ -303,6 +351,7 @@ def contact(request):
     return redirect('/')
 
 def dashboard(request):
+    schedule_refresh()
     if request.user.is_staff:
         my_ads = Files.objects.all().filter(user=request.user)
         my_city = []
@@ -546,6 +595,7 @@ def download_image(request,id):
     return response
 
 def save_coupon(request):
+    schedule_refresh()
     coupon, _ = Coupon.objects.get_or_create(user = request.user, offer = Files.objects.get( id = int(request.POST.get('offer_id'))))
     coupon.code = request.POST.get('code')
     coupon.start_date = request.POST.get('start-date')
@@ -558,9 +608,5 @@ def save_coupon(request):
         coupon.active = False
 
     coupon.save()
-
-    all_history = CouponHistory.objects.all().filter(ad = coupon.offer)
-
-    for history in all_history:
-        history.delete()
+    
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

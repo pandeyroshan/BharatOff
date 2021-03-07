@@ -119,7 +119,7 @@ class Files(models.Model):
     active_image = models.IntegerField(default=0)
     last_date = models.DateField(default=django.utils.timezone.now)
     rating = models.FloatField('Rating', default=5)
-    rated_by = models.ManyToManyField(User, related_name='rated_by')
+    rated_by = models.ManyToManyField(User, related_name='rated_by', blank=True)
 
     def __str__(self):
         return self.heading
@@ -234,6 +234,7 @@ class CouponHistory(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     status = models.BooleanField()
     timestamp = models.DateTimeField(auto_now=True)
+    expiry_date = models.DateTimeField(null=True)
 
     def __str__(self):
         return str(self.status)
@@ -247,5 +248,5 @@ class CouponHistory(models.Model):
             return context
     
     class Meta:
-        verbose_name = 'Coupon History'
-        verbose_name_plural = 'Coupon History'
+        verbose_name = 'All Coupon History'
+        verbose_name_plural = 'All Coupon History'

@@ -21,10 +21,11 @@ from .models import (
     WebCounter, 
     MiniLocation, 
     Category, 
-    Resources,
-    Coupon,
-    CouponHistory,
+    Resources, 
+    Coupon, 
+    CouponHistory, 
     )
+from .views import schedule_refresh
 
 from users.models import CustomerLogin
 import string
@@ -61,6 +62,7 @@ def all_categories(request):
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def all_advertisement(request):
+    schedule_refresh()
     lat = request.POST.get('lat')
     lon = request.POST.get('lon')
 
@@ -102,7 +104,7 @@ def all_advertisement(request):
     counter.visit += random.randint(0,5)
     counter.save()
 
-    all_ads = Files.objects.all().filter(city=nearest_city)
+    all_ads = Files.objects.all().filter(MiniLocation=nearest_location)
 
     for i in range(len(all_ads)):
         if all_ads[i].active_image == 0:
@@ -456,6 +458,7 @@ def varify_otp(request):
 
 @api_view(['POST'])
 def category_wise_ad(request):
+    schedule_refresh()
     cat_id = request.POST.get('cat_id')
     lat = request.POST.get('lat')
     lon = request.POST.get('lon')
@@ -605,6 +608,7 @@ def verify_otp(request):
 
 @api_view(['POST'])
 def scratch_coupon(request):
+    schedule_refresh()
     context = {}
     user_id = request.POST.get('user_id')
     ad_id = request.POST.get('ad_id')
@@ -635,7 +639,7 @@ def scratch_coupon(request):
     else:
         if random.choice([True, False]):
             coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
-            history = CouponHistory.objects.create(code = coupon.code, user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True)
+            history = CouponHistory.objects.create(code = coupon.code, user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True, expiry_date=coupon.end_date)
             history.save()
             coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
             return Response({
@@ -680,7 +684,7 @@ def get_coupon_history(request):
                     "timestamp" : data.timestamp,
                     "shop" : data.ad.company_name,
                     "location" : data.ad.location,
-                    "expiry_date" : Coupon.objects.get(offer = data.ad).end_date,
+                    "expiry_date" : data.expiry_date,
                 }
             )
     

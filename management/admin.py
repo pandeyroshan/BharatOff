@@ -39,7 +39,7 @@ class VisitorAdmin(admin.ModelAdmin):
 
 class FilesAdmin(admin.ModelAdmin):
     model = Files
-    list_display = ('company_name','package_type','user','heading','category','date','activated_till','active')
+    list_display = ('company_name','package_type','user','heading','category','date','activated_till','rating','active')
     search_fields = ('company_name',)
     list_filter = ('active',)
     radio_fields = {"category": admin.HORIZONTAL,"user" : admin.HORIZONTAL}
@@ -82,7 +82,7 @@ class PackageTypeAdmin(admin.ModelAdmin):
 
 class CouponAdmin(admin.ModelAdmin):
     model = Coupon
-    list_display = ('user','code','offer','start_date','total_coupon','active')
+    list_display = ('user','code','offer','start_date','end_date','total_coupon','active')
     search_fields = ('code',)
 
     def has_add_permission(self, request):
@@ -96,7 +96,7 @@ class CouponAdmin(admin.ModelAdmin):
 
 class CouponHistoryAdmin(admin.ModelAdmin):
     model = CouponHistory
-    list_display = ('ad','user','status')
+    list_display = ('code','user','status','expiry_date')
 
     def has_add_permission(self, request):
         return True
