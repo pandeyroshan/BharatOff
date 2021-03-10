@@ -6,6 +6,8 @@ from management import views as management_views
 from . import settings
 from django.conf.urls.static import static
 from management import api_views
+from django.views.static import serve
+from django.conf.urls import url
 
 
 urlpatterns = [
@@ -61,7 +63,10 @@ urlpatterns = [
     path('api/verify-otp/',api_views.verify_otp), # pass phone number and otp (that user entered)
     path('api/scratch/',api_views.scratch_coupon),
     path('api/coupon-history/',api_views.get_coupon_history),
-    path('api/update-profile/', api_views.update_profile)
+    path('api/update-profile/', api_views.update_profile),
+    
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 
 if settings.DEBUG:
