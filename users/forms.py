@@ -41,3 +41,12 @@ class FreelancerRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email','password1','password2','phone']
+
+class SalesRegistrationForm(UserCreationForm):
+    email = forms.EmailField()
+    phone = forms.CharField(max_length=15, required=False)
+    city = forms.ChoiceField(choices = CITY_CHOICE)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'phone', 'city']

@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
-from .forms import UserRegisterForm, ShopkeeperRegisterForm, FreelancerRegisterForm
+from .forms import UserRegisterForm, ShopkeeperRegisterForm, FreelancerRegisterForm, SalesRegistrationForm
 from management.models import CityData
 from django.contrib.auth.models import User
-from users.models import UserProfile, Shopkeeper, Freelancer     
+from users.models import UserProfile, Shopkeeper, Freelancer, SalesPerson   
 from management.models import Address
 
 # Create your views here.
@@ -69,3 +69,25 @@ def register_freelancer(request):
         'address' : Address.objects.all()[0]
     }
     return render(request,'users/register_freelancer.html', context)
+
+def register_sales(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        phone = request.POST.get('phone')
+
+        print(request.POST.get('city'))
+
+        city = CityData.objects.get(id=int(request.POST.get('city')))
+
+        user = User.objects.create_user(username=username, email=email, password=password1)
+        user.save()
+        
+        user_profile = SalesPerson.objects.create(user=user, mobile_number=phone, pwd=password1, city=city)
+        user.is_staff=True 
+        user_profile.save()
+        return redirect('/login')
+    form = SalesRegistrationForm()
+    context = {'form': form}
+    return render(request, 'users/register_sales.html', context)

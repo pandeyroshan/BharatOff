@@ -42,6 +42,9 @@ class SalesPerson(models.Model):
     city = models.ForeignKey(CityData, blank=True, on_delete=models.CASCADE)
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
+    suspend_account = models.BooleanField(default=False)
+    can_change_photo = models.BooleanField('Can Change Photo', default=False)
 
     def __str__(self):
         return self.user.username

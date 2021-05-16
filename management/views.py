@@ -610,3 +610,6 @@ def save_coupon(request):
     coupon.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def sales_dashboard(request):
+    return render(request, 'management/sales_dashboard.html')

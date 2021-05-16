@@ -86,6 +86,7 @@ class StateData(models.Model):
 
 
 class Files(models.Model):
+    comes_under = models.ForeignKey(User, verbose_name='Salesperson', related_name='comes_under',on_delete=models.CASCADE)
     package_type = models.ForeignKey(PackageType, on_delete = models.CASCADE)
     change_at = models.CharField('Phamplet will change',max_length=50, choices=TIME_INTERVAL, default='5')
     city = models.ManyToManyField(CityData)
