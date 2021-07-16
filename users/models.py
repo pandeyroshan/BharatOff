@@ -21,7 +21,7 @@ class Shopkeeper(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobile_number = models.CharField(max_length=15, blank=False)
     pwd = models.CharField('Password', max_length=1000, blank=False)
-    city = models.ForeignKey(CityData, blank=True, on_delete=models.CASCADE)
+    city = models.ForeignKey(CityData, blank=True, on_delete=models.CASCADE, null=True)
     comment = models.TextField(blank=True)
     notification = models.CharField(max_length=1000, blank=True)
     otp = models.IntegerField(default=0)

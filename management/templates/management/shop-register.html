@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>Bharatoff - Shop Registration</title>
+      <meta content="" name="descriptison">
+      <meta content="" name="keywords">
+      <!-- Favicons -->
+      <link href="{% static 'offer/img/logo.jpg' %}" rel="icon">
+      <link href="{% static 'offer/img/logo.jpg' %}" rel="apple-touch-icon">
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Vendor CSS Files -->
+      <link href="{% static 'offer/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/venobox/venobox.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/vendor/aos/aos.css' %}" rel="stylesheet">
+      <link href="{% static 'offer/css/style.css' %}" rel="stylesheet">
+      <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+   </head>
+   <body>
+      <!-- ======= Header ======= -->
+      <header id="header" class="fixed-top d-flex align-items-center">
+         <div class="container d-flex align-items-center">
+            <div class="logo mr-auto">
+               <a href="/"><img src="{% static 'offer/img/logo.jpg' %}" alt="" class="img-fluid"><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#FF5A00; margin-left: 5px; margin-top:5px;">Bharat</span><span style="font-size: 25px;font-family: 'Abril Fatface', cursive; color:#000; margin-top:5px;">off</span></a>
+            </div>
+         </div>
+      </header>
+      <!-- End Header -->
+      <main id="main">
+
+        <!-- ======= Portfolio Section ======= -->
+        <section id="portfolio" class="portfolio">
+          <div class="container">
+    
+            <div class="section-title mt-5" data-aos="fade-up">
+              <h3 class="font-weight-bold">Shop Registration</h3>
+            </div>
+            <div class="content-section">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Shop Name</label>
+                        <input type="text" class="form-control" id="shopName" name="shopName" aria-describedby="emailHelp" placeholder="Enter shop name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Owner Name</label>
+                        <input type="text" class="form-control" id="ownerName" name="ownerName" aria-describedby="emailHelp" placeholder="Enter owner name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phone Number</label>
+                        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Whatsapp Number</label>
+                        <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp" placeholder="Enter your address">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">City</label>
+                        <input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Enter your city">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email Address</label>
+                        <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Business Categories</label>
+                        <select class="form-control" id="businessCategory" name="businessCategory">
+                          <option value="Fashion">Fashion</option>
+                          <option value="">Salon</option>
+                          <option value="">Grocery</option>
+                          <option value="">Supermarket</option>
+                          <option value="">Electronic</option>
+                          <option value="">Jewellers</option>
+                          <option value="">Bakery and Cake</option>
+                          <option value="">Mobile and Repair</option>
+                          <option value="">Wedding Photography</option>
+                          <option value="">Fancy & Gift</option>
+                          <option value="">Ayurveda</option>
+                          <option value="">Motorcycle Dealer</option>
+                          <option value="">Health & Insurance</option>
+                          <option value="">Service</option>
+                          <option value="">Shoes</option>
+                          <option value="">Electric Vehicle</option>
+                          <option value="">Restaurant</option>
+                          <option value="">Hospital/Medical</option>
+                          <option value="">Properties</option>
+                          <option value="">Furniture</option>
+                          <option value="">Books & Sports</option>
+                          <option value="">Manufacturers/Wholesalers</option>
+                          <option value="">Cars</option>
+                          <option value="">Pets</option>
+                          <option value="">Jobs</option>
+                          <option value="">School & College</option>
+                          <option value="">Kitchen Appliances</option>
+                          <option value="">Agriculture</option>
+                          <option value="">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Products</label>
+                        <input type="text" class="form-control" id="products" name="products" aria-describedby="emailHelp" placeholder="Your Products">
+                    </div>
+
+                    <label for="exampleInputEmail1">Discounts</label>
+                    <div id="inputBundle1" class="form-group d-flex">
+                        <input type="number" id="purchase" name="purchaseData[]" class="purchaseInput form-control mb-1" placeholder="Minimum Purchase">
+                        <input type="number" id="discount" name="discountData[]" class="discountInput form-control mb-1 ml-2" placeholder="Bharatoff Discount">
+                        
+                        
+                        <hr style="border-top: 1px dashed #9BB0DA;">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-outline-danger" type="button" onClick="removeNode()" value="Add New">Remove last</button>
+                        <button class="btn btn-sm btn-outline-success" type="button" onClick="addNewNode()" value="Add New">Add new</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Total applicable customers</label>
+                        <input type="number" class="form-control" id="totalCustomers" name="totalCustomers" class="totalCustomers" aria-describedby="emailHelp" placeholder="How many customers should get this discount">
+                    </div>
+                    
+                    <label for="exampleFormControlSelect1">Package Type</label>
+                    <div class="text-right">
+                        <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="generateQRCode()">
+                          Pay now
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content text-center">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Payment Code</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div id="qrcode-container">
+                                    <div id="qrcode" class="qrcode"></div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Done</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Transaction ID</label>
+                        <input type="text" class="form-control" id="transactionId" name="transactionId" aria-describedby="emailHelp" placeholder="Transaction ID of above payment">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="customFile">Upload Photos 1</label>
+                      <input type="file" class="form-control" id="file1" name="file1" />
+
+                      <label for="exampleInputEmail1">Comment for Photo 1</label>
+                      <input type="text" class="form-control" id="comment1" name="comment1" placeholder="Add comments for Photo 1">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="customFile">Upload Photos 2</label>
+                      <input type="file" class="form-control" id="file2" name="file2" />
+
+                      <label for="exampleInputEmail1">Comment for Photo 2</label>
+                      <input type="text" class="form-control" id="comment2" name="comment2" placeholder="Add comments for Photo 2">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="customFile">Upload Photos 3</label>
+                      <input type="file" class="form-control" id="file3" name="file3" />
+
+                      <label for="exampleInputEmail1">Comment for Photo 3</label>
+                      <input type="text" class="form-control" id="comment3" name="comment3" placeholder="Add comments for Photo 3">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="customFile">Upload Photos 4</label>
+                      <input type="file" class="form-control" id="file4" name="file4" />
+
+                      <label for="exampleInputEmail1">Comment for Photo 4</label>
+                      <input type="text" class="form-control" id="comment4" name="comment4" placeholder="Add comments for Photo 4">
+                    </div>
+
+                    
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="googleMap" name="googleMap" value="yes">
+                        <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
+                    </div>
+                    {% csrf_token %}
+                    <div class="form-group text-center mb-5">
+                        <button class="btn btn-outline-info" type="submit">Register Shop</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </section>
+            
+      </main>
+      <!-- End #main -->
+      <!-- ======= Footer ======= -->
+      <footer id="footer" class="fixed-bottom">
+         <div class="container">
+            <div class="row d-flex align-items-center">
+               <div class="col-lg-6 text-lg-left text-center">
+                  <div class="copyright">
+                     &copy; Copyright <strong>Bharatoff</strong>. All Rights Reserved
+                  </div>
+                  <div class="credits">
+                     <!-- All the links in the footer should remain intact. -->
+                     <!-- You can delete the links only if you purchased the pro version. -->
+                     <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                     <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/vesperr-free-bootstrap-template/ -->
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+                     <a href="#intro" class="scrollto">Home</a>
+                     <a href="#about" class="scrollto">offers</a>
+                     <a href="#">Register/Login</a>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- End Footer -->
+      <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+      <!-- Vendor JS Files -->
+      <script src="{% static 'offer/vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/php-email-form/validate.js' %}"></script>
+      <script src="{% static 'offer/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/counterup/counterup.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/venobox/venobox.min.js' %}"></script>
+      <script src="{% static 'offer/vendor/aos/aos.js' %}"></script>
+      <!-- Template Main JS File -->
+      <script src="{% static 'offer/js/main.js' %}"></script>
+      <script>
+		var totalNodes=1;
+
+		function insertAfter(referenceNode, newNode) {
+		  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+		}
+
+		function addNewNode(){
+			totalNodes++;
+			var instance = document.getElementById("inputBundle1");
+			var cloneInstance = instance.cloneNode(true);
+			cloneInstance.id = "inputBundle"+totalNodes;
+			var div = document.getElementById("inputBundle"+(totalNodes-1));
+			insertAfter(div, cloneInstance);
+
+			var x = document.getElementById("inputBundle"+totalNodes).querySelectorAll(".purchaseInput"); 
+			x[0].value = '';
+			x[0].id = 'purchase'+totalNodes;
+
+			var y = document.getElementById("inputBundle"+totalNodes).querySelectorAll(".discountInput"); 
+			y[0].value = '';
+			y[0].id = 'discount'+totalNodes;
+		}
+
+		function removeNode(){
+			if(totalNodes>1) {
+				var elem = document.getElementById("inputBundle"+totalNodes);
+	  			elem.remove();
+	  			totalNodes--;
+  			}
+		}
+
+		// function consolidateInputBundle(){
+		// 	var purchaseData = document.getElementsByName('purchaseData[]');
+		// 	var discountData = document.getElementsByName('discountData[]');
+		// 	var k = "";
+
+    //   var form = document.createElement("form");
+		//   form.setAttribute("method", "post");
+		//   form.setAttribute("action", "/shop-registration");
+		//   form.style.visibility = 'hidden';
+
+		//   var FN = document.createElement("input");
+		//   FN.setAttribute("type", "hidden");
+		// 	FN.setAttribute("name", "totalNodes");
+		// 	FN.setAttribute("value", totalNodes);
+
+		// 	form.appendChild(FN);
+  
+    //   for (var i = 0; i < purchaseData.length; i++) {
+    //       var a = purchaseData[i];
+    //       var b = discountData[i];
+    //       console.log(a.value);
+    //       console.log(b.value);
+          
+    //       var FN1 = document.createElement("input");
+		//     	FN1.setAttribute("type", "text");
+		// 	    FN1.setAttribute("name", "purchase"+i);
+		// 	    FN1.setAttribute("value", a.value);
+
+    //             var FN2 = document.createElement("input");
+		//     	FN2.setAttribute("type", "text");
+		// 	    FN2.setAttribute("name", "discount"+i);
+		// 	    FN2.setAttribute("value", b.value);
+			    
+		// 	    form.appendChild(FN1);
+		// 	    form.appendChild(FN2);
+    //   }
+		  	
+    //   document.body.appendChild(form);
+    //   form.submit();
+		// }
+        
+        function generateQRCode() {
+          let website = "upi://pay?pa=bharatoff@barodampay&pn=bharatoff&tr=EZYS6263610046&cu=INR&mc=7221&am="+document.getElementById("packageAmount").value;
+          if (website) {
+            let qrcodeContainer = document.getElementById("qrcode");
+            qrcodeContainer.innerHTML = "";
+            new QRCode(qrcodeContainer, website);
+            /*With some styles*/
+            let qrcodeContainer2 = document.getElementById("qrcode-2");
+            qrcodeContainer2.innerHTML = "";
+            new QRCode(qrcodeContainer2, {
+              text: website,
+              width: 128,
+              height: 128,
+              colorDark: "#5868bf",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.H
+            });
+            document.getElementById("qrcode-container").style.display = "block";
+          } else {
+            alert("Please enter a valid URL");
+          }
+        }
+      </script>
+   </body>
+</html>

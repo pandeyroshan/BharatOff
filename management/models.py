@@ -251,3 +251,45 @@ class CouponHistory(models.Model):
     class Meta:
         verbose_name = 'All Coupon History'
         verbose_name_plural = 'All Coupon History'
+
+class Discount(models.Model):
+    total_purchase = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.total_purchase)+":"+str(self.discount)
+    
+    class Meta:
+        verbose_name = 'Discount'
+        verbose_name_plural = 'Discount'
+
+class ShopDetails(models.Model):
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    shop_name = models.CharField(max_length=1000, blank=False)
+    owner_name = models.CharField(max_length=1000, blank=False)
+    phone_number = models.CharField(max_length=1000, blank=False)
+    whatsapp_number = models.CharField(max_length=1000, blank=False)
+    address = models.CharField(max_length=1000, blank=False)
+    city = models.CharField(max_length=100,blank=False)
+    email_address = models.CharField(max_length=1000, blank=False)
+    business_category = models.CharField(max_length=1000, blank=False)
+    products = models.TextField()
+    discounts = models.ManyToManyField(Discount)
+    total_eligible_customer = models.IntegerField(default=0)
+    package_amount = models.IntegerField(default=1)
+    transaction_id = models.CharField(max_length=1000, blank=False)
+    image_file1 = models.FileField(upload_to='shop-images/', null=True)
+    comment1 = models.CharField(max_length=1000, blank=True)
+    image_file2 = models.FileField(upload_to='shop-images/', null=True)
+    comment2 = models.CharField(max_length=1000, blank=True)
+    image_file3 = models.FileField(upload_to='shop-images/', null=True)
+    comment3 = models.CharField(max_length=1000, blank=True)
+    image_file4 = models.FileField(upload_to='shop-images/', null=True)
+    comment4 = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.shop_name
+
+    class Meta:
+        verbose_name = 'Shop Informations'
+        verbose_name_plural = 'Shop Informations'

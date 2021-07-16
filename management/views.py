@@ -13,6 +13,8 @@ from .models import (
     Resources,
     Coupon,
     CouponHistory,
+    Discount,
+    ShopDetails
 )
 
 from django.views.decorators.csrf import csrf_exempt
@@ -22,6 +24,14 @@ import datetime
 from django.contrib.auth.models import User
 from wsgiref.util import FileWrapper
 import mimetypes
+from django.contrib.auth.decorators import login_required
+from users.models import SalesPerson, Shopkeeper
+
+from .mail_service import send_credentials, send_invoice, send_invoice_and_credentials
+from .sms_delivery import send_username_password, send_invoice_details
+from .pdf_generator import create_invoice
+
+from datetime import date
 # Create your views here
 
 def refresh_ads(request):
@@ -106,7 +116,6 @@ def schedule_refresh():
                     ad.active_image = (ad.active_image+1)%img_count
                     ad.counter = 0
             ad.save()
-    print('Refreshed Every Fucking thing .. ')
 
 def process_active_image(ad):
 
@@ -152,6 +161,7 @@ def home(request):
 def location_based(request):
     schedule_refresh()
     if request.method == 'POST':
+        print(request.POST)
         lat = request.POST.get('lat')
         lon = request.POST.get('lon')
 
@@ -160,6 +170,8 @@ def location_based(request):
         all_mini_locations = MiniLocation.objects.all()
 
         R = 6373.0
+
+        print(all_mini_locations)
 
         for mini_location in all_mini_locations:
             lat1 = radians(float(lat))
@@ -177,6 +189,8 @@ def location_based(request):
             if distance < min_distance:
                 min_distance = distance
                 nearest_location = mini_location
+        
+        print(nearest_location)
     else:
         return redirect('/')
 
@@ -265,10 +279,12 @@ def city_ad(request, id):
         'counter' : counter,
         'nearby_location' : nearby_location
     }
-
-    visitor_object = Visitors.objects.get(city = CityData.objects.get(id=int(id)))
-    visitor_object.counter += 1
-    visitor_object.save()
+    try:
+        visitor_object = Visitors.objects.get(city = CityData.objects.get(id=int(id)))
+        visitor_object.counter += 1
+        visitor_object.save()
+    except:
+        pass
 
     return render(request,'management/location.html',context)
 
@@ -613,3 +629,85 @@ def save_coupon(request):
 
 def sales_dashboard(request):
     return render(request, 'management/sales_dashboard.html')
+
+@login_required
+def register_shopkeeper(request):
+    if not SalesPerson.objects.get(user = request.user):
+        return redirect("/")
+    if request.method == 'POST':
+
+        print(request.POST)
+        discount_list = []
+        
+        purchase = request.POST.getlist('purchaseData[]')
+        discounts = request.POST.getlist('discountData[]')
+
+        print(purchase, type(purchase))
+        print(discounts, type(discounts))
+
+        for i in range(len(purchase)):
+            discount = Discount.objects.create(total_purchase = int(purchase[i]),discount = int(discounts[i]))
+            discount.save()
+            discount_list.append(discount)
+        
+        print(discount_list)
+
+        shop = ShopDetails.objects.create(
+            created_by =  request.user,
+            shop_name = request.POST.get('shopName'),
+            owner_name = request.POST.get('ownerName'),
+            phone_number = request.POST.get('phoneNumber'),
+            whatsapp_number = request.POST.get('whatsappNumber'),
+            address = request.POST.get('address'),
+            city = request.POST.get('city'),
+            email_address = request.POST.get('emailAddress'),
+            business_category = request.POST.get('businessCategory'),
+            products = request.POST.get('products'),
+            total_eligible_customer = request.POST.get('totalCustomers'),
+            package_amount = request.POST.get('packageAmount'),
+            transaction_id = request.POST.get('transactionId'),
+            image_file1 = request.FILES['file1'].name,
+            comment1 = request.POST.get('comment1'),
+            image_file2 = request.FILES['file2'].name,
+            comment2 = request.POST.get('comment2'),
+            image_file3 = request.FILES['file3'].name,
+            comment3 = request.POST.get('comment3'),
+            image_file4 = request.FILES['file4'].name,
+            comment4 = request.POST.get('comment4')
+        )
+        shop.discounts.set(discount_list)
+        shop.save()
+
+        user = User.objects.create_user(username=request.POST.get('ownerName').replace(" ",""), password="Hello@321")
+        user.save()
+
+        shopkeeper = Shopkeeper.objects.create(
+            user = user,
+            mobile_number = request.POST.get('phoneNumber'),
+            pwd = "Hello@321",
+        )
+
+        shopkeeper.save()
+
+        create_invoice(
+            request.POST.get('shopName'), 
+            request.POST.get('address'), 
+            request.POST.get('phoneNumber'), 
+            request.POST.get('packageAmount')+" Package", 
+            "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())),
+            int(request.POST.get('packageAmount'))
+        )
+
+        # send_invoice_and_credentials(request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('shopName'), request.POST.get('emailAddress'))
+
+        amount = int(request.POST.get('packageAmount'))
+        
+        # mail delivery
+        send_credentials(request.POST.get('ownerName'), request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('emailAddress'))
+        send_invoice(request.POST.get('ownerName'), round(amount*0.82, 2), round(amount*0.18, 2), int(amount), "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())), request.POST.get('emailAddress'))
+
+        #sms delivery
+        send_username_password(request.POST.get('ownerName'), request.POST.get('phoneNumber'), request.POST.get('ownerName').replace(" ",""), "Hello@321" )
+        send_invoice_details(request.POST.get('ownerName'), request.POST.get('phoneNumber'), "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())), request.POST.get('packageAmount'))
+
+    return render(request, 'management/shop-register.html')

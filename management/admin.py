@@ -16,6 +16,8 @@ from management.models import (
     Resources,
     Coupon,
     CouponHistory,
+    Discount,
+    ShopDetails
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -31,6 +33,9 @@ class CityAdmin(admin.ModelAdmin):
     model = CityData
     list_display = ('city_name','lat','lon')
     search_fields = ('city_name',)
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class VisitorAdmin(admin.ModelAdmin):
@@ -124,3 +129,5 @@ admin.site.register(PackageType, PackageTypeAdmin)
 admin.site.register(Resources)
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(CouponHistory, CouponHistoryAdmin)
+admin.site.register(Discount)
+admin.site.register(ShopDetails)
