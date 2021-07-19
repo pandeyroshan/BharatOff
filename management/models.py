@@ -286,6 +286,7 @@ class ShopDetails(models.Model):
     comment3 = models.CharField(max_length=1000, blank=True)
     image_file4 = models.FileField(upload_to='shop-images/', null=True)
     comment4 = models.CharField(max_length=1000, blank=True)
+    payment_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.shop_name

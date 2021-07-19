@@ -446,9 +446,9 @@ def send_credentials(name ,username_client, password_client, email):
         )
 
 def send_invoice(name, package_amount, gst, total_amount, invoice_number, email):
-    sender_email = "Info@bharatoff.com"
+    sender_email = "Info@bharatoff.com" #"contact@bharatoff.com"
     receiver_email = email
-    password = "ravkjzahrnxwscki"
+    password = "ravkjzahrnxwscki" #"@Bharat8602950609"
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "BharatOff - Invoice Mailer"

@@ -92,48 +92,37 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Name</th>
-                                                <th class="text-center">Date Posted</th>
-                                                <th class="text-center">City</th>
-                                                <th class="text-center">Localities</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">Setting</th>
-                                                <th class="text-center">Direct Link</th>
+                                                <th class="text-center">Shop Name</th>
+                                                <th class="text-center">Address</th>
+                                                <th class="text-center">Package Amount</th>
+                                                <th class="text-center">Transaction ID</th>
+                                                <th class="text-center">Payment Verified</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th class="text-center">Name</th>
-                                                <th class="text-center">Date Posted</th>
-                                                <th class="text-center">City</th>
-                                                <th class="text-center">Localities</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">Setting</th>
-                                                <th class="text-center">Direct Link</th>
+                                                <th class="text-center">Shop Name</th>
+                                                <th class="text-center">Address</th>
+                                                <th class="text-center">Package Amount</th>
+                                                <th class="text-center">Transaction ID</th>
+                                                <th class="text-center">Payment Verified</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            {% for ad in ads %}
+                                            {% for shop in all_shops %}
                                                 <tr>
-                                                    <td class="text-center">{{ad.heading}}</td>
-                                                    <td class="text-center">{{ad.date}}</td>
-                                                    <td class="text-center">
-                                                        {%for city in ad.all_city%}
-                                                            {{city}},
-                                                        {%endfor%}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {%for loc in ad.all_minor%}
-                                                            {{loc}},
-                                                        {%endfor%}
-                                                    </td>
-                                                    {% if ad.active %}
-                                                        <td class="text-center text-success">Active</td>
+                                                    <td class="text-center">{{shop.shop_name}}</td>
+                                                    <td class="text-center">{{shop.address}}, {{shop.city}}</td>
+                                                    <td class="text-center">{{shop.package_amount}}</td>
+                                                    <td class="text-center">{{shop.transaction_id}}</td>
+                                                    {% if shop.payment_verified %}
+                                                        <td class="text-center text-success">Verified</td>
                                                     {%else%}
-                                                        <td class="text-center text-danger">Deactive</td>
+                                                        <td class="text-center text-danger">Not Verified</td>
                                                     {%endif%}
-                                                    <td class="text-center"><a href="/settings/{{ad.id}}/" style="text-decoration: none;"><span class="fa-spin">&#9881;</span></a></td>
-                                                    <td class="text-center"><a href="/location/broad/{{ad.id}}" target="_blank">Click here</a></td>
+                                                    <td class="text-center"><a href="" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>
                                                 </tr>
                                             {%endfor%}
                                         </tbody>

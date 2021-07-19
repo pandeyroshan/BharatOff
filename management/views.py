@@ -627,8 +627,16 @@ def save_coupon(request):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+@login_required
 def sales_dashboard(request):
-    return render(request, 'management/sales_dashboard.html')
+    if not SalesPerson.objects.get(user = request.user):
+        return redirect("/")
+    else:
+        all_shop_details = ShopDetails.objects.all().filter(created_by = request.user)
+        context = {
+            'all_shops' : all_shop_details,
+        }
+        return render(request, 'management/sales_dashboard.html', context=context)
 
 @login_required
 def register_shopkeeper(request):
@@ -689,14 +697,14 @@ def register_shopkeeper(request):
 
         shopkeeper.save()
 
-        create_invoice(
-            request.POST.get('shopName'), 
-            request.POST.get('address'), 
-            request.POST.get('phoneNumber'), 
-            request.POST.get('packageAmount')+" Package", 
-            "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())),
-            int(request.POST.get('packageAmount'))
-        )
+        # create_invoice(
+        #     request.POST.get('shopName'), 
+        #     request.POST.get('address'), 
+        #     request.POST.get('phoneNumber'), 
+        #     request.POST.get('packageAmount')+" Package", 
+        #     "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())),
+        #     int(request.POST.get('packageAmount'))
+        # )
 
         # send_invoice_and_credentials(request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('shopName'), request.POST.get('emailAddress'))
 

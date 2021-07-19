@@ -25,6 +25,7 @@ class SalesPersonAdmin(admin.ModelAdmin):
     model = SalesPerson
     readonly_fields = ('user', 'pwd')
     exclude = ('otp',)
+    list_display = ('user','city')
 
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)

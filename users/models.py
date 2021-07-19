@@ -54,7 +54,7 @@ class SalesPerson(models.Model):
         verbose_name_plural = 'Sales Person'
 
 class Freelancer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
     mobile_number = models.CharField(max_length=15, blank=False)
     pwd = models.CharField('Password', max_length=1000, blank=False)
     comes_under = models.OneToOneField(SalesPerson, on_delete = models.CASCADE, null=True)

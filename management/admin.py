@@ -112,6 +112,10 @@ class CouponHistoryAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj = None):
         return True
 
+class ShopDetailsAdmin(admin.ModelAdmin):
+    model = ShopDetails
+    readonly_fields = ('created_by', 'package_amount', 'discounts')
+
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)
 
@@ -130,4 +134,4 @@ admin.site.register(Resources)
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(CouponHistory, CouponHistoryAdmin)
 admin.site.register(Discount)
-admin.site.register(ShopDetails)
+admin.site.register(ShopDetails, ShopDetailsAdmin)
