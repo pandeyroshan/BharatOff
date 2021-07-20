@@ -5,6 +5,8 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import date
+from datetime import datetime
+from datetime import timedelta
 
 
 
@@ -924,6 +926,13 @@ def send_invoice(name, package_amount, gst, total_amount, invoice_number, email)
                                     <td class="attributes_item">
                                         <span class="f-fallback">
                 <strong>Date:</strong> """+str(date.today())+"""
+                </span>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td class="attributes_item">
+                                        <span class="f-fallback">
+                <strong>Validity:</strong> """+str(date.today()+timedelta(days=372))+""" (1 year + 7 extra days)
                 </span>
                                     </td>
                                     </tr>

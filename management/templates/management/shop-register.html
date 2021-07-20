@@ -48,75 +48,83 @@
                 <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Shop Name</label>
-                        <input type="text" class="form-control" id="shopName" name="shopName" aria-describedby="emailHelp" placeholder="Enter shop name">
+                        <input type="text" class="form-control" id="shopName" name="shopName" aria-describedby="emailHelp" placeholder="Enter shop name" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Owner Name</label>
-                        <input type="text" class="form-control" id="ownerName" name="ownerName" aria-describedby="emailHelp" placeholder="Enter owner name">
+                        <input type="text" class="form-control" id="ownerName" name="ownerName" aria-describedby="emailHelp" placeholder="Enter owner name"  required>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">GST Number</label>
+                      <input type="text" class="form-control" id="gstNumber" name="gstNumber" aria-describedby="emailHelp" placeholder="Provide the GST Number of Shopkeeper">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Phone Number</label>
-                        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Enter phone number">
+                        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Enter phone number" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Whatsapp Number</label>
-                        <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number">
+                        <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp" placeholder="Enter your address">
+                        <input type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp" placeholder="Enter your address" required>
+                    </div>
+                    <div class="form-check form-check-inline mb-3">
+                      <input class="form-check-input" type="checkbox" id="googleMap" name="googleMap" value="yes">
+                      <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">City</label>
-                        <input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Enter your city">
+                        <input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Enter your city" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email Address</label>
-                        <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address">
+                        <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Business Categories</label>
                         <select class="form-control" id="businessCategory" name="businessCategory">
                           <option value="Fashion">Fashion</option>
-                          <option value="">Salon</option>
-                          <option value="">Grocery</option>
-                          <option value="">Supermarket</option>
-                          <option value="">Electronic</option>
-                          <option value="">Jewellers</option>
-                          <option value="">Bakery and Cake</option>
-                          <option value="">Mobile and Repair</option>
-                          <option value="">Wedding Photography</option>
-                          <option value="">Fancy & Gift</option>
-                          <option value="">Ayurveda</option>
-                          <option value="">Motorcycle Dealer</option>
-                          <option value="">Health & Insurance</option>
-                          <option value="">Service</option>
-                          <option value="">Shoes</option>
-                          <option value="">Electric Vehicle</option>
-                          <option value="">Restaurant</option>
-                          <option value="">Hospital/Medical</option>
-                          <option value="">Properties</option>
-                          <option value="">Furniture</option>
-                          <option value="">Books & Sports</option>
-                          <option value="">Manufacturers/Wholesalers</option>
-                          <option value="">Cars</option>
-                          <option value="">Pets</option>
-                          <option value="">Jobs</option>
-                          <option value="">School & College</option>
-                          <option value="">Kitchen Appliances</option>
-                          <option value="">Agriculture</option>
-                          <option value="">Others</option>
+                          <option value="salon">Salon</option>
+                          <option value="grocery">Grocery</option>
+                          <option value="supermarket">Supermarket</option>
+                          <option value="Electronic">Electronic</option>
+                          <option value="Jewellers">Jewellers</option>
+                          <option value="Bakery and Cake">Bakery and Cake</option>
+                          <option value="Mobile and Repair">Mobile and Repair</option>
+                          <option value="Wedding Photography">Wedding Photography</option>
+                          <option value="Fancy & Gift">Fancy & Gift</option>
+                          <option value="Ayurveda">Ayurveda</option>
+                          <option value="Motorcycle Dealer">Motorcycle Dealer</option>
+                          <option value="Health & Insurance">Health & Insurance</option>
+                          <option value="Service">Service</option>
+                          <option value="Shoes">Shoes</option>
+                          <option value="Electric Vehicle">Electric Vehicle</option>
+                          <option value="Restaurant">Restaurant</option>
+                          <option value="Hospital/Medical">Hospital/Medical</option>
+                          <option value="Properties">Properties</option>
+                          <option value="Furniture">Furniture</option>
+                          <option value="Books & Sports">Books & Sports</option>
+                          <option value="Manufacturers/Wholesalers">Manufacturers/Wholesalers</option>
+                          <option value="Cars">Cars</option>
+                          <option value="Pets">Pets</option>
+                          <option value="Jobs">Jobs</option>
+                          <option value="School & College">School & College</option>
+                          <option value="Kitchen Appliances">Kitchen Appliances</option>
+                          <option value="Agriculture">Agriculture</option>
+                          <option value="Others">Others</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Products</label>
-                        <input type="text" class="form-control" id="products" name="products" aria-describedby="emailHelp" placeholder="Your Products">
+                        <input type="text" class="form-control" id="products" name="products" aria-describedby="emailHelp" placeholder="Your Products" required>
                     </div>
 
                     <label for="exampleInputEmail1">Discounts</label>
                     <div id="inputBundle1" class="form-group d-flex">
-                        <input type="number" id="purchase" name="purchaseData[]" class="purchaseInput form-control mb-1" placeholder="Minimum Purchase">
-                        <input type="number" id="discount" name="discountData[]" class="discountInput form-control mb-1 ml-2" placeholder="Bharatoff Discount">
+                        <input type="number" id="purchase" name="purchaseData[]" class="purchaseInput form-control mb-1" placeholder="Minimum Purchase" required>
+                        <input type="number" id="discount" name="discountData[]" class="discountInput form-control mb-1 ml-2" placeholder="Bharatoff Discount" required>
                         
                         
                         <hr style="border-top: 1px dashed #9BB0DA;">
@@ -128,12 +136,17 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Total applicable customers</label>
-                        <input type="number" class="form-control" id="totalCustomers" name="totalCustomers" class="totalCustomers" aria-describedby="emailHelp" placeholder="How many customers should get this discount">
+                        <input type="number" class="form-control" id="totalCustomers" name="totalCustomers" class="totalCustomers" aria-describedby="emailHelp" placeholder="How many customers should get this discount" required>
                     </div>
                     
                     <label for="exampleFormControlSelect1">Package Type</label>
                     <div class="text-right">
-                        <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount">
+                        <!-- <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount" required> -->
+                        <select class="form-control" id="packageAmount" name="packageAmount">
+                          <option value="99">99 INR</option>
+                          <option value="199">199 INR</option>
+                          <option value="2999">2999 INR</option>
+                        </select>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="generateQRCode()">
                           Pay now
@@ -165,7 +178,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Transaction ID</label>
-                        <input type="text" class="form-control" id="transactionId" name="transactionId" aria-describedby="emailHelp" placeholder="Transaction ID of above payment">
+                        <input type="text" class="form-control" id="transactionId" name="transactionId" aria-describedby="emailHelp" placeholder="Transaction ID of above payment" required>
                     </div>
 
                     <div class="form-group">
@@ -199,8 +212,8 @@
 
                     
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="googleMap" name="googleMap" value="yes">
-                        <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
+                        <input class="form-check-input" type="checkbox" id="iAgree" name="iAgree" value="yes" required>
+                        <label class="form-check-label" for="inlineCheckbox1">I agree to the terms and conditions.</label>
                     </div>
                     {% csrf_token %}
                     <div class="form-group text-center mb-5">

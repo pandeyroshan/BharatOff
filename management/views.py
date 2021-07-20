@@ -664,6 +664,7 @@ def register_shopkeeper(request):
             created_by =  request.user,
             shop_name = request.POST.get('shopName'),
             owner_name = request.POST.get('ownerName'),
+            gst_no = request.POST.get('gstNumber'),
             phone_number = request.POST.get('phoneNumber'),
             whatsapp_number = request.POST.get('whatsappNumber'),
             address = request.POST.get('address'),
@@ -674,14 +675,16 @@ def register_shopkeeper(request):
             total_eligible_customer = request.POST.get('totalCustomers'),
             package_amount = request.POST.get('packageAmount'),
             transaction_id = request.POST.get('transactionId'),
-            image_file1 = request.FILES['file1'].name,
-            comment1 = request.POST.get('comment1'),
-            image_file2 = request.FILES['file2'].name,
-            comment2 = request.POST.get('comment2'),
-            image_file3 = request.FILES['file3'].name,
-            comment3 = request.POST.get('comment3'),
-            image_file4 = request.FILES['file4'].name,
-            comment4 = request.POST.get('comment4')
+            image_file1 = request.FILES['file1'].name if 'file1' in request.FILES else None,
+            comment1 = request.POST.get('comment1', 'No Comments'),
+            image_file2 = request.FILES['file2'].name if 'file2' in request.FILES else None,
+            comment2 = request.POST.get('comment2', 'No Comments'),
+            image_file3 = request.FILES['file3'].name if 'file3' in request.FILES else None,
+            comment3 = request.POST.get('comment3', 'No Comments'),
+            image_file4 = request.FILES['file4'].name if 'file4' in request.FILES else None,
+            comment4 = request.POST.get('comment4', 'No Comments'),
+            payment_verified = False,
+            invoice_no = "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all()))
         )
         shop.discounts.set(discount_list)
         shop.save()

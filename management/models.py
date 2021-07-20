@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django
+from datetime import date
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -267,6 +268,7 @@ class ShopDetails(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     shop_name = models.CharField(max_length=1000, blank=False)
     owner_name = models.CharField(max_length=1000, blank=False)
+    gst_no = models.CharField(max_length=100, blank=True)
     phone_number = models.CharField(max_length=1000, blank=False)
     whatsapp_number = models.CharField(max_length=1000, blank=False)
     address = models.CharField(max_length=1000, blank=False)
@@ -287,6 +289,8 @@ class ShopDetails(models.Model):
     image_file4 = models.FileField(upload_to='shop-images/', null=True)
     comment4 = models.CharField(max_length=1000, blank=True)
     payment_verified = models.BooleanField(default=False)
+    date_of_registration = models.DateTimeField(default=django.utils.timezone.now)
+    invoice_no = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.shop_name
