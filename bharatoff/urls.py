@@ -70,6 +70,9 @@ urlpatterns = [
     path('api/scratch/',api_views.scratch_coupon),
     path('api/coupon-history/',api_views.get_coupon_history),
     path('api/update-profile/', api_views.update_profile),
+
+
+    path('invoice/<str:invoice_number>', management_views.show_invoice, name='show-invoice'),
     
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

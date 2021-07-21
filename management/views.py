@@ -30,9 +30,12 @@ from users.models import SalesPerson, Shopkeeper
 from .mail_service import send_credentials, send_invoice, send_invoice_and_credentials
 from .sms_delivery import send_username_password, send_invoice_details
 from .pdf_generator import create_invoice
+from django.http import FileResponse
 
 from datetime import date
 # Create your views here
+
+from .models import ShopDetails
 
 def refresh_ads(request):
     x = datetime.datetime.now()
@@ -161,7 +164,6 @@ def home(request):
 def location_based(request):
     schedule_refresh()
     if request.method == 'POST':
-        print(request.POST)
         lat = request.POST.get('lat')
         lon = request.POST.get('lon')
 
@@ -170,8 +172,6 @@ def location_based(request):
         all_mini_locations = MiniLocation.objects.all()
 
         R = 6373.0
-
-        print(all_mini_locations)
 
         for mini_location in all_mini_locations:
             lat1 = radians(float(lat))
@@ -189,8 +189,6 @@ def location_based(request):
             if distance < min_distance:
                 min_distance = distance
                 nearest_location = mini_location
-        
-        print(nearest_location)
     else:
         return redirect('/')
 
@@ -644,21 +642,17 @@ def register_shopkeeper(request):
         return redirect("/")
     if request.method == 'POST':
 
-        print(request.POST)
         discount_list = []
         
         purchase = request.POST.getlist('purchaseData[]')
         discounts = request.POST.getlist('discountData[]')
 
-        print(purchase, type(purchase))
-        print(discounts, type(discounts))
-
         for i in range(len(purchase)):
             discount = Discount.objects.create(total_purchase = int(purchase[i]),discount = int(discounts[i]))
             discount.save()
             discount_list.append(discount)
-        
-        print(discount_list)
+
+        invoice_number = "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all()))
 
         shop = ShopDetails.objects.create(
             created_by =  request.user,
@@ -684,12 +678,15 @@ def register_shopkeeper(request):
             image_file4 = request.FILES['file4'].name if 'file4' in request.FILES else None,
             comment4 = request.POST.get('comment4', 'No Comments'),
             payment_verified = False,
-            invoice_no = "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all()))
+            invoice_no = invoice_number
         )
         shop.discounts.set(discount_list)
         shop.save()
 
-        user = User.objects.create_user(username=request.POST.get('ownerName').replace(" ",""), password="Hello@321")
+        user = User.objects.create_user(
+            username=request.POST.get('ownerName').replace(" ",""),
+            password="Hello@321"
+        )
         user.save()
 
         shopkeeper = Shopkeeper.objects.create(
@@ -700,25 +697,57 @@ def register_shopkeeper(request):
 
         shopkeeper.save()
 
-        # create_invoice(
-        #     request.POST.get('shopName'), 
-        #     request.POST.get('address'), 
-        #     request.POST.get('phoneNumber'), 
-        #     request.POST.get('packageAmount')+" Package", 
-        #     "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())),
-        #     int(request.POST.get('packageAmount'))
-        # )
+        # create the pdf of the invoice
+        create_invoice(
+            request.POST.get('shopName'), 
+            request.POST.get('address'), 
+            request.POST.get('phoneNumber'), 
+            request.POST.get('gstNumber', 'Not Available'),
+            request.POST.get('packageAmount')+" Package", 
+            invoice_number,
+            int(request.POST.get('packageAmount'))
+        )
 
         # send_invoice_and_credentials(request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('shopName'), request.POST.get('emailAddress'))
 
         amount = int(request.POST.get('packageAmount'))
         
-        # mail delivery
-        send_credentials(request.POST.get('ownerName'), request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('emailAddress'))
-        send_invoice(request.POST.get('ownerName'), round(amount*0.82, 2), round(amount*0.18, 2), int(amount), "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())), request.POST.get('emailAddress'))
+        # mail delivery for username, password
+        send_credentials(
+            request.POST.get('ownerName'), 
+            request.POST.get('ownerName').replace(" ",""), 
+            "Hello@321", 
+            request.POST.get('emailAddress')
+        )
 
-        #sms delivery
-        send_username_password(request.POST.get('ownerName'), request.POST.get('phoneNumber'), request.POST.get('ownerName').replace(" ",""), "Hello@321" )
-        send_invoice_details(request.POST.get('ownerName'), request.POST.get('phoneNumber'), "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all())), request.POST.get('packageAmount'))
+        # mail delivery for invoice
+        send_invoice(
+            request.POST.get('ownerName'), 
+            round(amount*0.82, 2), 
+            round(amount*0.18, 2), 
+            int(amount), 
+            invoice_number, 
+            request.POST.get('emailAddress')
+        )
+
+        # sms delivery for username, password
+        send_username_password(
+            request.POST.get('ownerName'), 
+            request.POST.get('phoneNumber'), 
+            request.POST.get('ownerName').replace(" ",""), 
+            "Hello@321"
+        )
+
+        # sms delivery for invoice
+        send_invoice_details(
+            request.POST.get('ownerName'), 
+            request.POST.get('phoneNumber'), 
+            invoice_number, 
+            request.POST.get('packageAmount')
+        )
 
     return render(request, 'management/shop-register.html')
+
+def show_invoice(request, invoice_number):
+    shop_details = ShopDetails.objects.get(invoice_no=invoice_number)
+    return FileResponse(open('invoice/'+ shop_details.shop_name +'.pdf', 'rb'), content_type='application/pdf')

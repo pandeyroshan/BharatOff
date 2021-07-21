@@ -3,7 +3,7 @@ from datetime import date
 from num2words import num2words
 
 
-def create_invoice(shop_name, shop_address, shop_phone_number, order_detail, invoice_number, amount):
+def create_invoice(shop_name, shop_address, shop_phone_number, shop_gstno, order_detail, invoice_number, amount):
     pdf = FPDF()
     pdf.add_page()
 
@@ -45,6 +45,7 @@ def create_invoice(shop_name, shop_address, shop_phone_number, order_detail, inv
     pdf.cell(200, 6, txt="Bill To: "+ shop_name, border=20, ln=1, align="L")
     pdf.cell(200, 6, txt="Address: "+ shop_address, border=20, ln=1, align="L")
     pdf.cell(200, 6, txt="Contact Number: "+ shop_phone_number, border=20, ln=1, align="L")
+    pdf.cell(200, 6, txt="GST Number: "+ shop_gstno, border=20, ln=1, align="L")
 
     pdf.ln(10)
 
@@ -76,13 +77,13 @@ def create_invoice(shop_name, shop_address, shop_phone_number, order_detail, inv
     pdf.cell(200, 10, txt="GST: "+ str(round(amount*0.18, 2))+"        ", border=20, ln=1, align="R")
     pdf.set_font('Arial', size=12, style="B")
     pdf.ln(1.5)
-    pdf.dashed_line(140, 147, 200, 147)
+    pdf.dashed_line(140, 152, 200, 152)
     pdf.cell(200, 10, txt="Grand Total: "+ str(amount)+"        ", border=20, ln=1, align="R")
     pdf.set_font('Arial', size=12, style="I")
     pdf.cell(200, 5, txt="In words: "+ num2words(amount)+"        ", border=20, ln=1, align="R")
 
-    pdf.image("logo.jpg", 75, 9, 11, 10)
-    pdf.image("stamp.png", 15, 122, 50, 50)
+    pdf.image("./logo.jpg", 75, 9, 11, 10)
+    pdf.image("./stamp.png", 15, 122, 50, 50)
 
     pdf.dashed_line(10, 175, 200, 175)
 
@@ -94,4 +95,4 @@ def create_invoice(shop_name, shop_address, shop_phone_number, order_detail, inv
     pdf.output("invoice/"+shop_name+".pdf")
 
 if __name__ == '__main__':
-    create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","199 Package", "IN20210706001" ,199)
+    create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","GSTIN1212112","199 Package", "IN20210706001" ,199)
