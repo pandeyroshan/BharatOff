@@ -746,8 +746,14 @@ def register_shopkeeper(request):
             request.POST.get('packageAmount')
         )
 
+        return render(request, 'management/shop-registration-success.html', {'shop_name' : request.POST.get('shopName')})
+
     return render(request, 'management/shop-register.html')
 
 def show_invoice(request, invoice_number):
     shop_details = ShopDetails.objects.get(invoice_no=invoice_number)
     return FileResponse(open('invoice/'+ shop_details.shop_name +'.pdf', 'rb'), content_type='application/pdf')
+
+def shop_registration_successful(request):
+    shop_name = "PineApple Inc."
+    return render(request, 'management/shop-registration-success.html', {'shop_name' : shop_name})

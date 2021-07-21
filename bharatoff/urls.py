@@ -21,6 +21,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'),name='logout'),
 
     path('shop-registration/', management_views.register_shopkeeper, name="register-shop"),  
+    path('success/', management_views.shop_registration_successful, name="register-shop-success"),  
     path('', management_views.home,name='home'),
     path('location', management_views.location_based, name='location-based'),
     path('city/<int:id>/', management_views.city_ad, name='city_add'),
