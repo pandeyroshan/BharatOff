@@ -289,7 +289,7 @@ class ShopDetails(models.Model):
     image_file4 = models.FileField(upload_to='shop-images/', null=True)
     comment4 = models.CharField(max_length=1000, blank=True)
     payment_verified = models.BooleanField(default=False)
-    date_of_registration = models.DateTimeField(default=django.utils.timezone.now)
+    date_of_registration = models.DateField(default=django.utils.timezone.now)
     invoice_no = models.CharField(max_length=100, blank=True)
     invoice_pdf = models.FileField(upload_to='all-invoices/', null=True)
 

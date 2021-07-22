@@ -33,6 +33,11 @@ from .pdf_generator import create_invoice
 from django.http import FileResponse
 
 from datetime import date
+
+import io
+from reportlab.pdfgen import canvas
+
+from datetime import date
 # Create your views here
 
 from .models import ShopDetails
@@ -778,10 +783,69 @@ def shop_registration_successful(request):
     shop_name = "PineApple Inc."
     return render(request, 'management/shop-registration-success.html', {'shop_name' : shop_name})
 
-def show_pdf(request):
-    pdf = create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","GSTIN1212112","199 Package", "IN20210706001" ,199)
-    filename = "sample_pdf.pdf"
+def show_pdf(request, invoice_id):
+    shop = ShopDetails.objects.get(invoice_no=invoice_id)
+    buffer = io.BytesIO()
 
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
-    return response
+    p = canvas.Canvas(buffer)
+
+    p.setFont("Helvetica", 20, leading=None)
+    p.setFillColorRGB(1, 0.35294117647, 0)
+
+    p.drawString(270, 800, "Bharat")
+
+    p.setFillColorRGB(0, 0, 0)
+    p.drawString(330, 800, "Off")
+
+    p.setFont("Helvetica", 15, leading=None)
+    p.drawString(85, 780, "Office no.45 3rd Floor, Magneto Mall, Raipur 492001 (C.G.) India")
+
+    p.line(10, 770, 585, 770)
+
+    p.setFont("Helvetica-Bold", 15, leading=None)
+    p.drawString(280, 730, "INVOICE")
+
+    p.setFont("Helvetica", 12, leading=None)
+
+    p.drawString(480, 715, "Date: "+str(shop.date_of_registration))
+    p.drawString(420, 700, "GST No: 22FIAPS9006P1ZU")
+
+    p.drawString(20, 670, "Invoice Number: "+invoice_id)
+
+    p.drawString(20, 640, "Bill To:")
+    p.drawString(20, 615, shop.shop_name+",")
+    p.drawString(20, 600, shop.address+" - "+shop.city+",")
+    p.drawString(20, 585, "Contact No - "+shop.phone_number)
+
+    if len(shop.gst_no) > 3:
+        p.drawString(20, 570, "GST No - "+shop.gst_no)
+    
+    p.line(30, 540, 565, 540)
+    p.line(30, 500, 565, 500)
+    p.line(30, 460, 565, 460)
+
+    p.line(30, 540, 30, 460)
+    p.line(565, 540, 565, 460 )
+
+    p.line(450, 540, 450, 460 )
+
+    p.drawString(200, 518, "Description")
+    p.drawString(480, 518, "Amount")
+
+
+    p.drawString(200, 478, str(shop.package_amount)+" Package")
+    p.drawString(480, 478, str(round(shop.package_amount*0.82, 2))+" INR")
+
+    p.drawString(440, 410, "Total: "+str(round(shop.package_amount*0.82, 2))+" INR")
+    p.drawString(440, 390, "GST(18%): "+str(round(shop.package_amount*0.18, 2))+" INR")
+
+    p.setFont("Helvetica-Bold", 13, leading=None)
+    
+    p.drawString(440, 370, "Grand Total: "+str(shop.package_amount)+" INR")
+
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=invoice_id+'.pdf')

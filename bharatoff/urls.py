@@ -73,8 +73,7 @@ urlpatterns = [
     path('api/update-profile/', api_views.update_profile),
 
 
-    path('invoice/<str:invoice_number>', management_views.show_invoice, name='show-invoice'),
-    path('pdf/', management_views.show_pdf, name='show-pdf'),
+    path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
     
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
