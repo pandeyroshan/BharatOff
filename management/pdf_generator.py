@@ -82,9 +82,6 @@ def create_invoice(shop_name, shop_address, shop_phone_number, shop_gstno, order
     pdf.set_font('Arial', size=12, style="I")
     pdf.cell(200, 5, txt="In words: "+ num2words(amount)+"        ", border=20, ln=1, align="R")
 
-    pdf.image("./logo.jpg", 75, 9, 11, 10)
-    pdf.image("./stamp.png", 15, 122, 50, 50)
-
     pdf.dashed_line(10, 175, 200, 175)
 
     pdf.cell(500, 5, txt="In words: ", border=20, ln=1, align="C")
