@@ -716,15 +716,15 @@ def register_shopkeeper(request):
         shopkeeper.save()
 
         # create the pdf of the invoice
-        pdf = create_invoice(
-            request.POST.get('shopName'), 
-            request.POST.get('address'), 
-            request.POST.get('phoneNumber'), 
-            request.POST.get('gstNumber', 'Not Available'),
-            request.POST.get('packageAmount')+" Package", 
-            invoice_number,
-            int(request.POST.get('packageAmount'))
-        )
+        # pdf = create_invoice(
+        #     request.POST.get('shopName'), 
+        #     request.POST.get('address'), 
+        #     request.POST.get('phoneNumber'), 
+        #     request.POST.get('gstNumber', 'Not Available'),
+        #     request.POST.get('packageAmount')+" Package", 
+        #     invoice_number,
+        #     int(request.POST.get('packageAmount'))
+        # )
 
         shop.save()
 
