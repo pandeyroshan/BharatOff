@@ -91,3 +91,6 @@ def register_sales(request):
     form = SalesRegistrationForm()
     context = {'form': form}
     return render(request, 'users/register_sales.html', context)
+
+def app_privacy_policy(request):
+    return render(request,'users/app-privacy-policy.html',{})

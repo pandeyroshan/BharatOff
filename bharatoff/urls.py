@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('register/', users_views.register, name='register'),
+    path('app-privacy-policy/', users_views.app_privacy_policy, name='app-privacy-policy'),
     path('register-shop/', users_views.register_shopkeepers, name='register-shop'),
     path('register-freelancer/', users_views.register_freelancer, name='register-freelancer'),
     path('register-sales/', users_views.register_sales, name='register-sales'),

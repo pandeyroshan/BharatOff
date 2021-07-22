@@ -225,7 +225,7 @@ def get_ad_detail(request):
         "message" : "success",
         "data" : []
     }
-    ad = Files.objects.get(id=int(request.POST.get("ad_id")))
+    ad = Files.objects.get(id=int(request.POST.get("id")))
     user = User.objects.get(id = int(request.POST.get("user_id")))
 
     history = CouponHistory.objects.all().filter(user = user, ad = ad)
@@ -274,11 +274,14 @@ def get_ad_detail(request):
 
     context["coupon"] = {}
 
-    ad_coupon = Coupon.objects.get(offer = ad)
-    print(ad_coupon)
-
-    if ad_coupon:
+    try:
+        ad_coupon = Coupon.objects.get(offer = ad)
         context["coupon"]["code"] = ad_coupon.code
+    except Coupon.DoesNotExist:
+        context["coupon"]["code"] = ""
+
+#    if Coupon:
+#        context["coupon"]["code"] = ad_coupon.code
 
     return Response(context)
 
@@ -563,7 +566,7 @@ def create_user_with_phone_number(request):
         customer_profile.otp = otp
         customer_profile.save()
     
-    URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&response=json".format(customer_profile.mobile,"Welcome {0}, your OTP for bharatoff account is {1}".format(customer_profile.mobile, customer_profile.otp))
+    URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&DLT_TE_ID=1207161720147826445&response=json".format(customer_profile.mobile,"Welcome {0}, your OTP for BharatOff account is {1} %0A8YCI5DgeFy9 %0A%0ARegards, %0ABharatOff".format(customer_profile.mobile, customer_profile.otp))
     
     import requests
     requests.get(URL)
@@ -601,7 +604,7 @@ def verify_otp(request):
         })
     else:
         user = User.objects.get(username=phone_number)
-        # user.delete()
+#        user.delete()
         return Response({
             "message" : "OTP mismatched"
         })

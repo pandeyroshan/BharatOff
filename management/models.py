@@ -1,7 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django
-from datetime import date
+import os
+import uuid
+import random
+
+def user_directory_path(instance, filename):
+    path = "img/"
+    extension = "." + filename.split('.')[-1]
+    stringId = str(uuid.uuid4())
+    randInt = str(random.randint(10, 99))
+    filename_reformat = stringId + randInt + extension
+    return os.path.join(path, filename_reformat)
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -50,7 +60,7 @@ class CityData(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=1000, blank=False)
-    img = models.ImageField('Image',upload_to='img/', blank=True)
+    img = models.ImageField('Image',upload_to=user_directory_path, blank=True)
 
     def __str__(self):
         return self.name
@@ -99,16 +109,16 @@ class Files(models.Model):
     heading = models.CharField('Heading', max_length=300)
     phone_number = models.CharField('Phone Number', max_length=1000)
     whatsapp_link = models.URLField('Whatsapp URL', max_length=1000, blank=True)
-    img = models.ImageField('Image 1',upload_to='img/', blank=False)
-    img1 = models.ImageField('Image 2',upload_to='img/', blank=True)
-    img2 = models.ImageField('Image 3',upload_to='img/', blank=True)
-    img3 = models.ImageField('Image 4',upload_to='img/', blank=True)
-    img4 = models.ImageField('Image 5',upload_to='img/', blank=True)
-    img5 = models.ImageField('Image 6',upload_to='img/', blank=True)
-    img6 = models.ImageField('Image 7',upload_to='img/', blank=True)
-    img7 = models.ImageField('Image 8',upload_to='img/', blank=True)
-    img8 = models.ImageField('Image 9',upload_to='img/', blank=True)
-    img9 = models.ImageField('Image 10',upload_to='img/', blank=True)
+    img = models.ImageField('Image 1',upload_to=user_directory_path, blank=False)
+    img1 = models.ImageField('Image 2',upload_to=user_directory_path, blank=True)
+    img2 = models.ImageField('Image 3',upload_to=user_directory_path, blank=True)
+    img3 = models.ImageField('Image 4',upload_to=user_directory_path, blank=True)
+    img4 = models.ImageField('Image 5',upload_to=user_directory_path, blank=True)
+    img5 = models.ImageField('Image 6',upload_to=user_directory_path, blank=True)
+    img6 = models.ImageField('Image 7',upload_to=user_directory_path, blank=True)
+    img7 = models.ImageField('Image 8',upload_to=user_directory_path, blank=True)
+    img8 = models.ImageField('Image 9',upload_to=user_directory_path, blank=True)
+    img9 = models.ImageField('Image 10',upload_to=user_directory_path, blank=True)
     location = models.URLField('Google Location URL', max_length=50000, blank=True)
     date = models.DateField(default=django.utils.timezone.now)
     active = models.BooleanField(default=False)
@@ -202,7 +212,7 @@ class MarketingSources(models.Model):
         verbose_name_plural = 'Marketing Sources'
 
 class Resources(models.Model):
-    img = models.ImageField('Image 1',upload_to='img/', blank=False)
+    img = models.ImageField('Image 1',upload_to=user_directory_path, blank=False)
     code = models.CharField('Codeword', max_length=50, unique=True)
     keyword = models.TextField()
 
@@ -259,7 +269,7 @@ class Discount(models.Model):
 
     def __str__(self):
         return str(self.total_purchase)+":"+str(self.discount)
-    
+
     class Meta:
         verbose_name = 'Discount'
         verbose_name_plural = 'Discount'
