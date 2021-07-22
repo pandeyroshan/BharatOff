@@ -49,34 +49,34 @@
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">My Advertisements</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total - {{total_ads}}</a>
+                                        <a class="small text-white stretched-link" href="#">Total - {{total_advertisement}}</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Active Advertisements</div>
+                                    <div class="card-body">Total Verified Payments</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total - {{active_ads}}</a>
+                                        <a class="small text-white stretched-link" href="#">Total - {{total_verified_payments}}</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Total Views</div>
+                                    <div class="card-body">Total Unverified Payments</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total - {{counter}}</a>
+                                        <a class="small text-white stretched-link" href="#">Total - {{total_unverified_payments}}</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Locations</div>
+                                    <div class="card-body">Total Profit</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total - {{city_count}}</a>
+                                        <a class="small text-white stretched-link" href="#">Total - {{total_profit}}</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -97,6 +97,7 @@
                                                 <th class="text-center">Package Amount</th>
                                                 <th class="text-center">Transaction ID</th>
                                                 <th class="text-center">Payment Verified</th>
+                                                <th class="text-center">My Profit</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -107,6 +108,7 @@
                                                 <th class="text-center">Package Amount</th>
                                                 <th class="text-center">Transaction ID</th>
                                                 <th class="text-center">Payment Verified</th>
+                                                <th class="text-center">My Profit</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </tfoot>
@@ -122,6 +124,7 @@
                                                     {%else%}
                                                         <td class="text-center text-danger">Not Verified</td>
                                                     {%endif%}
+                                                    <td class="text-center">{{shop.profit}}</td>
                                                     <td class="text-center"><a href="" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>
                                                 </tr>
                                             {%endfor%}

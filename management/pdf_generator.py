@@ -94,5 +94,10 @@ def create_invoice(shop_name, shop_address, shop_phone_number, shop_gstno, order
 
     pdf.output("invoice/"+shop_name+".pdf")
 
+    return pdf.output("", "S")
+
+def test():
+    pass
+
 if __name__ == '__main__':
-    create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","GSTIN1212112","199 Package", "IN20210706001" ,199)
+    print(create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","GSTIN1212112","199 Package", "IN20210706001" ,199))

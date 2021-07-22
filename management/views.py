@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
 from .models import (
     CityData, 
     Address, 
@@ -631,8 +631,26 @@ def sales_dashboard(request):
         return redirect("/")
     else:
         all_shop_details = ShopDetails.objects.all().filter(created_by = request.user)
+        salesperson = SalesPerson.objects.get(user=request.user)
+
+        total_profit = 0
+        
+        for i in range(len(all_shop_details)):
+            profit = (all_shop_details[i].package_amount * 0.82)*((salesperson.share)/100.0)
+            total_profit+=profit
+            all_shop_details[i].profit = int(profit)
+        
+        verified_payements = 0
+        
+        for shop in all_shop_details:
+            if shop.payment_verified:
+                verified_payements+=1
         context = {
             'all_shops' : all_shop_details,
+            'total_advertisement' : len(all_shop_details),
+            'total_verified_payments' : verified_payements,
+            'total_unverified_payments' : len(all_shop_details) - verified_payements,
+            'total_profit' : int(total_profit)
         }
         return render(request, 'management/sales_dashboard.html', context=context)
 
@@ -698,7 +716,7 @@ def register_shopkeeper(request):
         shopkeeper.save()
 
         # create the pdf of the invoice
-        create_invoice(
+        pdf = create_invoice(
             request.POST.get('shopName'), 
             request.POST.get('address'), 
             request.POST.get('phoneNumber'), 
@@ -707,6 +725,8 @@ def register_shopkeeper(request):
             invoice_number,
             int(request.POST.get('packageAmount'))
         )
+
+        shop.save()
 
         # send_invoice_and_credentials(request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('shopName'), request.POST.get('emailAddress'))
 
@@ -757,3 +777,11 @@ def show_invoice(request, invoice_number):
 def shop_registration_successful(request):
     shop_name = "PineApple Inc."
     return render(request, 'management/shop-registration-success.html', {'shop_name' : shop_name})
+
+def show_pdf(request):
+    pdf = create_invoice("ABC Shop", "JP Nagar, Rewa - MP", "+91 9752315423","GSTIN1212112","199 Package", "IN20210706001" ,199)
+    filename = "sample_pdf.pdf"
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+    return response
