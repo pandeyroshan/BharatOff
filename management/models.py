@@ -291,7 +291,6 @@ class ShopDetails(models.Model):
     payment_verified = models.BooleanField(default=False)
     date_of_registration = models.DateField(default=django.utils.timezone.now)
     invoice_no = models.CharField(max_length=100, blank=True)
-    invoice_pdf = models.FileField(upload_to='all-invoices/', null=True)
 
     def __str__(self):
         return self.shop_name
