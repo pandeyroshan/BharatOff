@@ -280,13 +280,13 @@ class ShopDetails(models.Model):
     total_eligible_customer = models.IntegerField(default=0)
     package_amount = models.IntegerField(default=1)
     transaction_id = models.CharField(max_length=1000, blank=False)
-    image_file1 = models.FileField(upload_to='shop-images/', null=True)
+    image_file1 = models.ImageField('Image 1',upload_to='img/', blank=True, null=True)
     comment1 = models.CharField(max_length=1000, blank=True)
-    image_file2 = models.FileField(upload_to='shop-images/', null=True)
+    image_file2 = models.ImageField('Image 2',upload_to='img/', blank=True, null=True)
     comment2 = models.CharField(max_length=1000, blank=True)
-    image_file3 = models.FileField(upload_to='shop-images/', null=True)
+    image_file3 = models.ImageField('Image 3',upload_to='img/', blank=True, null=True)
     comment3 = models.CharField(max_length=1000, blank=True)
-    image_file4 = models.FileField(upload_to='shop-images/', null=True)
+    image_file4 = models.ImageField('Image 4',upload_to='img/', blank=True, null=True)
     comment4 = models.CharField(max_length=1000, blank=True)
     payment_verified = models.BooleanField(default=False)
     date_of_registration = models.DateField(default=django.utils.timezone.now)
@@ -298,3 +298,10 @@ class ShopDetails(models.Model):
     class Meta:
         verbose_name = 'Shop Informations'
         verbose_name_plural = 'Shop Informations'
+
+class FileTest(models.Model):
+    file = models.ImageField('Image 1',upload_to='img/', blank=False, null=True)
+    
+    class Meta:
+        verbose_name = "Testing Image File Upload"
+        verbose_name_plural = "Testing Image File"

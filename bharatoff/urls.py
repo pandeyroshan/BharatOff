@@ -74,6 +74,7 @@ urlpatterns = [
 
 
     path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
+    path('invoices/', management_views.show_all_invoices, name='download-all-invoice'),
     
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

@@ -369,6 +369,7 @@ def contact(request):
     msg_obj.save()
     return redirect('/')
 
+@login_required
 def dashboard(request):
     schedule_refresh()
     if request.user.is_staff:
@@ -692,7 +693,7 @@ def register_shopkeeper(request):
             total_eligible_customer = request.POST.get('totalCustomers'),
             package_amount = request.POST.get('packageAmount'),
             transaction_id = request.POST.get('transactionId'),
-            image_file1 = request.FILES['file1'].name if 'file1' in request.FILES else None,
+            image_file1 = request.FILES["file1"].name if 'file1' in request.FILES else None,
             comment1 = request.POST.get('comment1', 'No Comments'),
             image_file2 = request.FILES['file2'].name if 'file2' in request.FILES else None,
             comment2 = request.POST.get('comment2', 'No Comments'),
@@ -703,7 +704,18 @@ def register_shopkeeper(request):
             payment_verified = False,
             invoice_no = invoice_number
         )
+
+        if 'file1' in request.FILES:
+            shop.image_file1.save(request.FILES["file1"].name, request.FILES["file1"])
+        if 'file2' in request.FILES:
+            shop.image_file2.save(request.FILES["file2"].name, request.FILES["file2"])
+        if 'file3' in request.FILES:
+            shop.image_file3.save(request.FILES["file3"].name, request.FILES["file3"])
+        if 'file4' in request.FILES:
+            shop.image_file4.save(request.FILES["file4"].name, request.FILES["file4"])
+        
         shop.discounts.set(discount_list)
+        
         shop.save()
 
         user = User.objects.create_user(
@@ -849,3 +861,14 @@ def show_pdf(request, invoice_id):
 
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=invoice_id+'.pdf')
+
+@login_required
+def show_all_invoices(request):
+    if request.user.is_superuser:
+        all_shop_details = ShopDetails.objects.all()
+        context = {
+            "all_shop_details" : all_shop_details,
+        }
+        return render(request, "management/all_invoices.html", context)
+    else:
+        return redirect("/")

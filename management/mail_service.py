@@ -253,6 +253,7 @@ def send_credentials(name ,username_client, password_client, email):
     <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
     <p style="font-size: 14px; line-height: 140%;">Username - """+username_client+"""</p>
     <p style="font-size: 14px; line-height: 140%;">Password - """+password_client+"""</p>
+    <p style="font-size: 14px; line-height: 140%;">Dashboard - """+"""<a href="https://bharatoff.com/dashboard">Click here</a>"""+"""</p>
     <p style="font-size: 14px; line-height: 140%;">&nbsp;</p>
     <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 16px; line-height: 22.4px;">Support Team,</span><br /><strong>BharatOff</strong><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </p>
     </div>

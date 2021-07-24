@@ -114,6 +114,9 @@ class CouponHistoryAdmin(admin.ModelAdmin):
 
 class ShopDetailsAdmin(admin.ModelAdmin):
     model = ShopDetails
+    list_display = ('shop_name', 'owner_name', 'phone_number', 'city', 'package_amount', 'transaction_id', 'payment_verified', 'date_of_registration', 'invoice_no')
+    search_fields = ('created_by', 'invoice_no', 'transaction_id')
+    list_filter = ('payment_verified', 'date_of_registration', 'package_amount')
     readonly_fields = ('created_by', 'package_amount', 'discounts')
 
 admin.site.register(CityData,CityAdmin)
