@@ -152,6 +152,11 @@ def process_active_image(ad):
 
 @csrf_exempt
 def home(request):
+    if request.user.is_authenticated:
+        salesperson = SalesPerson.objects.all().filter(user = request.user)
+
+        if salesperson:
+            return redirect("/sales")
     schedule_refresh()
     address = Address.objects.all()[0]
     states = StateData.objects.all()

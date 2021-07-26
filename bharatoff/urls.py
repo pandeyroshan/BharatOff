@@ -18,6 +18,7 @@ urlpatterns = [
     path('register-freelancer/', users_views.register_freelancer, name='register-freelancer'),
     path('register-sales/', users_views.register_sales, name='register-sales'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'),name='login'),
+    path('change-password/', auth_views.PasswordChangeView.as_view(template_name='users/change-password.html',success_url='/'),name='change-password'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'),name='logout'),
 
     path('shop-registration/', management_views.register_shopkeeper, name="register-shop"),  

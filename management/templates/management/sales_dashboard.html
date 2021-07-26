@@ -31,6 +31,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="/change-password">Change Password</a>
                         <a class="dropdown-item" href="/logout/">Logout</a>
                     </div>
                 </li>
@@ -44,6 +45,9 @@
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Welcome {{user}}</li>
                         </ol>
+                        <div class="text-right mb-2">
+                            <a href="/shop-registration"><button class="btn btn-sm btn-primary" type="button">Register Shop</button></a>
+                        </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -76,7 +80,7 @@
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Total Profit</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total - {{total_profit}}</a>
+                                        <a class="small text-white stretched-link" href="#">Total - {{total_profit}} Rs.</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -85,7 +89,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                Advertisement List
+                                All time sales
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -96,6 +100,7 @@
                                                 <th class="text-center">Address</th>
                                                 <th class="text-center">Package Amount</th>
                                                 <th class="text-center">Transaction ID</th>
+                                                <th class="text-center">Date</th>
                                                 <th class="text-center">Payment Verified</th>
                                                 <th class="text-center">My Profit</th>
                                                 <th class="text-center">Action</th>
@@ -107,6 +112,7 @@
                                                 <th class="text-center">Address</th>
                                                 <th class="text-center">Package Amount</th>
                                                 <th class="text-center">Transaction ID</th>
+                                                <th class="text-center">Date</th>
                                                 <th class="text-center">Payment Verified</th>
                                                 <th class="text-center">My Profit</th>
                                                 <th class="text-center">Action</th>
@@ -117,14 +123,15 @@
                                                 <tr>
                                                     <td class="text-center">{{shop.shop_name}}</td>
                                                     <td class="text-center">{{shop.address}}, {{shop.city}}</td>
-                                                    <td class="text-center">{{shop.package_amount}}</td>
+                                                    <td class="text-center">Rs. {{shop.package_amount}}</td>
                                                     <td class="text-center">{{shop.transaction_id}}</td>
+                                                    <td class="text-center">{{shop.date_of_registration}}</td> 
                                                     {% if shop.payment_verified %}
                                                         <td class="text-center text-success">Verified</td>
                                                     {%else%}
                                                         <td class="text-center text-danger">Not Verified</td>
                                                     {%endif%}
-                                                    <td class="text-center">{{shop.profit}}</td>
+                                                    <td class="text-center">Rs. {{shop.profit}}</td>
                                                     <td class="text-center"><a href="" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>
                                                 </tr>
                                             {%endfor%}

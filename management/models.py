@@ -305,3 +305,14 @@ class FileTest(models.Model):
     class Meta:
         verbose_name = "Testing Image File Upload"
         verbose_name_plural = "Testing Image File"
+
+class SocialAccounts(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    url = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Social Accounts"
+        verbose_name_plural = "Social Accounts" 
