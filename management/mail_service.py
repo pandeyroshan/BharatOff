@@ -1014,8 +1014,6 @@ def send_invoice(name, package_amount, gst, total_amount, invoice_number, email)
                         <td class="content-cell" align="center">
                         <p class="f-fallback sub align-center">&copy; 2020 BharatOff. All rights reserved.</p>
                         <p class="f-fallback sub align-center">
-                            BharatOff
-                            <br>Raipur, Chattisgarh (India)
                         </p>
                         </td>
                     </tr>
