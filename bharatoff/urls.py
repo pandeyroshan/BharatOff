@@ -13,7 +13,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('register/', users_views.register, name='register'),
+    path('register/', users_views.register, name='register'),
     # path('register-shop/', users_views.register_shopkeepers, name='register-shop'),
     path('register-freelancer/', users_views.register_freelancer, name='register-freelancer'),
     # path('register-sales/', users_views.register_sales, name='register-sales'),
