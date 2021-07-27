@@ -683,6 +683,8 @@ def register_shopkeeper(request):
 
         invoice_number = "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all()))
 
+        salesperson = SalesPerson.objects.get(user = request.user)
+
         shop = ShopDetails.objects.create(
             created_by =  request.user,
             shop_name = request.POST.get('shopName'),
@@ -691,7 +693,8 @@ def register_shopkeeper(request):
             phone_number = request.POST.get('phoneNumber'),
             whatsapp_number = request.POST.get('whatsappNumber'),
             address = request.POST.get('address'),
-            city = request.POST.get('city'),
+            city = salesperson.city.city_name,
+            minilocation = request.POST.get('minilocation'),
             email_address = request.POST.get('emailAddress'),
             business_category = request.POST.get('businessCategory'),
             products = request.POST.get('products'),
@@ -737,17 +740,6 @@ def register_shopkeeper(request):
 
         shopkeeper.save()
 
-        # create the pdf of the invoice
-        # pdf = create_invoice(
-        #     request.POST.get('shopName'), 
-        #     request.POST.get('address'), 
-        #     request.POST.get('phoneNumber'), 
-        #     request.POST.get('gstNumber', 'Not Available'),
-        #     request.POST.get('packageAmount')+" Package", 
-        #     invoice_number,
-        #     int(request.POST.get('packageAmount'))
-        # )
-
         shop.save()
 
         # send_invoice_and_credentials(request.POST.get('ownerName').replace(" ",""), "Hello@321", request.POST.get('shopName'), request.POST.get('emailAddress'))
@@ -789,8 +781,17 @@ def register_shopkeeper(request):
         )
 
         return render(request, 'management/shop-registration-success.html', {'shop_name' : request.POST.get('shopName')})
-
-    return render(request, 'management/shop-register.html')
+    
+    salesperson = SalesPerson.objects.get(user = request.user)
+    
+    all_mini_location = MiniLocation.objects.all().filter(main_city = salesperson.city)
+    print(all_mini_location)
+    
+    context = {
+        "all_mini_location" : all_mini_location
+    }
+    
+    return render(request, 'management/shop-register.html', context=context)
 
 def show_invoice(request, invoice_number):
     shop_details = ShopDetails.objects.get(invoice_no=invoice_number)

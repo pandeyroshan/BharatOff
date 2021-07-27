@@ -273,6 +273,7 @@ class ShopDetails(models.Model):
     whatsapp_number = models.CharField(max_length=1000, blank=False)
     address = models.CharField(max_length=1000, blank=False)
     city = models.CharField(max_length=100,blank=False)
+    minilocation = models.CharField(max_length=100,blank=True)
     email_address = models.CharField(max_length=1000, blank=False)
     business_category = models.CharField(max_length=1000, blank=False)
     products = models.TextField()

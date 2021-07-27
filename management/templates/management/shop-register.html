@@ -75,8 +75,13 @@
                       <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">City</label>
-                        <input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Enter your city" required>
+                        <label for="exampleInputEmail1">Mini Location</label>
+                        <select class="form-control" id="minilocation" name="minilocation">
+                          <option value="All Minilocations">All Minilocations</option>
+                        {% for minilocation in all_mini_location%}
+                          <option value="{{minilocation}}">{{minilocation}}</option>
+                        {%endfor%}
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email Address</label>

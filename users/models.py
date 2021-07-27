@@ -46,6 +46,7 @@ class SalesPerson(models.Model):
     suspend_account = models.BooleanField(default=False)
     can_change_photo = models.BooleanField('Can Change Photo', default=False)
     share = models.IntegerField(default=0)
+    security_code = models.CharField(max_length=4,blank=True)
 
     def __str__(self):
         return self.user.username
