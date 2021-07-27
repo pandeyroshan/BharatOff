@@ -17,7 +17,8 @@ from management.models import (
     Coupon,
     CouponHistory,
     Discount,
-    ShopDetails
+    ShopDetails,
+    SocialAccounts
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -138,3 +139,4 @@ admin.site.register(Coupon, CouponAdmin)
 admin.site.register(CouponHistory, CouponHistoryAdmin)
 admin.site.register(Discount)
 admin.site.register(ShopDetails, ShopDetailsAdmin)
+admin.site.register(SocialAccounts)
