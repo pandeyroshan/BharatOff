@@ -23,7 +23,6 @@ class CustomerLoginAdmin(admin.ModelAdmin):
 
 class SalesPersonAdmin(admin.ModelAdmin):
     model = SalesPerson
-    readonly_fields = ('user', 'pwd')
     exclude = ('otp',)
     list_display = ('user','city')
 
