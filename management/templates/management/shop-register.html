@@ -47,11 +47,11 @@
             <div class="content-section">
                 <form method="POST" enctype="multipart/form-data" id="registerForm">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Shop Name</label>
+                        <label for="exampleInputEmail1">Shop Name<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="shopName" name="shopName" aria-describedby="emailHelp" placeholder="Enter shop name" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Owner Name</label>
+                        <label for="exampleInputEmail1">Owner Name<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="ownerName" name="ownerName" aria-describedby="emailHelp" placeholder="Enter owner name"  required>
                     </div>
                     <div class="form-group">
@@ -59,15 +59,15 @@
                       <input type="text" class="form-control" id="gstNumber" name="gstNumber" aria-describedby="emailHelp" placeholder="Provide the GST Number of Shopkeeper">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Phone Number</label>
+                        <label for="exampleInputEmail1">Phone Number<sup style="color: red">*</sup></label>
                         <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" aria-describedby="emailHelp" placeholder="Enter phone number" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Whatsapp Number</label>
+                        <label for="exampleInputEmail1">Whatsapp Number<sup style="color: red">*</sup></label>
                         <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
+                        <label for="exampleInputEmail1">Address<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp" placeholder="Enter your address" required>
                     </div>
                     <div class="form-check form-check-inline mb-3">
@@ -75,7 +75,7 @@
                       <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Mini Location</label>
+                        <label for="exampleInputEmail1">Mini Location<sup style="color: red">*</sup></label>
                         <select class="form-control" id="minilocation" name="minilocation">
                           <option value="All Minilocations">All Minilocations</option>
                         {% for minilocation in all_mini_location%}
@@ -84,12 +84,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email Address</label>
+                        <label for="exampleInputEmail1">Email Address<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Business Categories</label>
-                        <select class="form-control" id="businessCategory" name="businessCategory">
+                        <label for="exampleFormControlSelect1">Business Categories<sup style="color: red">*</sup></label>
+                        <select class="form-control" id="businessCategory" name="businessCategory" required>
                           <option value="Fashion">Fashion</option>
                           <option value="salon">Salon</option>
                           <option value="grocery">Grocery</option>
@@ -122,11 +122,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Products</label>
+                        <label for="exampleInputEmail1">Products<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="products" name="products" aria-describedby="emailHelp" placeholder="Your Products" required>
                     </div>
 
-                    <label for="exampleInputEmail1">Discounts</label>
+                    <label for="exampleInputEmail1">Discounts<sup style="color: red">*</sup></label>
                     <div id="inputBundle1" class="form-group d-flex">
                         <input type="number" id="purchase" name="purchaseData[]" class="purchaseInput form-control mb-1" placeholder="Minimum Purchase" required>
                         <input type="number" id="discount" name="discountData[]" class="discountInput form-control mb-1 ml-2" placeholder="Bharatoff Discount" required>
@@ -140,11 +140,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Total applicable customers</label>
+                        <label for="exampleInputEmail1">Total applicable customers<sup style="color: red">*</sup></label>
                         <input type="number" class="form-control" id="totalCustomers" name="totalCustomers" class="totalCustomers" aria-describedby="emailHelp" placeholder="How many customers should get this discount" required>
                     </div>
                     
-                    <label for="exampleFormControlSelect1">Package Type</label>
+                    <label for="exampleFormControlSelect1">Package Type<sup style="color: red">*</sup></label>
                     <div class="text-right">
                         <!-- <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount" required> -->
                         <select class="form-control" id="packageAmount" name="packageAmount">
@@ -184,15 +184,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Transaction ID</label>
+                        <label for="exampleInputEmail1">Transaction ID<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="transactionId" name="transactionId" aria-describedby="emailHelp" placeholder="Transaction ID of above payment" required>
                     </div>
 
                     <div class="form-group">
-                      <label class="form-label" for="customFile">Payment Proof</label>
+                      <label class="form-label" for="customFile">Payment Proof <sup style="color: red">*</sup></label>
                       <input type="file" class="form-control" id="file1" name="file1" />
 
-                      <label for="exampleInputEmail1">Comment for Payment Proof</label>
+                      <label for="exampleInputEmail1">Comment for Payment Proof <sup style="color: red">*</sup></label>
                       <input type="text" class="form-control" id="comment1" name="comment1" placeholder="Ex - Sent 2999 from Google Pay">
                     </div>
                     <div class="form-group">
