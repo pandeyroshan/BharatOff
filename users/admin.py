@@ -24,7 +24,9 @@ class CustomerLoginAdmin(admin.ModelAdmin):
 class SalesPersonAdmin(admin.ModelAdmin):
     model = SalesPerson
     exclude = ('otp',)
-    list_display = ('user','city')
+    list_display = ('user','city', 'mobile_number', 'pwd', 'share', 'security_code', 'security_warning')
+    list_filter = ('city', 'share')
+    search_fields = ('user','city', 'mobile_number')
 
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)

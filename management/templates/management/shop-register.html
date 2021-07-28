@@ -45,7 +45,7 @@
               <h3 class="font-weight-bold">Shop Registration</h3>
             </div>
             <div class="content-section">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" id="registerForm">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Shop Name</label>
                         <input type="text" class="form-control" id="shopName" name="shopName" aria-describedby="emailHelp" placeholder="Enter shop name" required>
@@ -148,7 +148,7 @@
                     <div class="text-right">
                         <!-- <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount" required> -->
                         <select class="form-control" id="packageAmount" name="packageAmount">
-                          <option value="99">99 INR (Minicity - Street Market)</option>
+                          <option value="99">99 INR (Minicity - Street Vendor</option>
                           <option value="199">199 INR (Minicity - Shop & Brands)</option>
                           <option value="2999">2999 INR (City - Shop & Brands)</option>
                           <option value="10000">10000 INR (State - Shop & Brands)</option>
@@ -224,7 +224,28 @@
                     </div>
                     {% csrf_token %}
                     <div class="form-group text-center mb-5">
-                        <button class="btn btn-outline-info" type="submit">Register Shop</button>
+                        <button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Register Shop</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">SECURE REGISTRATION PIN</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <input type="number" class="form-control" id="pin" name="pin" placeholder="Your 4 digit secure pin">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="checkPin()">Verify and Submit</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </form>
             </div>
@@ -367,6 +388,35 @@
           } else {
             alert("Please enter a valid URL");
           }
+        }
+
+        var unsuccessfulAttempt = 0;
+
+        function checkPin(){
+          var pin = document.getElementById("pin").value;
+          var correctPin = "{{pin}}";
+
+          if(pin == correctPin){
+            document.getElementById("registerForm").submit();
+          } else {
+            alert("Secure registration pin verification failed.");
+            unsuccessfulAttempt+=1;
+
+            if(unsuccessfulAttempt == 3){
+              alert("PIN Verification failed 3 times, A security concern for your account will be raised.");
+              sendSecurityAlert();
+            }
+          }
+        }
+
+        function sendSecurityAlert(){
+          var userId = "{{request.user.id}}";
+          $.get(
+              "/security-report/"+userId,
+              function(data) {
+                alert('page content: ' + data);
+              }
+          );
         }
       </script>
    </body>

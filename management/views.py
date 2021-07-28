@@ -788,7 +788,8 @@ def register_shopkeeper(request):
     print(all_mini_location)
     
     context = {
-        "all_mini_location" : all_mini_location
+        "all_mini_location" : all_mini_location,
+        "pin" : salesperson.security_code,
     }
     
     return render(request, 'management/shop-register.html', context=context)
@@ -878,3 +879,13 @@ def show_all_invoices(request):
         return render(request, "management/all_invoices.html", context)
     else:
         return redirect("/")
+
+def raise_security_concern(request, id):
+    user = User.objects.get(id=int(id))
+    salesperson = SalesPerson.objects.get(user = user)
+    salesperson.security_warning = True
+    salesperson.save()
+
+    print("\n\n\n"+"REPORT RAISED: "+user+"\n\n\n")
+
+    return redirect("/shop-registration")

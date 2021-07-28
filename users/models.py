@@ -47,6 +47,7 @@ class SalesPerson(models.Model):
     can_change_photo = models.BooleanField('Can Change Photo', default=False)
     share = models.IntegerField(default=0)
     security_code = models.CharField(max_length=4,blank=True)
+    security_warning = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
