@@ -84,3 +84,16 @@ class CustomerLogin(models.Model):
     class Meta:
         verbose_name = 'Customer Login Info'
         verbose_name_plural = 'Customer Login Info'
+
+class RewardScheme(models.Model):
+    package = models.IntegerField(default=0, blank=False)
+    total_sale = models.IntegerField(default=0, blank=False)
+    time = models.IntegerField('Time Duration in Days',default=0, blank=False)
+    total_rewards = models.IntegerField('Reward', default=0, blank=False)
+
+    def __str__(self):
+        return "Reward on "+str(self.package)
+    
+    class Meta:
+        verbose_name = "Reward Scheme"
+        verbose_name_plural = "Reward Scheme"

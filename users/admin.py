@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import UserProfile,Shopkeeper, Freelancer, CustomerLogin, SalesPerson
+from .models import UserProfile,Shopkeeper, Freelancer, CustomerLogin, SalesPerson, RewardScheme
 
 class ShopkeeperAdmin(admin.ModelAdmin):
     model = Shopkeeper
@@ -28,8 +28,13 @@ class SalesPersonAdmin(admin.ModelAdmin):
     list_filter = ('city', 'share')
     search_fields = ('user','city', 'mobile_number')
 
+class RewardSchemeAdmin(admin.ModelAdmin):
+    model = RewardScheme
+    list_display = ('package', 'total_sale', 'time', 'total_rewards')
+
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)
 admin.site.register(Freelancer, FreelancerAdmin)
 admin.site.register(CustomerLogin, CustomerLoginAdmin)
 admin.site.register(SalesPerson, SalesPersonAdmin)
+admin.site.register(RewardScheme, RewardSchemeAdmin)
