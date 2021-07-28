@@ -396,6 +396,24 @@
           var pin = document.getElementById("pin").value;
           var correctPin = "{{pin}}";
 
+          let allAreFilled = true;
+          document.getElementById("registerForm").querySelectorAll("[required]").forEach(function(i) {
+            if (!allAreFilled) return;
+            if (!i.value) allAreFilled = false;
+            if (i.type === "radio") {
+              let radioValueCheck = false;
+              document.getElementById("registerForm").querySelectorAll(`[name=${i.name}]`).forEach(function(r) {
+                if (r.checked) radioValueCheck = true;
+              })
+              allAreFilled = radioValueCheck;
+            }
+          })
+          $("#exampleModalCenter1").modal('hide');
+          if (!allAreFilled) {
+            alert('Fill all the fields');
+            return false;
+          }
+
           if(pin == correctPin){
             document.getElementById("registerForm").submit();
           } else {
