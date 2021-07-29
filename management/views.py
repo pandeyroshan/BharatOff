@@ -14,8 +14,14 @@ from .models import (
     Coupon,
     CouponHistory,
     Discount,
-    ShopDetails
+    ShopDetails,
 )
+
+from users.models import (
+    RewardScheme,
+    RewardHistory
+)
+import datetime
 
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
@@ -33,6 +39,7 @@ from .pdf_generator import create_invoice
 from django.http import FileResponse
 
 from datetime import date
+import django
 
 import io
 from reportlab.pdfgen import canvas
@@ -726,8 +733,14 @@ def register_shopkeeper(request):
         
         shop.save()
 
+        try:
+            if User.objects.get(username=request.POST.get('ownerName').replace(" ","")):
+                username = request.POST.get('ownerName').replace(" ","")+str(len(User.objects.all()))
+        except :
+            username = request.POST.get('ownerName').replace(" ","")
+
         user = User.objects.create_user(
-            username=request.POST.get('ownerName').replace(" ",""),
+            username=username,
             password="Hello@321"
         )
         user.save()
@@ -779,6 +792,88 @@ def register_shopkeeper(request):
             invoice_number, 
             request.POST.get('packageAmount')
         )
+
+        # check if the salesperson made 10 deals of Rs. 199 in a day
+
+        # fetch all the details which are not covered with the reward
+        all_shop_details = ShopDetails.objects.all().filter(created_by=request.user, date_of_registration=datetime.date.today(), covered_under_reward=False, package_amount=199)
+
+        print(all_shop_details)
+
+        reward_scheme = RewardScheme.objects.get(package=199)
+
+        if len(all_shop_details)>=reward_scheme.total_sale:
+            # give 100 Rs. Bonus to him with date
+            total_reward = (len(all_shop_details)/reward_scheme.total_sale)*reward_scheme.total_rewards
+            reward = RewardHistory.objects.create(
+                user = request.user,
+                note = "Earned a reward of Rs. "+str(total_reward)+" for making "+str(len(all_shop_details))+" sales in a Day.",
+                reward = total_reward
+            )
+            reward.save()
+
+            # make the those offers as covered_under_reward = True so that they are not selected next time
+
+            for i in range(int(len(all_shop_details)/reward_scheme.total_sale)*reward_scheme.total_sale):
+                all_shop_details[i].covered_under_reward = True
+                all_shop_details[i].save()
+
+        reward_scheme = RewardScheme.objects.get(package=2999)
+
+        # check if the salesperson made 1 deal of 2999
+        if int(request.POST.get('packageAmount')) == 2999:
+            # give 200 Rs. Bonus to him with date
+            reward = RewardHistory.objects.create(
+                user = request.user,
+                note = "Earned a reward of Rs."+str(reward_scheme.total_rewards)+" for making a 2999 Package sale.",
+                reward = reward_scheme.total_rewards
+            )
+
+            reward.save()
+
+            shop.covered_under_reward = True
+            shop.save()
+
+        # check if the total sale of this month is more than 50,000
+        today = datetime.date.today()
+        all_shop_details = ShopDetails.objects.all().filter(created_by=request.user, date_of_registration__month=today.month, covered_under_monthly_reward=False)
+        
+        this_month_total = 0
+
+        reward_scheme = RewardScheme.objects.get(package=50000)
+
+        for shop in all_shop_details:
+            this_month_total += shop.package_amount
+        
+        if this_month_total>=50000:
+            reward_amount = int(this_month_total/50000)*reward_scheme.total_rewards
+
+            reward = RewardHistory.objects.create(
+                user = request.user,
+                note = "Earned a reward of Rs."+str(reward_amount)+" for making a Rs."+str(this_month_total)+" sale this month.",
+                reward = reward_amount
+            )
+
+            reward.save()
+
+            this_month_total_check = 0
+
+            i=0
+
+            for shop in all_shop_details:
+                this_month_total_check += shop.package_amount
+
+                if this_month_total_check > int(this_month_total):
+                    i-=1
+                    break
+                elif this_month_total_check == int(this_month_total):
+                    break
+                else:
+                    i+=1
+            
+            for j in range(i+1):
+                all_shop_details[j].covered_under_monthly_reward = True
+                all_shop_details[j].save()
 
         return render(request, 'management/shop-registration-success.html', {'shop_name' : request.POST.get('shopName')})
     

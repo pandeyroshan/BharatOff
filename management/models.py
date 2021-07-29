@@ -292,6 +292,8 @@ class ShopDetails(models.Model):
     payment_verified = models.BooleanField(default=False)
     date_of_registration = models.DateField(default=django.utils.timezone.now)
     invoice_no = models.CharField(max_length=100, blank=True)
+    covered_under_reward = models.BooleanField(default=False)
+    covered_under_monthly_reward = models.BooleanField(default=False)
 
     def __str__(self):
         return self.shop_name

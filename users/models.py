@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from management.models import CityData
+import django
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -97,3 +98,16 @@ class RewardScheme(models.Model):
     class Meta:
         verbose_name = "Reward Scheme"
         verbose_name_plural = "Reward Scheme"
+
+class RewardHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    note = models.CharField(max_length=1000, blank=False)
+    date = models.DateField(default=django.utils.timezone.now)
+    reward = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username+"'s Reward"
+    
+    class Meta:
+        verbose_name = "Reward History"
+        verbose_name_plural = "Reward History"
