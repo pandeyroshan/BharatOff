@@ -47,6 +47,7 @@
                         </ol>
                         <div class="text-right mb-2">
                             <a href="/shop-registration"><button class="btn btn-sm btn-primary" type="button">Register Shop</button></a>
+                            <a href="#myRewards"><button class="btn btn-sm btn-success" type="button">My Rewards</button></a>
                         </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -136,6 +137,45 @@
                                                     <td class="text-center">Rs. {{shop.profit}}</td>
                                                     <td class="text-center"><a href="https://wa.me/91{{shop.whatsapp_number}}">Whatsapp</a></td>
                                                     <td class="text-center"><a href="" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>
+                                                </tr>
+                                            {%endfor%}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4" id="myRewards">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                My Rewards
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">Date</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Rewards</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">Date</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Total Rewards: Rs. </th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            {% for reward in my_rewards %}
+                                                <tr>
+                                                    <td class="text-center">{{forloop.counter}}.</td>
+                                                    <td class="text-center">{{reward.date}}</td>
+                                                    <td class="text-center">{{reward.note}}</td>
+                                                    <td class="text-center">Rs. {{reward.reward}}</td>
                                                 </tr>
                                             {%endfor%}
                                         </tbody>

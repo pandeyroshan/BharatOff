@@ -668,7 +668,8 @@ def sales_dashboard(request):
             'total_advertisement' : len(all_shop_details),
             'total_verified_payments' : verified_payements,
             'total_unverified_payments' : len(all_shop_details) - verified_payements,
-            'total_profit' : int(total_profit)
+            'total_profit' : int(total_profit),
+            'my_rewards' : RewardHistory.objects.all().filter(user=request.user)
         }
         return render(request, 'management/sales_dashboard.html', context=context)
 

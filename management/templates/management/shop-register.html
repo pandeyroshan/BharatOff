@@ -148,7 +148,7 @@
                     <div class="text-right">
                         <!-- <input type="number" id="packageAmount" name="packageAmount" class="purchaseInput form-control mb-3" placeholder="Package Amount" required> -->
                         <select class="form-control" id="packageAmount" name="packageAmount">
-                          <option value="99">99 INR (Minicity - Street Vendor</option>
+                          <option value="99">99 INR (Minicity - Street Vendor)</option>
                           <option value="199">199 INR (Minicity - Shop & Brands)</option>
                           <option value="2999">2999 INR (City - Shop & Brands)</option>
                           <option value="10000">10000 INR (State - Shop & Brands)</option>
@@ -414,16 +414,20 @@
             return false;
           }
 
-          if(pin == correctPin){
-            document.getElementById("registerForm").submit();
-          } else {
-            alert("Secure registration pin verification failed.");
-            unsuccessfulAttempt+=1;
+          if(document.getElementById("file1").value != ""){
+            if(pin == correctPin){
+              document.getElementById("registerForm").submit();
+            } else {
+              alert("Secure registration pin verification failed.");
+              unsuccessfulAttempt+=1;
 
-            if(unsuccessfulAttempt == 3){
-              alert("PIN Verification failed 3 times, A security concern for your account will be raised.");
-              sendSecurityAlert();
+              if(unsuccessfulAttempt == 3){
+                alert("PIN Verification failed 3 times, A security concern for your account will be raised.");
+                sendSecurityAlert();
+              }
             }
+          } else {
+            alert("Please Upload the Payment Proof");
           }
         }
 
