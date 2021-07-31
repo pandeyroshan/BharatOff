@@ -294,6 +294,7 @@ class ShopDetails(models.Model):
     invoice_no = models.CharField(max_length=100, blank=True)
     covered_under_reward = models.BooleanField(default=False)
     covered_under_monthly_reward = models.BooleanField(default=False)
+    sales_profit = models.FloatField(default=0)
 
     def __str__(self):
         return self.shop_name

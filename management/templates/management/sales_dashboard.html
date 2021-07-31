@@ -116,7 +116,7 @@
                                                 <th class="text-center">Transaction ID</th>
                                                 <th class="text-center">Date</th>
                                                 <th class="text-center">Payment Verified</th>
-                                                <th class="text-center">My Profit</th>
+                                                <th class="text-center">Total: Rs. {{total_share}}</th>
                                                 <th class="text-center">Connect</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -134,7 +134,7 @@
                                                     {%else%}
                                                         <td class="text-center text-danger">Not Verified</td>
                                                     {%endif%}
-                                                    <td class="text-center">Rs. {{shop.profit}}</td>
+                                                    <td class="text-center">Rs. {{shop.sales_profit}}</td>
                                                     <td class="text-center"><a href="https://wa.me/91{{shop.whatsapp_number}}">Whatsapp</a></td>
                                                     <td class="text-center"><a href="" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>
                                                 </tr>
@@ -166,7 +166,7 @@
                                                 <th class="text-center">S.No.</th>
                                                 <th class="text-center">Date</th>
                                                 <th class="text-center">Description</th>
-                                                <th class="text-center">Total Rewards: Rs. </th>
+                                                <th class="text-center">Total Rewards: Rs. {{total_rewards}}</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>

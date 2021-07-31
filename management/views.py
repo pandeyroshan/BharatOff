@@ -654,22 +654,30 @@ def sales_dashboard(request):
         total_profit = 0
         
         for i in range(len(all_shop_details)):
-            profit = (all_shop_details[i].package_amount * 0.82)*((salesperson.share)/100.0)
-            total_profit+=profit
-            all_shop_details[i].profit = int(profit)
+            total_profit+=all_shop_details[i].sales_profit
         
         verified_payements = 0
         
         for shop in all_shop_details:
             if shop.payment_verified:
                 verified_payements+=1
+        
+        total_reward_profit = 0
+        
+        my_rewards = RewardHistory.objects.all().filter(user=request.user)
+
+        for reward in my_rewards:
+            total_reward_profit += reward.reward
+        
         context = {
             'all_shops' : all_shop_details,
             'total_advertisement' : len(all_shop_details),
             'total_verified_payments' : verified_payements,
             'total_unverified_payments' : len(all_shop_details) - verified_payements,
-            'total_profit' : int(total_profit),
-            'my_rewards' : RewardHistory.objects.all().filter(user=request.user)
+            'total_profit' : round(total_profit,2)+int(total_reward_profit),
+            'my_rewards' : RewardHistory.objects.all().filter(user=request.user),
+            'total_rewards' : int(total_reward_profit),
+            'total_share' : round(total_profit,2)
         }
         return render(request, 'management/sales_dashboard.html', context=context)
 
@@ -678,6 +686,8 @@ def register_shopkeeper(request):
     if not SalesPerson.objects.get(user = request.user):
         return redirect("/")
     if request.method == 'POST':
+
+        salesperson = SalesPerson.objects.get(user = request.user)
 
         discount_list = []
         
@@ -718,7 +728,8 @@ def register_shopkeeper(request):
             image_file4 = request.FILES['file4'].name if 'file4' in request.FILES else None,
             comment4 = request.POST.get('comment4', 'No Comments'),
             payment_verified = False,
-            invoice_no = invoice_number
+            invoice_no = invoice_number,
+            sales_profit = int(request.POST.get('packageAmount'))*((salesperson.share)/100.0)*0.82
         )
 
         if 'file1' in request.FILES:
@@ -734,18 +745,22 @@ def register_shopkeeper(request):
         
         shop.save()
 
+
+        # create a username
         try:
             if User.objects.get(username=request.POST.get('ownerName').replace(" ","")):
                 username = request.POST.get('ownerName').replace(" ","")+str(len(User.objects.all()))
         except :
             username = request.POST.get('ownerName').replace(" ","")
 
+        # create the user
         user = User.objects.create_user(
             username=username,
             password="Hello@321"
         )
         user.save()
-
+        
+        # create the shopkeeper
         shopkeeper = Shopkeeper.objects.create(
             user = user,
             mobile_number = request.POST.get('phoneNumber'),
@@ -981,6 +996,9 @@ def raise_security_concern(request, id):
     salesperson = SalesPerson.objects.get(user = user)
     salesperson.security_warning = True
     salesperson.save()
+
+    user.is_active = False
+    user.save()
 
     print("\n\n\n"+"REPORT RAISED: "+user+"\n\n\n")
 

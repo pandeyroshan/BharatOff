@@ -418,12 +418,20 @@
             if(pin == correctPin){
               document.getElementById("registerForm").submit();
             } else {
-              alert("Secure registration pin verification failed.");
+              if(unsuccessfulAttempt == 0)
+              {
+                alert("Secure registration pin verification failed, 2 Attempts remaining.");
+              }
+              if(unsuccessfulAttempt == 1)
+              {
+                alert("Secure registration pin verification failed, 1 Attempts remaining.");
+              }
               unsuccessfulAttempt+=1;
 
               if(unsuccessfulAttempt == 3){
                 alert("PIN Verification failed 3 times, A security concern for your account will be raised.");
                 sendSecurityAlert();
+                window.location.replace("/logout");
               }
             }
           } else {
