@@ -950,7 +950,7 @@ def send_invoice(name, package_amount, gst, total_amount, invoice_number, email)
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
                                     <tr>
                                     <td align="center">
-                                        <a href="http://bharatoff.com/invoice/"""+invoice_number+"""" class="f-fallback button button--green" target="_blank">Download Invoice</a>
+                                        <a href="http://bharatoff.com/invoice/?invoice-number="""+invoice_number+"""" class="f-fallback button button--green" target="_blank">Download Invoice</a>
                                     </td>
                                     </tr>
                                 </table>

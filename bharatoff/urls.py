@@ -75,7 +75,8 @@ urlpatterns = [
     path('api/update-profile/', api_views.update_profile),
 
 
-    path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
+    # path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
+    path('invoice/', management_views.show_pdf, name='show-invoice'),
     path('invoices/', management_views.show_all_invoices, name='download-all-invoice'),
     
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),

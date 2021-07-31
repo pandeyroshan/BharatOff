@@ -699,7 +699,7 @@ def register_shopkeeper(request):
             discount.save()
             discount_list.append(discount)
 
-        invoice_number = "IN"+ str(date.today()).replace("-", "") + str(len(ShopDetails.objects.all()))
+        invoice_number = "INV/BOFF/"+ str(1001 + len(ShopDetails.objects.all()))
 
         salesperson = SalesPerson.objects.get(user = request.user)
 
@@ -913,7 +913,8 @@ def shop_registration_successful(request):
     shop_name = "PineApple Inc."
     return render(request, 'management/shop-registration-success.html', {'shop_name' : shop_name})
 
-def show_pdf(request, invoice_id):
+def show_pdf(request):
+    invoice_id = request.GET.get("invoice-number")
     shop = ShopDetails.objects.get(invoice_no=invoice_id)
     buffer = io.BytesIO()
 
@@ -928,7 +929,7 @@ def show_pdf(request, invoice_id):
     p.drawString(330, 800, "Off")
 
     p.setFont("Helvetica", 15, leading=None)
-    p.drawString(85, 780, "Office no.45 3rd Floor, Magneto Mall, Raipur 492001 (C.G.) India")
+    p.drawString(50, 780, "3rd Floor, Shop no-45, Magneto Mall, Labhandi Road, Raipur (C.G.) - 492002")
 
     p.line(10, 770, 585, 770)
 
@@ -958,13 +959,31 @@ def show_pdf(request, invoice_id):
     p.line(565, 540, 565, 460 )
 
     p.line(450, 540, 450, 460 )
+    p.line(70, 540, 70, 460 ) # line after S.No.
 
-    p.drawString(200, 518, "Description")
+
+    p.line(400, 540, 400, 460 )
+    p.line(350, 540, 350, 460 )
+
+    p.drawString(35, 518, "S.No.")
+    p.drawString(40, 478, "1.")
+
+    p.drawString(360, 518, "QTY")
+    p.drawString(370, 478, "1")
+
+    p.drawString(410, 518, "Unit")
+    p.drawString(415, 478, "Year")
+
+    p.drawString(180, 518, "Description")
     p.drawString(480, 518, "Amount")
 
+    p.setFont("Helvetica", 10, leading=None)
 
-    p.drawString(200, 478, str(shop.package_amount)+" Package")
+
+    p.drawString(80, 478, str(shop.package_amount)+" Package (1 Year Advertisement + Dashboard Support)")
     p.drawString(480, 478, str(round(shop.package_amount*0.82, 2))+" INR")
+
+    p.setFont("Helvetica", 13, leading=None)
 
     p.drawString(440, 410, "Total: "+str(round(shop.package_amount*0.82, 2))+" INR")
     p.drawString(440, 390, "GST(18%): "+str(round(shop.package_amount*0.18, 2))+" INR")
@@ -972,6 +991,13 @@ def show_pdf(request, invoice_id):
     p.setFont("Helvetica-Bold", 13, leading=None)
     
     p.drawString(440, 370, "Grand Total: "+str(shop.package_amount)+" INR")
+
+
+    p.setFont("Helvetica-Bold", 7, leading=None)
+
+    p.drawString(30, 350, "Payment Terms: 100% Paid")
+
+    p.drawString(30, 50, "This is computer generated invoice. No Signature is required.")
 
 
     p.showPage()
