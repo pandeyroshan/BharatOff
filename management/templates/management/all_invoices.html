@@ -94,7 +94,7 @@
                                                     {%endif%}
                                                     <td class="text-center">{{shop.date_of_registration}}</td>
                                                     <td class="text-center">{{shop.invoice_no}}</td>
-                                                    <td class="text-center"><a href="/invoice/{{shop.invoice_no}}" style="text-decoration: none;" class="invoice_download"><span class="fa-spin">Download Invoice</span></a></td>
+                                                    <td class="text-center"><a href="/invoice/?invoice-number={{shop.invoice_no}}" style="text-decoration: none;" class="invoice_download"><span class="fa-spin">Download Invoice</span></a></td>
                                                 </tr>
                                             {%endfor%}
                                         </tbody>
