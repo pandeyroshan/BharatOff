@@ -20,6 +20,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'),name='login'),
     path('change-password/', auth_views.PasswordChangeView.as_view(template_name='users/change-password.html',success_url='/'),name='change-password'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'),name='logout'),
+    path('update-password/', users_views.update_password, name="update-password"),
 
     path('shop-registration/', management_views.register_shopkeeper, name="register-shop"),  
     path('success/', management_views.shop_registration_successful, name="register-shop-success"),  

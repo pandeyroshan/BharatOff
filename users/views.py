@@ -91,3 +91,22 @@ def register_sales(request):
     form = SalesRegistrationForm()
     context = {'form': form}
     return render(request, 'users/register_sales.html', context)
+
+def update_password(request):
+    user_id = request.GET.get('user_id')
+
+    user = User.objects.get(id=int(user_id))
+    try:
+        salesperson = SalesPerson.objects.get(user= user)
+        salesperson.pwd = request.GET.get('password')
+
+        salesperson.save()
+    except:
+        shopkeeper = Shopkeeper.objects.get(user=user)
+        shopkeeper.pwd = request.GET.get('password')
+
+        shopkeeper.save()
+
+    print('Password changed')
+
+    return redirect('/login')
