@@ -1,3 +1,4 @@
+from management.sms_delivery import send_username_password
 from django.shortcuts import render,redirect
 from .forms import UserRegisterForm, ShopkeeperRegisterForm, FreelancerRegisterForm, SalesRegistrationForm
 from management.models import CityData
@@ -5,6 +6,7 @@ from django.contrib.auth.models import User
 from users.models import UserProfile, Shopkeeper, Freelancer, SalesPerson   
 from management.models import Address
 
+from management.mail_service import send_username_password_via_email
 # Create your views here.
 
 def register(request):
@@ -110,3 +112,18 @@ def update_password(request):
     print('Password changed')
 
     return redirect('/login')
+
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            profile = SalesPerson.objects.get(email=email)
+        except:
+            try:
+                profile = Shopkeeper.objects.get(email=email)
+            except:
+                return redirect('/login')
+        send_username_password_via_email(profile.user.username, profile.pwd, profile.email)
+        return render(request,"users/password-sent-successful.html")
+        pass
+    return render(request,'users/forgot-password.html')

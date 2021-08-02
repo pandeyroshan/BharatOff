@@ -21,6 +21,7 @@ class UserProfile(models.Model):
 class Shopkeeper(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobile_number = models.CharField(max_length=15, blank=False)
+    email = models.EmailField(blank=True)
     pwd = models.CharField('Password', max_length=1000, blank=False)
     city = models.ForeignKey(CityData, blank=True, on_delete=models.CASCADE, null=True)
     comment = models.TextField(blank=True)
@@ -39,6 +40,7 @@ class Shopkeeper(models.Model):
 class SalesPerson(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobile_number = models.CharField(max_length=15, blank=False)
+    email = models.EmailField(blank=True)
     pwd = models.CharField('Password', max_length=1000, blank=False)
     city = models.ForeignKey(CityData, blank=True, on_delete=models.CASCADE)
     otp = models.IntegerField(default=0)
