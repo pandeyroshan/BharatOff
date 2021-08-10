@@ -92,13 +92,13 @@ class CouponAdmin(admin.ModelAdmin):
     search_fields = ('code',)
 
     def has_add_permission(self, request):
-        return False
+        return True
     
     def has_delete_permission(self, request, obj = None):
-        return False
+        return True
     
     def has_change_permission(self, request, obj = None):
-        return False
+        return True
 
 class CouponHistoryAdmin(admin.ModelAdmin):
     model = CouponHistory
@@ -115,7 +115,7 @@ class CouponHistoryAdmin(admin.ModelAdmin):
 
 class ShopDetailsAdmin(admin.ModelAdmin):
     model = ShopDetails
-    list_display = ('shop_name', 'owner_name', 'phone_number', 'city', 'package_amount', 'transaction_id', 'payment_verified', 'date_of_registration', 'invoice_no')
+    list_display = ('shop_name', 'owner_name', 'phone_number', 'city', 'package_amount', 'transaction_id', 'payment_verified', 'date_of_registration', 'invoice_no', 'design_approved')
     search_fields = ('created_by', 'invoice_no', 'transaction_id')
     list_filter = ('payment_verified', 'date_of_registration', 'package_amount')
     readonly_fields = ('created_by', 'package_amount', 'discounts')

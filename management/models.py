@@ -88,11 +88,11 @@ class StateData(models.Model):
 
 class Files(models.Model):
     comes_under = models.ForeignKey(User, verbose_name='Salesperson', related_name='comes_under',on_delete=models.CASCADE)
-    package_type = models.ForeignKey(PackageType, on_delete = models.CASCADE)
+    package_type = models.ForeignKey(PackageType, on_delete = models.CASCADE, null=True)
     change_at = models.CharField('Phamplet will change',max_length=50, choices=TIME_INTERVAL, default='5')
     city = models.ManyToManyField(CityData)
     MiniLocation = models.ManyToManyField(MiniLocation)
-    user = models.ForeignKey(User,limit_choices_to={'is_staff': True}, on_delete = models.CASCADE)
+    user = models.ForeignKey(User,limit_choices_to={'is_staff': True}, on_delete = models.CASCADE, verbose_name="Shopkeeper")
     company_name = models.CharField(max_length=300,blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     icon_category = models.CharField(max_length=50, choices=CHOICES_CATEGORY, default="1")
@@ -275,7 +275,7 @@ class ShopDetails(models.Model):
     city = models.CharField(max_length=100,blank=False)
     minilocation = models.CharField(max_length=100,blank=True)
     email_address = models.CharField(max_length=1000, blank=False)
-    business_category = models.CharField(max_length=1000, blank=False)
+    business_category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     products = models.TextField()
     discounts = models.ManyToManyField(Discount)
     total_eligible_customer = models.IntegerField(default=0)
@@ -295,6 +295,10 @@ class ShopDetails(models.Model):
     covered_under_reward = models.BooleanField(default=False)
     covered_under_monthly_reward = models.BooleanField(default=False)
     sales_profit = models.FloatField(default=0)
+    forward_to_freelancer = models.BooleanField(default=False)
+    final_pamphlet = models.ImageField('Final Design', upload_to='img/', blank=True, null=True)
+    design_approved = models.BooleanField(default=False)
+    freelancer_profit = models.IntegerField(default=0)
 
     def __str__(self):
         return self.shop_name

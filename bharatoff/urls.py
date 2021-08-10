@@ -24,6 +24,12 @@ urlpatterns = [
     path('forgot-password/', users_views.forgot_password, name="forgot-password"),
 
     path('shop-registration/', management_views.register_shopkeeper, name="register-shop"),  
+    path('view-shop-details/', management_views.view_shop_details, name="view-shop-details"),
+    path('view-shop-details-freelancer/', management_views.view_shop_details_freelancer, name="view-shop-details-freelancer"),
+    path('forward-to-freelancer/', management_views.forward_to_freelancer, name="forward-to-freelancer"),
+    path('approve-design/', management_views.approve_design, name="approve-design"),
+    path('reject-design', management_views.reject_with_comment, name="reject-design"),
+    path('upload-design', management_views.upload_design, name="upload-design"),
     path('success/', management_views.shop_registration_successful, name="register-shop-success"),  
     path('', management_views.home,name='home'),
     path('location', management_views.location_based, name='location-based'),
@@ -34,6 +40,7 @@ urlpatterns = [
     path('search/', management_views.search, name='search'),
 
     path('dashboard/', management_views.dashboard, name='dashboard'),
+    path('freelancer/', management_views.freelancer_dashboard, name="freelancer-dashboard"),
 
     path('category/fashion/<int:id>/', management_views.fashion, name='fashion'),
     path('category/property/<int:id>/', management_views.property, name='property'),

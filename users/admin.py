@@ -13,9 +13,9 @@ class ShopkeeperAdmin(admin.ModelAdmin):
 
 class FreelancerAdmin(admin.ModelAdmin):
     model = Freelancer
-    list_display = ('user', 'mobile_number', 'pwd', 'comes_under')
+    list_display = ('user', 'mobile_number', 'pwd', 'comes_under', 'per_design_profit')
     radio_fields = {"comes_under": admin.HORIZONTAL}
-    readonly_fields = ('user','pwd')
+    exclude = ('otp',)
 
 class CustomerLoginAdmin(admin.ModelAdmin):
     model = CustomerLogin

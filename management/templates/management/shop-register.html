@@ -67,6 +67,10 @@
                         <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number" required>
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Email Address<sup style="color: red">*</sup></label>
+                      <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Address<sup style="color: red">*</sup></label>
                         <input type="text" class="form-control" id="address" name="address" aria-describedby="emailHelp" placeholder="Enter your address" required>
                     </div>
@@ -75,50 +79,11 @@
                       <label class="form-check-label" for="inlineCheckbox1">My Shop is available on google map.</label>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Mini Location<sup style="color: red">*</sup></label>
-                        <select class="form-control" id="minilocation" name="minilocation">
-                          <option value="All Minilocations">All Minilocations</option>
-                        {% for minilocation in all_mini_location%}
-                          <option value="{{minilocation}}">{{minilocation}}</option>
-                        {%endfor%}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email Address<sup style="color: red">*</sup></label>
-                        <input type="text" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email address" required>
-                    </div>
-                    <div class="form-group">
                         <label for="exampleFormControlSelect1">Business Categories<sup style="color: red">*</sup></label>
                         <select class="form-control" id="businessCategory" name="businessCategory" required>
-                          <option value="Fashion">Fashion</option>
-                          <option value="salon">Salon</option>
-                          <option value="grocery">Grocery</option>
-                          <option value="supermarket">Supermarket</option>
-                          <option value="Electronic">Electronic</option>
-                          <option value="Jewellers">Jewellers</option>
-                          <option value="Bakery and Cake">Bakery and Cake</option>
-                          <option value="Mobile and Repair">Mobile and Repair</option>
-                          <option value="Wedding Photography">Wedding Photography</option>
-                          <option value="Fancy & Gift">Fancy & Gift</option>
-                          <option value="Ayurveda">Ayurveda</option>
-                          <option value="Motorcycle Dealer">Motorcycle Dealer</option>
-                          <option value="Health & Insurance">Health & Insurance</option>
-                          <option value="Service">Service</option>
-                          <option value="Shoes">Shoes</option>
-                          <option value="Electric Vehicle">Electric Vehicle</option>
-                          <option value="Restaurant">Restaurant</option>
-                          <option value="Hospital/Medical">Hospital/Medical</option>
-                          <option value="Properties">Properties</option>
-                          <option value="Furniture">Furniture</option>
-                          <option value="Books & Sports">Books & Sports</option>
-                          <option value="Manufacturers/Wholesalers">Manufacturers/Wholesalers</option>
-                          <option value="Cars">Cars</option>
-                          <option value="Pets">Pets</option>
-                          <option value="Jobs">Jobs</option>
-                          <option value="School & College">School & College</option>
-                          <option value="Kitchen Appliances">Kitchen Appliances</option>
-                          <option value="Agriculture">Agriculture</option>
-                          <option value="Others">Others</option>
+                          {%for category in categories%}
+                            <option value={{category.id}}>{{category}}</option>
+                          {%endfor%}
                         </select>
                     </div>
                     <div class="form-group">
@@ -189,31 +154,42 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="form-label" for="customFile">Payment Proof <sup style="color: red">*</sup></label>
-                      <input type="file" class="form-control" id="file1" name="file1" />
+                      <label for="exampleInputEmail1">Advertisement Coverage<sup style="color: red">*</sup></label>
+                      <select class="form-control" id="minilocation" name="minilocation">
+                        <option value="-1">All Minilocations</option>
+                        {% for minilocation in all_mini_location%}
+                          <option value="{{minilocation}}">{{minilocation}}</option>
+                        {%endfor%}
+                        <option value="NA">NA (for State and Country)</option>
+                      </select>
+                  </div>
 
-                      <label for="exampleInputEmail1" class="mt-2">Comment for Payment Proof <sup style="color: red">*</sup></label>
+                    <div class="form-group">
+                      <label class="form-label" for="customFile">Payment Proof <sup style="color: red">*</sup></label>
+                      <input type="file" class="form-control-file" id="file1" name="file1" />
+
+                      <label for="exampleInputEmail1" class="mt-3">Comment for Payment Proof <sup style="color: red">*</sup></label>
                       <input type="text" class="form-control" id="comment1" name="comment1" placeholder="Ex - Sent 2999 from Google Pay">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="customFile">Upload Photos 1</label>
-                      <input type="file" class="form-control" id="file2" name="file2" />
+                      <input type="file" class="form-control-file" id="file2" name="file2" />
 
-                      <label for="exampleInputEmail1" class="mt-2">Comment for Photo 1</label>
+                      <label for="exampleInputEmail1" class="mt-3">Comment for Photo 1</label>
                       <input type="text" class="form-control" id="comment2" name="comment2" placeholder="Add comments for Photo 1">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="customFile">Upload Photos 2</label>
-                      <input type="file" class="form-control" id="file3" name="file3" />
+                      <input type="file" class="form-control-file" id="file3" name="file3" />
 
-                      <label for="exampleInputEmail1" class="mt-2">Comment for Photo 2</label>
+                      <label for="exampleInputEmail1" class="mt-3">Comment for Photo 2</label>
                       <input type="text" class="form-control" id="comment3" name="comment3" placeholder="Add comments for Photo 2">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="customFile">Upload Photos 3</label>
-                      <input type="file" class="form-control" id="file4" name="file4" />
+                      <input type="file" class="form-control-file" id="file4" name="file4" />
 
-                      <label for="exampleInputEmail1" class="mt-2">Comment for Photo 3</label>
+                      <label for="exampleInputEmail1" class="mt-3">Comment for Photo 3</label>
                       <input type="text" class="form-control" id="comment4" name="comment4" placeholder="Add comments for Photo 3">
                     </div>
 

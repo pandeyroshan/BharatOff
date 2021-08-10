@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from management.models import CityData
 import django
+from management.models import ShopDetails
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -63,9 +64,10 @@ class Freelancer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
     mobile_number = models.CharField(max_length=15, blank=False)
     pwd = models.CharField('Password', max_length=1000, blank=False)
-    comes_under = models.OneToOneField(SalesPerson, on_delete = models.CASCADE, null=True)
+    comes_under = models.ForeignKey(SalesPerson, on_delete = models.CASCADE, null=True)
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
+    per_design_profit = models.IntegerField('Per Design Cost',default=0)
 
     def __str__(self):
         return self.user.username
@@ -113,3 +115,22 @@ class RewardHistory(models.Model):
     class Meta:
         verbose_name = "Reward History"
         verbose_name_plural = "Reward History"
+
+class FreelancerEarning(models.Model):
+    freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(default=django.utils.timezone.now)
+    note = models.CharField(max_length=1000, blank=True)
+    earning = models.IntegerField(default=0, blank=True)
+
+    def __str__(self):
+        return self.freelancer.user.username+"'s Earning"
+
+class Designcomments(models.Model):
+    shopdetails = models.ForeignKey(ShopDetails, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(default=django.utils.timezone.now)
+    comment = models.CharField(max_length=3000, blank=False)
+
+    class Meta:
+        verbose_name = "Design Comments"
+        verbose_name_plural = "Design Comments"

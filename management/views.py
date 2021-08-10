@@ -18,8 +18,10 @@ from .models import (
 )
 
 from users.models import (
+    Freelancer,
     RewardScheme,
-    RewardHistory
+    RewardHistory,
+    Designcomments
 )
 import datetime
 
@@ -164,6 +166,11 @@ def home(request):
 
         if salesperson:
             return redirect("/sales")
+        
+        freelancer = Freelancer.objects.all().filter(user = request.user)
+
+        if freelancer:
+            return redirect("/freelancer")
     schedule_refresh()
     address = Address.objects.all()[0]
     states = StateData.objects.all()
@@ -714,7 +721,7 @@ def register_shopkeeper(request):
             city = salesperson.city.city_name,
             minilocation = request.POST.get('minilocation'),
             email_address = request.POST.get('emailAddress'),
-            business_category = request.POST.get('businessCategory'),
+            business_category = Category.objects.get(id=int(request.POST.get('businessCategory'))),
             products = request.POST.get('products'),
             total_eligible_customer = request.POST.get('totalCustomers'),
             package_amount = request.POST.get('packageAmount'),
@@ -729,7 +736,8 @@ def register_shopkeeper(request):
             comment4 = request.POST.get('comment4', 'No Comments'),
             payment_verified = False,
             invoice_no = invoice_number,
-            sales_profit = int(request.POST.get('packageAmount'))*((salesperson.share)/100.0)*0.82
+            sales_profit = int(request.POST.get('packageAmount'))*((salesperson.share)/100.0)*0.82,
+            forward_to_freelancer = True
         )
 
         if 'file1' in request.FILES:
@@ -756,6 +764,7 @@ def register_shopkeeper(request):
         # create the user
         user = User.objects.create_user(
             username=username,
+            email= request.POST.get("emailAddress"),
             password="Hello@321"
         )
         user.save()
@@ -765,6 +774,7 @@ def register_shopkeeper(request):
             user = user,
             mobile_number = request.POST.get('phoneNumber'),
             pwd = "Hello@321",
+            is_staff=True
         )
 
         shopkeeper.save()
@@ -901,6 +911,7 @@ def register_shopkeeper(request):
     context = {
         "all_mini_location" : all_mini_location,
         "pin" : salesperson.security_code,
+        "categories" : Category.objects.all()
     }
     
     return render(request, 'management/shop-register.html', context=context)
@@ -1029,3 +1040,208 @@ def raise_security_concern(request, id):
     print("\n\n\n"+"REPORT RAISED: "+user+"\n\n\n")
 
     return redirect("/shop-registration")
+
+@login_required
+def freelancer_dashboard(request):
+    freelancer = Freelancer.objects.get(user = request.user)
+
+    all_shop_details = ShopDetails.objects.all().filter(created_by = freelancer.comes_under.user)
+
+    print(all_shop_details)
+
+    context = {
+        "all_shops" : all_shop_details,
+    }
+
+    return render(request, "management/freelancer-dashboard.html", context = context)
+
+@login_required
+def view_shop_details(request):
+    shop_id = int(request.GET.get('shop-id'))
+    shop = ShopDetails.objects.get(id=shop_id)
+
+    comments = Designcomments.objects.all().filter(shopdetails=ShopDetails.objects.get(id=shop_id)).order_by("-datetime")
+
+    context = {
+        "shop" : shop,
+        "comments": comments
+    }
+    return render(request, "management/view-shop-details.html", context=context)
+
+def forward_to_freelancer(request):
+    shop_id = int(request.GET.get("shop_id"))
+    shop = ShopDetails.objects.get(id=shop_id)
+
+    shop.forward_to_freelancer = True
+    shop.save()
+
+    return HttpResponse("Success")
+
+def approve_design(request):
+    shop_id = int(request.GET.get("shop_id"))
+    shop = ShopDetails.objects.get(id=shop_id)
+    salesperson = SalesPerson.objects.get(user=shop.created_by)
+
+    shop.design_approved = True
+    shop.save()
+
+    # create a offer
+
+    # for Country
+    if shop.package_amount == 100000:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = shop.final_pamphlet
+        )
+        cities = CityData.objects.all()
+        minilocations = MiniLocation.objects.all()
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for State
+    if shop.package_amount == 10000:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = shop.final_pamphlet
+        )
+
+        state = StateData.objects.get(cities=salesperson.city)
+        cities = state.cities.all()
+        minilocations = []
+
+        for city in cities:
+            minilocations += MiniLocation.objects.all().filter(main_city=city)
+        
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+
+    # for city
+    if shop.package_amount == 2999:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = shop.final_pamphlet
+        )
+
+        cities = [salesperson.city,]
+        minilocations = MiniLocation.objects.all().filter(main_city=salesperson.city)
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for Mini Location
+    if shop.package_amount == 199:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = shop.final_pamphlet
+        )
+
+        cities = [salesperson.city,]
+        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for Street vendors
+    if shop.package_amount == 99:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = shop.final_pamphlet
+        )
+
+        cities = [salesperson.city,]
+        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+    
+    return HttpResponse("Success")
+
+def reject_with_comment(request):
+    print(request.POST)
+    shop_id = int(request.POST.get("shop_id"))
+    comment = request.POST.get("comment")
+
+    design_comment = Designcomments.objects.create(
+        shopdetails = ShopDetails.objects.get(id=shop_id),
+        user = request.user,
+        comment = comment
+    )
+
+    design_comment.save()
+
+    return redirect("/view-shop-details/?shop-id="+str(shop_id))
+
+def view_shop_details_freelancer(request):
+    shop_id = int(request.GET.get("shop_id"))
+    shopdetails = ShopDetails.objects.get(id=shop_id)
+
+    comments = Designcomments.objects.all().filter(shopdetails=ShopDetails.objects.get(id=shop_id)).order_by("-datetime")
+
+    context = {
+        "shop" : shopdetails,
+        "comments" : comments,
+    }
+    return render(request, "management/view-shop-details-freelancer.html", context = context)
+
+def upload_design(request):
+    print(request.POST)
+    shop_id = int(request.POST.get("shop_id"))
+    comment = request.POST.get("comment")
+
+    shopDetails = ShopDetails.objects.get(id=shop_id)
+
+    if 'design' in request.FILES:
+        shopDetails.final_pamphlet.save(request.FILES["design"].name, request.FILES["design"])
+    
+    shopDetails.save()
+    
+    design_comment = Designcomments.objects.create(
+        shopdetails = ShopDetails.objects.get(id=shop_id),
+        user = request.user,
+        comment = comment
+    )
+
+    design_comment.save()
+    return redirect("/view-shop-details-freelancer/?shop_id="+str(shop_id))
