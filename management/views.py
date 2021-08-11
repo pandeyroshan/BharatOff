@@ -767,14 +767,14 @@ def register_shopkeeper(request):
             email= request.POST.get("emailAddress"),
             password="Hello@321"
         )
+        user.is_staff=True 
         user.save()
         
         # create the shopkeeper
         shopkeeper = Shopkeeper.objects.create(
             user = user,
             mobile_number = request.POST.get('phoneNumber'),
-            pwd = "Hello@321",
-            is_staff=True
+            pwd = "Hello@321"
         )
 
         shopkeeper.save()

@@ -15,7 +15,7 @@ def send_invoice_and_credentials(username, password, shop_name, email_address):
     body = "Welcome to BharatOff family, \n\nThank you for choosing BharatOff to reach your customers. Please find your username and password along with the Invoice of your Transaction.\nUsername - "+username+"\nPassword - "+password+"\n\nWe wish you a great sale ahead.\n\nRegards,\nTeam BharatOff"
     sender_email = "Info@bharatoff.com"
     receiver_email = email_address
-    password = "ravkjzahrnxwscki" #"@Info8602950609"
+    password = "jtyrjtclwsizuxom" #"@Info8602950609"
 
     # Create a multipart message and set headers
     message = MIMEMultipart()
@@ -58,7 +58,7 @@ def send_invoice_and_credentials(username, password, shop_name, email_address):
 def send_credentials(name ,username_client, password_client, email):
     sender_email = "Info@bharatoff.com"
     receiver_email = email
-    password = "ravkjzahrnxwscki"
+    password = "jtyrjtclwsizuxom"
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "Welcome to BharatOff"
@@ -451,7 +451,7 @@ def send_credentials(name ,username_client, password_client, email):
 def send_invoice(name, package_amount, gst, total_amount, invoice_number, email):
     sender_email = "Info@bharatoff.com" #"contact@bharatoff.com"
     receiver_email = email
-    password = "ravkjzahrnxwscki" #"@Bharat8602950609"
+    password = "jtyrjtclwsizuxom" #"@Bharat8602950609"
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "BharatOff - Invoice Mailer"
@@ -1051,7 +1051,7 @@ def send_invoice(name, package_amount, gst, total_amount, invoice_number, email)
 def send_username_password_via_email(username, username_password, email):
     sender_email = "Info@bharatoff.com" #"contact@bharatoff.com"
     receiver_email = email
-    password = "ravkjzahrnxwscki" #"@Bharat8602950609"
+    password = "jtyrjtclwsizuxom" #"@Bharat8602950609"
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "BharatOff - Forgot Password Mail"
