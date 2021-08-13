@@ -64,10 +64,11 @@ class Freelancer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
     mobile_number = models.CharField(max_length=15, blank=False)
     pwd = models.CharField('Password', max_length=1000, blank=False)
-    comes_under = models.ForeignKey(SalesPerson, on_delete = models.CASCADE, null=True)
+    comes_under = models.ManyToManyField(SalesPerson)
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
     per_design_profit = models.IntegerField('Per Design Cost',default=0)
+    date_of_joining = models.DateField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.user.username

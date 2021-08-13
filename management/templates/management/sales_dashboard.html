@@ -145,7 +145,11 @@
                                                                 <td class="text-center text-warning">Design under construction</td>
                                                             {%endif%}
                                                         {%else%}
-                                                                <td class="text-center text-danger">Deactive</td>
+                                                            {%if shop.design_approved%}
+                                                                <td class="text-center text-success">Approved</td>
+                                                            {%else%}
+                                                                <td class="text-center text-warning">Design under construction</td>
+                                                            {%endif%}
                                                         {%endif%}
                                                     </td>
                                                     <td class="text-center"><a href="/view-shop-details?shop-id={{shop.id}}" style="text-decoration: none;"><span class="fa-spin">Open Now</span></a></td>

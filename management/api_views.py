@@ -104,7 +104,7 @@ def all_advertisement(request):
     counter.visit += random.randint(0,5)
     counter.save()
 
-    all_ads = Files.objects.all().filter(MiniLocation=nearest_location)
+    all_ads = Files.objects.all().filter(MiniLocation=nearest_location, active=True)
 
     for i in range(len(all_ads)):
         if all_ads[i].active_image == 0:
@@ -319,7 +319,7 @@ def get_search_result(request):
 
     keywords = [x.lower() for x in keywords]
     
-    all_offers = Files.objects.all().filter(city = nearest_location.main_city)
+    all_offers = Files.objects.all().filter(city = nearest_location.main_city, active=True)
 
     searched_offers = []
 
@@ -487,7 +487,7 @@ def category_wise_ad(request):
             nearest_location = mini_location
     
     category = Category.objects.get(id = int(cat_id))
-    all_offers = Files.objects.all().filter(city = nearest_location.main_city, category = category)
+    all_offers = Files.objects.all().filter(city = nearest_location.main_city, category = category, active=True)
 
     for i in range(len(all_offers)):
         if all_offers[i].active_image == 0:

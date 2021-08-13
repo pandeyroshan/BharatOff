@@ -299,6 +299,7 @@ class ShopDetails(models.Model):
     final_pamphlet = models.ImageField('Final Design', upload_to='img/', blank=True, null=True)
     design_approved = models.BooleanField(default=False)
     freelancer_profit = models.IntegerField(default=0)
+    designed_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="designed_by")
 
     def __str__(self):
         return self.shop_name

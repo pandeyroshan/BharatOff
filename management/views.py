@@ -1045,7 +1045,12 @@ def raise_security_concern(request, id):
 def freelancer_dashboard(request):
     freelancer = Freelancer.objects.get(user = request.user)
 
-    all_shop_details = ShopDetails.objects.all().filter(created_by = freelancer.comes_under.user)
+    all_salesperson_user = []
+    
+    for salesperson in freelancer.comes_under.all():
+        all_salesperson_user.append(salesperson.user)
+
+    all_shop_details = ShopDetails.objects.all().filter(created_by__in = all_salesperson_user).filter(date_of_registration__gt=freelancer.date_of_joining)
 
     print(all_shop_details)
 
@@ -1196,6 +1201,8 @@ def approve_design(request):
 
         offer.save()
     
+    # give reward to the freelancer
+    
     return HttpResponse("Success")
 
 def reject_with_comment(request):
@@ -1226,7 +1233,6 @@ def view_shop_details_freelancer(request):
     return render(request, "management/view-shop-details-freelancer.html", context = context)
 
 def upload_design(request):
-    print(request.POST)
     shop_id = int(request.POST.get("shop_id"))
     comment = request.POST.get("comment")
 

@@ -13,8 +13,7 @@ class ShopkeeperAdmin(admin.ModelAdmin):
 
 class FreelancerAdmin(admin.ModelAdmin):
     model = Freelancer
-    list_display = ('user', 'mobile_number', 'pwd', 'comes_under', 'per_design_profit')
-    radio_fields = {"comes_under": admin.HORIZONTAL}
+    list_display = ('user', 'mobile_number', 'pwd', 'per_design_profit')
     exclude = ('otp',)
 
 class CustomerLoginAdmin(admin.ModelAdmin):
