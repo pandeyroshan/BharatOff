@@ -90,6 +90,21 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME': 'bharatoff',
+#         'USER': 'bharatoff_dbuser',
+#         'PASSWORD': '7L67Iw#Ywh7^o&w5',
+#         'HOST': 'database-bharatoff.c9qv4rxqjwp8.ap-south-1.rds.amazonaws.com',   # Localhost
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             "init_command": "SET foreign_key_checks = 0;",
+#         },
+#     }
+# }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
