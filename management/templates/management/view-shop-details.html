@@ -63,7 +63,9 @@
 
                         {%if shop.design_approved%}
                             <div class="text-center mt-3">
-                                <a id="design" href="{{shop.final_pamphlet.url}}" hidden download></a>
+                                {%if shop.final_pamphlet%}
+                                    <a id="design" href="{{shop.final_pamphlet.url}}" hidden download></a>
+                                {%endif%}
                                 <button class="btn btn-success btn-sm" disabled>Design Approved</button>
                                 <button class="btn btn-success btn-sm" onclick="donwloadAndSend()">Send Design</button>
                             </div>
