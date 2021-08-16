@@ -52,8 +52,6 @@
                                 <a href=""><button class="btn btn-sm btn-primary" type="button" onclick="forwardToFreelancer()">Forward For Designing</button></a>
                             {%endif%}
                         </div>
-
-                        <br>
                         <p class="text-center">Phamplate Design</p>
                         {%if shop.final_pamphlet%}
                             <img class="d-block w-100" src="{{shop.final_pamphlet.url}}">
@@ -99,7 +97,12 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-success btn-sm ml-3" onclick="approveDesign()">Approve Design</button>
+                                    <button class="btn btn-success btn-sm" onclick="approveDesign()">Approve Design</button><br>
+                                    
+                                    <div class="text-center mt-2">
+                                        <a class="btn btn-success btn-sm" id="designAndSend" href="{{shop.final_pamphlet.url}}" download onclick="hideDesignButton()">Download Design</a>
+                                        <a class="btn btn-success btn-sm disabled" id="sendWhatsapp" href="https://wa.me/91{{shop.whatsapp_number}}?text=Hi%20Greetings%20from%20BharatOff,%20here%20is%20your%20design%20for%20Ad%20service">Send Design</a>
+                                    </div>
                                 </div>
                             {%endif%}
                         {%endif%}
@@ -150,6 +153,8 @@
         <script src="{% static 'dashboard/assets/demo/datatables-demo.js' %}"></script>
 
         <script>
+            var bool = false;
+
             function forwardToFreelancer(){
                 var shopId = "{{shop.id}}";
                 
@@ -173,6 +178,18 @@
                 );
 
                 window.location.reload();
+            }
+
+            function hideDesignButton(){
+                var x = document.getElementById("designAndSend");
+
+                x.innerHTML="Downloaded";
+
+                x.classList.add("disabled");
+
+                var y = document.getElementById("sendWhatsapp");
+
+                y.classList.remove("disabled");
             }
 
             function donwloadAndSend(){

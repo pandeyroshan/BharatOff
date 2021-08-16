@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     'rest_framework',
+    'django_s3_storage',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = '/'
+
+AWS_ACCESS_KEY_ID  = 'AKIA3KW2SJW6V4RJDHIU'
+AWS_SECRET_ACCESS_KEY  = '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'
+AWS_S3_BUCKET_NAME  = 'cdn.bharatoff.com'
+AWS_REGION  = 'ap-south-1'
+DEFAULT_FILE_STORAGE = 'django_s3_storage.storage.S3Storage'
+AWS_S3_CONTENT_DISPOSITION = 'attachment'
