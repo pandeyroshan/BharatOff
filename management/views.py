@@ -1251,3 +1251,15 @@ def upload_design(request):
 
     design_comment.save()
     return redirect("/view-shop-details-freelancer/?shop_id="+str(shop_id))
+
+def update_social_media_links(request):
+    offer = Files.objects.get(user=request.user)
+
+    offer.facebook_link = request.POST.get("facebookUrl")
+    offer.instagram_link = request.POST.get("instagramUrl")
+    offer.youtube_link = request.POST.get("youtubeUrl")
+    offer.location = request.POST.get("gmapUrl")
+
+    offer.save()
+    
+    return redirect("/dashboard")

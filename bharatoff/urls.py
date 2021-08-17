@@ -31,6 +31,7 @@ urlpatterns = [
     path('reject-design', management_views.reject_with_comment, name="reject-design"),
     path('upload-design', management_views.upload_design, name="upload-design"),
     path('success/', management_views.shop_registration_successful, name="register-shop-success"),  
+    path('update-social-links', management_views.update_social_media_links, name="update-social-media"),
     path('', management_views.home,name='home'),
     path('location', management_views.location_based, name='location-based'),
     path('city/<int:id>/', management_views.city_ad, name='city_add'),

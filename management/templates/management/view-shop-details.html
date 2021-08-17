@@ -65,7 +65,10 @@
                                     <a id="design" href="{{shop.final_pamphlet.url}}" hidden download></a>
                                 {%endif%}
                                 <button class="btn btn-success btn-sm" disabled>Design Approved</button>
-                                <button class="btn btn-success btn-sm" onclick="donwloadAndSend()">Send Design</button>
+                                <div class="text-center mt-2">
+                                    <a class="btn btn-success btn-sm" id="designAndSend" href="{{shop.final_pamphlet.url}}" download onclick="hideDesignButton()">Download Design</a>
+                                    <a class="btn btn-success btn-sm disabled" id="sendWhatsapp" href="https://wa.me/91{{shop.whatsapp_number}}?text=Hi%20Greetings%20from%20BharatOff,%20here%20is%20your%20design%20for%20Ad%20service">Send Design</a>
+                                </div>
                             </div>
                         {%else%}
                             {%if shop.final_pamphlet%}
@@ -97,7 +100,7 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-success btn-sm" onclick="approveDesign()">Approve Design</button><br>
+                                    <button class="btn btn-success btn-sm" id="approveDesignButton" onclick="approveDesign()">Approve Design</button><br>
                                     
                                     <div class="text-center mt-2">
                                         <a class="btn btn-success btn-sm" id="designAndSend" href="{{shop.final_pamphlet.url}}" download onclick="hideDesignButton()">Download Design</a>
@@ -168,6 +171,9 @@
             }
 
             function approveDesign(){
+
+                alert("The Following design will be approved and uploaded for final review by Admin.");
+
                 var shopId = "{{shop.id}}";
 
                 $.get(
