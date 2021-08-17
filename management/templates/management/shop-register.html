@@ -24,6 +24,17 @@
       <link href="{% static 'offer/vendor/aos/aos.css' %}" rel="stylesheet">
       <link href="{% static 'offer/css/style.css' %}" rel="stylesheet">
       <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+      <style>
+          #loading {
+              background: red;
+              position: fixed;
+              top: 0;
+              width: 100%;
+              height: 100%;
+          }
+      </style>
    </head>
    <body>
       <!-- ======= Header ======= -->
@@ -64,7 +75,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Whatsapp Number<sup style="color: red">*</sup></label>
-                        <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number" required>
+                        <input type="number" class="form-control" id="whatsappNumber" name="whatsappNumber" aria-describedby="emailHelp" placeholder="Enter whatsapp number" onfocus="copyFunction()" required>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Email Address<sup style="color: red">*</sup></label>
@@ -199,8 +210,27 @@
                         <label class="form-check-label" for="inlineCheckbox1">I agree to the terms and conditions.</label>
                     </div>
                     {% csrf_token %}
-                    <div class="form-group text-center mb-5">
+                    <div class="form-group text-center mb-2">
                         <button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#exampleModalCenter1">Register Shop</button>
+                    </div>
+
+                    <button class="btn btn-outline-info" id="showLoader" type="button" data-toggle="modal" data-target="#loader">Loader</button>
+                   
+                    <!-- loader -->
+                    <div class="modal fade" id="loader" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Shop Registration Under Process</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Please wait while we submit your form.</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <!-- Modal -->
@@ -214,7 +244,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <input type="number" class="form-control" id="pin" name="pin" placeholder="Your 4 digit secure pin">
+                            <input type="password" class="form-control" id="pin" name="pin" placeholder="Your 4 digit secure pin">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -392,6 +422,8 @@
 
           if(document.getElementById("file1").value != "") {
             if(pin == correctPin){
+              var loaderButton = document.getElementById("showLoader");
+              loaderButton.click();
               document.getElementById("registerForm").submit();
             } else {
               if(unsuccessfulAttempt == 0)
@@ -423,6 +455,13 @@
                 alert('page content: ' + data);
               }
           );
+        }
+
+        function copyFunction(){
+          var x = document.getElementById("phoneNumber");
+          var y = document.getElementById("whatsappNumber");
+
+          y.innerHTML = x.value;
         }
       </script>
    </body>
