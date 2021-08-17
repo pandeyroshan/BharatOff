@@ -694,6 +694,11 @@ def register_shopkeeper(request):
         return redirect("/")
     if request.method == 'POST':
 
+        shopdetails = ShopDetails.objects.all().filter(shop_name = request.POST.get('shopName'))
+
+        if shopdetails:
+            return redirect("/sales")
+
         salesperson = SalesPerson.objects.get(user = request.user)
 
         discount_list = []
@@ -1261,5 +1266,5 @@ def update_social_media_links(request):
     offer.location = request.POST.get("gmapUrl")
 
     offer.save()
-    
+
     return redirect("/dashboard")
