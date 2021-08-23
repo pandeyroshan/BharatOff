@@ -18,7 +18,8 @@ from management.models import (
     CouponHistory,
     Discount,
     ShopDetails,
-    SocialAccounts
+    SocialAccounts,
+    PaymentIssue
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -102,7 +103,7 @@ class CouponAdmin(admin.ModelAdmin):
 
 class CouponHistoryAdmin(admin.ModelAdmin):
     model = CouponHistory
-    list_display = ('code','user','status','expiry_date')
+    # list_display = ()
 
     def has_add_permission(self, request):
         return True
@@ -140,3 +141,4 @@ admin.site.register(CouponHistory, CouponHistoryAdmin)
 admin.site.register(Discount)
 admin.site.register(ShopDetails, ShopDetailsAdmin)
 admin.site.register(SocialAccounts)
+admin.site.register(PaymentIssue)

@@ -82,6 +82,8 @@ urlpatterns = [
     path('api/verify-otp/',api_views.verify_otp), # pass phone number and otp (that user entered)
     path('api/scratch/',api_views.scratch_coupon),
     path('api/coupon-history/',api_views.get_coupon_history),
+    path('api/redeem/', api_views.make_coupon_redeemed),  # pass coupon_id and user_id to redeem a coupon 
+    path("api/report-coupon/", api_views.log_payment_issue),
     path('api/update-profile/', api_views.update_profile),
 
 

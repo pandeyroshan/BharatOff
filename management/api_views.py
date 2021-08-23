@@ -24,6 +24,7 @@ from .models import (
     Resources, 
     Coupon, 
     CouponHistory, 
+    PaymentIssue
     )
 from .views import schedule_refresh
 
@@ -91,9 +92,11 @@ def all_advertisement(request):
     
     nearest_city = nearest_location.main_city
 
-    address = Address.objects.all()[0]
+    print(nearest_city)
 
     nearby_location = MiniLocation.objects.all().filter(main_city=nearest_city)
+
+    print(nearby_location)
     
     states = StateData.objects.all()
 
@@ -105,6 +108,8 @@ def all_advertisement(request):
     counter.save()
 
     all_ads = Files.objects.all().filter(MiniLocation=nearest_location, active=True)
+
+    print(all_ads)
 
     for i in range(len(all_ads)):
         if all_ads[i].active_image == 0:
@@ -161,15 +166,29 @@ def all_advertisement(request):
         current_ad["image_link"] = str(data.real_image)
         current_ad["rating"] = str(data.rating)
 
+        current_ad["coupons"] = []
+
+        all_coupons = Coupon.objects.all().filter(offer=data)
+
+        for coupon in all_coupons:
+            new_coupon_detail = {}
+            new_coupon_detail["coupon_id"] = coupon.id
+            new_coupon_detail["coupon_code"] = coupon.code
+            new_coupon_detail["minimum_purchase"] = coupon.minimum_purchase
+            new_coupon_detail["total_discount"] = coupon.total_discount
+            new_coupon_detail["is_active"] = coupon.active
+            new_coupon_detail["last_date"] = coupon.end_date
+
+            current_ad["coupons"].append(new_coupon_detail)
+
         all_ads_json.append(current_ad)
-    
-    print(type(all_ads_json))
+
+        print(current_ad)
 
     context = {
         "message" : "success",
         "data" : all_ads_json
     }
-    print(all_ads_json)
     return Response(context)
 
 @api_view(['GET'])
@@ -228,14 +247,6 @@ def get_ad_detail(request):
     ad = Files.objects.get(id=int(request.POST.get("ad_id")))
     user = User.objects.get(id = int(request.POST.get("user_id")))
 
-    history = CouponHistory.objects.all().filter(user = user, ad = ad)
-
-    if history:
-        context["scratch_status"] = True
-    else:
-        context["scratch_status"] = False
-    
-
     if ad.active_image == 0:
         ad.real_image = ad.img
     elif ad.active_image == 1:
@@ -270,15 +281,21 @@ def get_ad_detail(request):
     context["data"][0]["youtube_link"] = ad.youtube_link
     context["data"][0]["image_link"] = str(ad.real_image)
     context["data"][0]["rating"] = str(ad.rating)
-    
 
-    context["coupon"] = {}
+    context["data"][0]["coupon"] = []
 
-    ad_coupon = Coupon.objects.get(offer = ad)
-    print(ad_coupon)
+    all_coupons = Coupon.objects.all().filter(offer=ad)
 
-    if ad_coupon:
-        context["coupon"]["code"] = ad_coupon.code
+    for coupon in all_coupons:
+        new_coupon_detail = {}
+        new_coupon_detail["coupon_id"] = coupon.id
+        new_coupon_detail["coupon_code"] = coupon.code
+        new_coupon_detail["minimum_purchase"] = coupon.minimum_purchase
+        new_coupon_detail["total_discount"] = coupon.total_discount
+        new_coupon_detail["is_active"] = coupon.active
+        new_coupon_detail["last_date"] = coupon.end_date
+
+        context["data"][0]["coupon"].append(new_coupon_detail)
 
     return Response(context)
 
@@ -380,6 +397,21 @@ def get_search_result(request):
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
         current_ad["rating"] = str(data.rating)
+
+        current_ad["coupons"] = []
+
+        all_coupons = Coupon.objects.all().filter(offer=data)
+
+        for coupon in all_coupons:
+            new_coupon_detail = {}
+            new_coupon_detail["coupon_id"] = coupon.id
+            new_coupon_detail["coupon_code"] = coupon.code
+            new_coupon_detail["minimum_purchase"] = coupon.minimum_purchase
+            new_coupon_detail["total_discount"] = coupon.total_discount
+            new_coupon_detail["is_active"] = coupon.active
+            new_coupon_detail["last_date"] = coupon.end_date
+
+            current_ad["coupons"].append(new_coupon_detail)
         
         context["data"].append(current_ad)
     return Response(context)
@@ -529,6 +561,21 @@ def category_wise_ad(request):
         current_ad["youtube_link"] = data.youtube_link
         current_ad["image_link"] = str(data.real_image)
         current_ad["rating"] = str(data.rating)
+
+        current_ad["coupons"] = []
+
+        all_coupons = Coupon.objects.all().filter(offer=data)
+
+        for coupon in all_coupons:
+            new_coupon_detail = {}
+            new_coupon_detail["coupon_id"] = coupon.id
+            new_coupon_detail["coupon_code"] = coupon.code
+            new_coupon_detail["minimum_purchase"] = coupon.minimum_purchase
+            new_coupon_detail["total_discount"] = coupon.total_discount
+            new_coupon_detail["is_active"] = coupon.active
+            new_coupon_detail["last_date"] = coupon.end_date
+
+            current_ad["coupons"].append(new_coupon_detail)
         
         context["data"].append(current_ad)
     return Response(context)
@@ -609,13 +656,19 @@ def verify_otp(request):
 @api_view(['POST'])
 def scratch_coupon(request):
     schedule_refresh()
+    
     context = {}
-    user_id = request.POST.get('user_id')
-    ad_id = request.POST.get('ad_id')
-    history = CouponHistory.objects.all().filter(user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id=int(ad_id)))
+    
+    user_id = int(request.POST.get('user_id'))
+    coupon_id = int(request.POST.get('coupon_id'))
+
+    user = User.objects.get(id=user_id)
+    coupon = Coupon.objects.get(id=coupon_id)
+
+    history = CouponHistory.objects.all().filter(user=user, coupon=coupon)
+
     if history:
         if history[0].status:
-            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
             return Response({
                 "message" : "SUCCESS",
                 "data" : {
@@ -623,8 +676,11 @@ def scratch_coupon(request):
                     "status" : True,
                     "coupon_info" : {
                         "code" : coupon.code,
-                        "start_date" : coupon.start_date,
-                        "active" : coupon.active
+                        "expiry_date" : coupon.end_date,
+                        "active" : coupon.active,
+                        "minimum_purchase" : coupon.minimum_purchase,
+                        "total_discount" : coupon.total_discount,
+                        "is_redeemed" : history[0].is_redeemed,
                     }
                 }
             })
@@ -638,23 +694,25 @@ def scratch_coupon(request):
             })
     else:
         if random.choice([True, False]):
-            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
-            history = CouponHistory.objects.create(code = coupon.code, user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=True, expiry_date=coupon.end_date)
+            history = CouponHistory.objects.create(user=user, coupon=coupon, status=True)
             history.save()
-            coupon = Coupon.objects.get(offer = Files.objects.get(id = int(ad_id)))
             return Response({
                 "message" : "SUCCESS",
                 "data" : {
+                    "note" : "WINNER",
                     "status" : True,
                     "coupon_info" : {
                         "code" : coupon.code,
-                        "start_date" : coupon.start_date,
-                        "active" : coupon.active
+                        "expiry_date" : coupon.end_date,
+                        "active" : coupon.active,
+                        "minimum_purchase" : coupon.minimum_purchase,
+                        "total_discount" : coupon.total_discount,
+                        "is_redeemed" : history[0].is_redeemed,
                     }
                 }
             })
         else:
-            history = CouponHistory.objects.create(code = "NULL", user = User.objects.get(id = int(user_id)), ad = Files.objects.get(id = int(ad_id)), status=False)
+            history = CouponHistory.objects.create(user=user, coupon=coupon, status=False)
             history.save()
             return Response({
                 "message" : "SUCCESS",
@@ -666,9 +724,55 @@ def scratch_coupon(request):
     return Response(context)
 
 @api_view(["POST"])
+def make_coupon_redeemed(request):
+    user_id = int(request.POST.get("user_id"))
+    coupon_id = int(request.POST.get("coupon_id"))
+
+    user = User.objects.get(id=user_id)
+    coupon = Coupon.objects.get(id=coupon_id)
+
+    coupon_history = CouponHistory.objects.get(user=user, coupon=coupon)
+
+    coupon_history.is_redeemed = True
+    coupon_history.save()
+
+    return Response({
+        "message" : "SUCCESS",
+        "data" : {
+            "user_id" : user_id,
+            "coupon_id" : coupon_id,
+            "note" : "Coupon Redeemed"
+        }
+    })
+
+
+@api_view(["POST"])
+def log_payment_issue(request):
+    user_id = int(request.POST.get("user_id"))
+    coupon_id = int(request.POST.get("coupon_id"))
+    message = request.POST.get("message")
+
+    user = User.objects.get(id=user_id)
+    coupon = Coupon.objects.get(id=coupon_id)
+
+    payment_issue = PaymentIssue.objects.create(user=user, coupon=coupon, offer = coupon.offer, message=message)
+    payment_issue.save()
+
+    return Response({
+        "message" : "SUCCESS",
+        "data" : {
+            "payment_issue_id" : payment_issue.id,
+            "message" : payment_issue.message
+        }
+    })
+    pass
+
+
+@api_view(["POST"])
 def get_coupon_history(request):
     user_id = int(request.POST.get('user_id'))
-    history = CouponHistory.objects.all().filter(user = User.objects.get(id=user_id))
+
+    history = CouponHistory.objects.all().filter(user = User.objects.get(id=user_id), status=True)
 
     context = {
         "message" : "SUCCESS",
@@ -679,12 +783,13 @@ def get_coupon_history(request):
         if data.status:
             context["data"].append(
                 {
-                    "code" : data.code,
-                    "ad_id" : int(data.ad.id),
-                    "timestamp" : data.timestamp,
-                    "shop" : data.ad.company_name,
-                    "location" : data.ad.location,
-                    "expiry_date" : data.expiry_date,
+                    "coupon_code" : data.coupon.code,
+                    "expiry_date" : data.coupon.end_date,
+                    "minimum_purchase" : data.coupon.minimum_purchase,
+                    "total_discount" : data.coupon.total_discount,
+                    "shop_name" : data.coupon.offer.company_name,
+                    "shop_id" : data.coupon.offer.id,
+                    "is_redeemed" : data.is_redeemed
                 }
             )
     

@@ -1207,6 +1207,23 @@ def approve_design(request):
         offer.save()
     
     # give reward to the freelancer
+
+    # create coupons
+
+    all_discount = shop.discounts.all()
+
+    for discount in all_discount:
+        coupon = Coupon.objects.create(
+            user = User.objects.get(email=shop.email_address),
+            code = "GET" + str(discount.discount),
+            offer = offer,
+            total_coupon = shop.total_eligible_customer,
+            minimum_purchase = discount.total_purchase,
+            total_discount = discount.discount,
+            end_date = datetime.now()+timedelta(days=365)
+        )
+
+        coupon.save()
     
     return HttpResponse("Success")
 

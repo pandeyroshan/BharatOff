@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import django
 from datetime import date
+from datetime import datetime, timedelta
+
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -124,7 +126,7 @@ class Files(models.Model):
     rated_by = models.ManyToManyField(User, related_name='rated_by', blank=True)
 
     def __str__(self):
-        return self.heading
+        return str(self.id)
     
     class Meta:
         verbose_name = 'Offers'
@@ -219,9 +221,11 @@ class Coupon(models.Model):
     code = models.CharField(max_length=10, blank=False)
     offer = models.ForeignKey(Files, on_delete=models.CASCADE)
     start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(datetime.now()+timedelta(days=365))
     total_coupon = models.IntegerField(default=5)
     active = models.BooleanField(default=True)
+    minimum_purchase = models.IntegerField(default=0)
+    total_discount = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.code)
@@ -231,23 +235,13 @@ class Coupon(models.Model):
         verbose_name_plural = 'Coupons'
 
 class CouponHistory(models.Model):
-    code = models.CharField(max_length=10, blank=True)
-    ad = models.ForeignKey(Files, on_delete = models.CASCADE, null=True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    status = models.BooleanField()
-    timestamp = models.DateTimeField(auto_now=True)
-    expiry_date = models.DateTimeField(null=True)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    status = models.BooleanField(default=False)
+    is_redeemed = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.status)
-    
-    def varify(self, coupon_id, user_id):
-        if CouponHistory.objects.all().filter(coupon = Coupon.objects.get(id = int(coupon_id)), user = User.objects.get(id = int(user_id))):
-            context = {}
-            context['coupon'] = Coupon.objects.get(id = int(coupon_id))
-            coupon_history = CouponHistory.objects.all().filter(coupon = Coupon.objects.get(id = int(coupon_id)), user = User.objects.get(id = int(user_id)))[0]
-            context['status'] = coupon_history.status
-            return context
     
     class Meta:
         verbose_name = 'All Coupon History'
@@ -325,3 +319,15 @@ class SocialAccounts(models.Model):
     class Meta:
         verbose_name = "Social Accounts"
         verbose_name_plural = "Social Accounts" 
+
+class PaymentIssue(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE)
+    offer = models.ForeignKey(Files, on_delete=models.CASCADE)
+    message = models.TextField()
+
+    def __str__(self):
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = "Payment Complaint"
