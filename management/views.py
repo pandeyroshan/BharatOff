@@ -21,7 +21,8 @@ from users.models import (
     Freelancer,
     RewardScheme,
     RewardHistory,
-    Designcomments
+    Designcomments,
+    NotificationAlert
 )
 import datetime
 
@@ -45,8 +46,6 @@ import django
 
 import io
 from reportlab.pdfgen import canvas
-
-from datetime import date
 # Create your views here
 
 from .models import ShopDetails
@@ -410,15 +409,41 @@ def dashboard(request):
         for city in my_city:
             counter += Visitors.objects.get(city=city).counter
 
+        # check if applicable to create a notification ( two cases - case 1: No notification created yet & case 2: Notification created a week ago )
+
+        my_notification = NotificationAlert.objects.all().filter(sent_by=request.user)
+
+        give_create_notification_option = False
+        my_notification_text = ""
+
+        if len(my_notification) == 0:  # if no notification is created then give option to create a notification
+            print("CASE 1")
+            give_create_notification_option = True
+        else:  # if a notification is already created then check if that notification was a week old
+            print("CASE 2")
+            notification = my_notification[0]
+            print(datetime.date.today())
+            delta = datetime.date.today() - notification.timestamp
+
+            my_notification_text = notification.text
+
+            if delta.days>=7:
+                give_create_notification_option = True
+            pass
+
+        print(give_create_notification_option)
+        print(my_notification)
+
         context = {
             'total_ads' : len(my_ads),
             'active_ads' : len(Files.objects.all().filter(user=request.user, active=True)),
             'city_count' : len(my_city),
             'counter' : counter,
             'ads' : my_ads,
-            'my_city' : my_city
+            'my_city' : my_city,
+            'give_create_notification_option' : give_create_notification_option,
+            'my_notification_text' : my_notification_text
         }
-        messages.success(request, 'Your password was updated successfully!')
         return render(request,'management/dashboard.html', context)
     else:
         return redirect('/')
@@ -1207,6 +1232,8 @@ def approve_design(request):
         offer.save()
     
     # give reward to the freelancer
+
+    
 
     # create coupons
 

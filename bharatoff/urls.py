@@ -67,6 +67,9 @@ urlpatterns = [
     path('sales/', management_views.sales_dashboard, name='sales-dashboard'),
     path('security-report/<int:id>', management_views.raise_security_concern, name='raise-security-concern'),
 
+    # notification work goes down here 
+    path("create-notification-alert", users_views.create_notification_alert, name="create-notification-alert"),
+
     # api work goes here 
 
     path('api/all-categories/',api_views.all_categories),
@@ -85,6 +88,8 @@ urlpatterns = [
     path('api/redeem/', api_views.make_coupon_redeemed),  # pass coupon_id and user_id to redeem a coupon 
     path("api/report-coupon/", api_views.log_payment_issue),
     path('api/update-profile/', api_views.update_profile),
+    path('api/update-user-location/', api_views.update_user_location),
+    path('api/get-notification', api_views.get_notification),
 
 
     # path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),

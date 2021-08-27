@@ -1,9 +1,12 @@
+from management.views import minilocations
 from management.sms_delivery import send_username_password
 from django.shortcuts import render,redirect
 from .forms import UserRegisterForm, ShopkeeperRegisterForm, FreelancerRegisterForm, SalesRegistrationForm
 from management.models import CityData
 from django.contrib.auth.models import User
-from users.models import UserProfile, Shopkeeper, Freelancer, SalesPerson   
+from users.models import UserProfile, Shopkeeper, Freelancer, SalesPerson, NotificationAlert, UserNotification
+from management.models import Files, MiniLocation
+from math import sin, cos, sqrt, atan2, radians
 from management.models import Address
 
 from management.mail_service import send_username_password_via_email
@@ -127,3 +130,57 @@ def forgot_password(request):
         return render(request,"users/password-sent-successful.html")
         pass
     return render(request,'users/forgot-password.html')
+
+def get_closest_minilocation(user_profile):
+    min_distance = 100000005
+
+    all_mini_locations = MiniLocation.objects.all()
+    nearest_minilocation = None
+
+    R = 6373.0
+
+    for mini_location in all_mini_locations:
+        lat1 = radians(float(user_profile.latitude))
+        lon1 = radians(float(user_profile.longitude))
+        lat2 = radians(mini_location.lat)
+        lon2 = radians(mini_location.lon)
+
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        distance = R * c
+
+        if distance < min_distance:
+            min_distance = distance
+            nearest_minilocation = mini_location
+    return nearest_minilocation
+
+def create_notification_alert(request):
+    if request.method == 'POST':
+        offer = Files.objects.get(user=request.user)
+        minilocations = offer.MiniLocation.all()
+        notification_text = request.POST.get("notification_text")
+
+        notification_alert = NotificationAlert.objects.create(sent_by=request.user, text=notification_text)
+        notification_alert.minilocations.set(minilocations)
+        notification_alert.save()
+
+        # send the notification to all users 
+
+        all_user_profiles = UserProfile.objects.all()
+
+        print("All users: ", all_user_profiles)
+
+        for user_profile in all_user_profiles:
+            minilocation = get_closest_minilocation(user_profile)
+
+            print("User: ", user_profile)
+            print("location: ", minilocation)
+
+            if minilocation in minilocations:
+                # add the notification
+                user_notification = UserNotification.objects.create(target_user = user_profile.user, notification_text = notification_text)
+                user_notification.save()
+    return redirect("/dashboard")

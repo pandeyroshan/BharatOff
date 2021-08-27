@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from management.models import CityData
 import django
-from management.models import ShopDetails
+from management.models import ShopDetails, MiniLocation
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -11,6 +11,8 @@ class UserProfile(models.Model):
     pwd = models.CharField(max_length=500,blank=False)
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.user.username
@@ -135,3 +137,27 @@ class Designcomments(models.Model):
     class Meta:
         verbose_name = "Design Comments"
         verbose_name_plural = "Design Comments"
+
+class NotificationAlert(models.Model):
+    sent_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)    # shopkeeper's user
+    text = models.CharField(max_length=1000, blank=False) 
+    timestamp = models.DateField(default=django.utils.timezone.now)                       # Time when this gets created
+    minilocations = models.ManyToManyField(MiniLocation)                       # minilocation coverage
+    total_reach = models.IntegerField(default=0)                              # Total views/delivery
+
+    class Meta:
+        verbose_name = "Notifications"
+        verbose_name_plural = "Notifications"
+
+class UserNotification(models.Model):
+    target_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    notification_text = models.CharField(max_length=1000, blank=False)
+    timestamp = models.DateTimeField(default=django.utils.timezone.now)
+    is_seen = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.target_user.username)+"'s Notifiction"
+    
+    class Meta:
+        verbose_name = "Users Notification"
+        verbose_name_plural = "Users Notification"

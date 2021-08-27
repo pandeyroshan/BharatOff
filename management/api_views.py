@@ -39,6 +39,7 @@ from django.contrib.auth.models import User
 from wsgiref.util import FileWrapper
 import mimetypes
 
+from users.models import UserNotification
 
 
 @api_view(['GET'])
@@ -819,4 +820,52 @@ def update_profile(request):
     return Response({
         "message" : "SUCCESS",
         "data" : "Email changed successfully."
+    })
+
+@api_view(["POST"])
+def update_user_location(request):
+    user_id = int(request.POST.get('user_id'))
+
+    user = User.objects.get(id=user_id)
+    latitude = request.POST.get("lat")
+    longitude = request.POST.get("lon")
+
+    user_profile = UserProfile.objects.get(user=user)
+    user_profile.latitude = latitude
+    user_profile.longitude = longitude
+
+
+    user_profile.save()
+
+
+    return Response({
+        "message" : "SUCCESS",
+        "data" : {
+            "user_id" : user_id,
+            "latitude" : user_profile.latitude,
+            "longitude" : user_profile.longitude
+        }
+    })
+
+@api_view(["POST"])
+def get_notification(request):
+    user_id = int(request.POST.get('user_id'))
+
+    user = User.objects.get(id=user_id)
+
+    user_notifications = UserNotification.objects.all().filter(target_user=user).order_by("-timestamp")
+
+    notifications = []
+
+    for notification in user_notifications:
+        notifications.append({
+            "notification_text" : notification.notification_text,
+            "timestamp" : notification.timestamp
+        })
+    
+    return Response({
+        "message" : "SUCCESS",
+        "data" : {
+            "all_notifications" : notifications
+        }
     })
