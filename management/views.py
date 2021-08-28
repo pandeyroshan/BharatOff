@@ -643,10 +643,10 @@ def image_resource(request):
             if keyword in keywords:
                 images.append(image)
         
-        return render(request, 'management/image_resources.html', {'all_images': images})
+        return render(request, 'management/image_resources.html', {'all_images': images, "total" : len(images)})
     if request.user.is_staff:
         all_images = Resources.objects.all()
-        return render(request, 'management/image_resources.html', {'all_images': all_images})
+        return render(request, 'management/image_resources.html', {'all_images': all_images, "total" : len(all_images)})
     return redirect('/')
 
 def download_image(request,id):
