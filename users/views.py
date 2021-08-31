@@ -10,6 +10,8 @@ from math import sin, cos, sqrt, atan2, radians
 from management.models import Address
 
 from management.mail_service import send_username_password_via_email
+from .models import DeviceID
+from management.firebase import send_fcm_notification
 # Create your views here.
 
 def register(request):
@@ -183,4 +185,12 @@ def create_notification_alert(request):
                 # add the notification
                 user_notification = UserNotification.objects.create(target_user = user_profile.user, notification_text = notification_text)
                 user_notification.save()
+
+                # get the Device-ids of the user and then send notification
+                all_device = DeviceID.objects.all().filter(user=user_profile.user)
+
+                print(all_device)
+
+                for device in all_device:
+                    send_fcm_notification(device.device_id, "Offer from BharatOff", notification_text)
     return redirect("/dashboard")

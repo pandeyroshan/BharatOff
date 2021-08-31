@@ -161,3 +161,14 @@ class UserNotification(models.Model):
     class Meta:
         verbose_name = "Users Notification"
         verbose_name_plural = "Users Notification"
+
+class DeviceID(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    device_id = models.CharField(max_length=2000, blank=False)
+
+    def __str__(self):
+        return "Device "+str(self.user.username)
+    
+    class Meta:
+        verbose_name = "Device IDs"
+        verbose_name_plural = "Device IDs"

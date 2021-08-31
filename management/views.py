@@ -417,12 +417,9 @@ def dashboard(request):
         my_notification_text = ""
 
         if len(my_notification) == 0:  # if no notification is created then give option to create a notification
-            print("CASE 1")
             give_create_notification_option = True
         else:  # if a notification is already created then check if that notification was a week old
-            print("CASE 2")
-            notification = my_notification[0]
-            print(datetime.date.today())
+            notification = my_notification[len(my_notification)-1]
             delta = datetime.date.today() - notification.timestamp
 
             my_notification_text = notification.text
@@ -430,9 +427,6 @@ def dashboard(request):
             if delta.days>=7:
                 give_create_notification_option = True
             pass
-
-        print(give_create_notification_option)
-        print(my_notification)
 
         context = {
             'total_ads' : len(my_ads),
@@ -854,8 +848,6 @@ def register_shopkeeper(request):
         # fetch all the details which are not covered with the reward
         all_shop_details = ShopDetails.objects.all().filter(created_by=request.user, date_of_registration=datetime.date.today(), covered_under_reward=False, package_amount=199)
 
-        print(all_shop_details)
-
         reward_scheme = RewardScheme.objects.get(package=199)
 
         if len(all_shop_details)>=reward_scheme.total_sale:
@@ -936,7 +928,6 @@ def register_shopkeeper(request):
     salesperson = SalesPerson.objects.get(user = request.user)
     
     all_mini_location = MiniLocation.objects.all().filter(main_city = salesperson.city)
-    print(all_mini_location)
     
     context = {
         "all_mini_location" : all_mini_location,
@@ -1067,8 +1058,6 @@ def raise_security_concern(request, id):
     user.is_active = False
     user.save()
 
-    print("\n\n\n"+"REPORT RAISED: "+user+"\n\n\n")
-
     return redirect("/shop-registration")
 
 @login_required
@@ -1081,8 +1070,6 @@ def freelancer_dashboard(request):
         all_salesperson_user.append(salesperson.user)
 
     all_shop_details = ShopDetails.objects.all().filter(created_by__in = all_salesperson_user).filter(date_of_registration__gt=freelancer.date_of_joining)
-
-    print(all_shop_details)
 
     context = {
         "all_shops" : all_shop_details,
@@ -1255,7 +1242,6 @@ def approve_design(request):
     return HttpResponse("Success")
 
 def reject_with_comment(request):
-    print(request.POST)
     shop_id = int(request.POST.get("shop_id"))
     comment = request.POST.get("comment")
 

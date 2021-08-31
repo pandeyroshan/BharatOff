@@ -90,6 +90,7 @@ urlpatterns = [
     path('api/update-profile/', api_views.update_profile),
     path('api/update-user-location/', api_views.update_user_location),
     path('api/get-notification', api_views.get_notification),
+    path('api/enroll-device-id/', api_views.enroll_device_id),
 
 
     # path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),

@@ -7,7 +7,7 @@ import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 import random
-from users.models import UserProfile
+from users.models import UserProfile, DeviceID
 from management.models import Category
 from django.contrib.auth.models import User
 
@@ -867,5 +867,24 @@ def get_notification(request):
         "message" : "SUCCESS",
         "data" : {
             "all_notifications" : notifications
+        }
+    })
+
+@api_view(["POST"])
+def enroll_device_id(request):
+
+    user_id = int(request.POST.get("user_id"))
+    device_id = request.POST.get("device_id")
+
+    user = User.objects.get(id=user_id)
+
+    new_device = DeviceID.objects.create(user=user, device_id = device_id)
+    new_device.save()
+    
+    return Response({
+        "message" : "SUCCESS",
+        "date" : {
+            "user_id" : user_id,
+            "device_id" : device_id
         }
     })
