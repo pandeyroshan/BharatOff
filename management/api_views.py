@@ -28,7 +28,7 @@ from .models import (
     )
 from .views import schedule_refresh
 
-from users.models import CustomerLogin
+from users.models import CustomerLogin, MonthlyWinner
 import string
 
 from django.views.decorators.csrf import csrf_exempt
@@ -604,6 +604,7 @@ def create_user_with_phone_number(request):
         user.save()
 
         customer_profile = CustomerLogin.objects.create(user=user, otp=otp, is_varified=False, mobile=phone_number, password=password)
+        customer_profile.coupon_code = "BOFF"+str(len(User.objects.all()))
         customer_profile.save()
     else: # if user with that phone number exist
         user = User.objects.get(username=phone_number)

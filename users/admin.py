@@ -1,7 +1,19 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import UserProfile,Shopkeeper, Freelancer, CustomerLogin, SalesPerson, RewardScheme, RewardHistory, NotificationAlert, UserNotification, DeviceID
+from .models import (
+    UserProfile, 
+    Shopkeeper, 
+    Freelancer, 
+    CustomerLogin, 
+    SalesPerson, 
+    RewardScheme, 
+    RewardHistory, 
+    NotificationAlert, 
+    UserNotification, 
+    DeviceID,
+    MonthlyWinner
+)
 
 class ShopkeeperAdmin(admin.ModelAdmin):
     model = Shopkeeper
@@ -35,6 +47,10 @@ class RewardHistoryAdmin(admin.ModelAdmin):
     model = RewardHistory
     list_display = ('user', 'date', 'reward')
 
+class MonthlyWinnerAdmin(admin.ModelAdmin):
+    model = MonthlyWinner
+    list_display = ('monthYear', 'prize')
+
 admin.site.register(UserProfile)
 admin.site.register(Shopkeeper, ShopkeeperAdmin)
 admin.site.register(Freelancer, FreelancerAdmin)
@@ -45,3 +61,4 @@ admin.site.register(RewardHistory)
 admin.site.register(NotificationAlert)
 admin.site.register(UserNotification)
 admin.site.register(DeviceID)
+admin.site.register(MonthlyWinner)

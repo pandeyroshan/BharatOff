@@ -19,7 +19,9 @@ from management.models import (
     Discount,
     ShopDetails,
     SocialAccounts,
-    PaymentIssue
+    PaymentIssue,
+    PamphletDesign,
+    DownloadedDesigns
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -142,3 +144,5 @@ admin.site.register(CouponHistory, CouponHistoryAdmin)
 admin.site.register(ShopDetails, ShopDetailsAdmin)
 admin.site.register(SocialAccounts)
 admin.site.register(PaymentIssue)
+admin.site.register(PamphletDesign)
+admin.site.register(DownloadedDesigns)

@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
 from .models import (
     CityData, 
-    Address, 
+    Address,
+    PamphletDesign, 
     StateData, 
     Visitors, 
     Files, 
@@ -15,6 +16,7 @@ from .models import (
     CouponHistory,
     Discount,
     ShopDetails,
+    DownloadedDesigns
 )
 
 from users.models import (
@@ -46,6 +48,9 @@ import django
 
 import io
 from reportlab.pdfgen import canvas
+
+from PIL import Image, ImageFont, ImageDraw 
+from django.core.files.base import ContentFile
 # Create your views here
 
 from .models import ShopDetails
@@ -1298,3 +1303,34 @@ def update_social_media_links(request):
     offer.save()
 
     return redirect("/dashboard")
+
+def image_editing(request):
+    pamphlet = PamphletDesign.objects.all()[0]
+    
+    offer = Files.objects.get(user=request.user)
+
+    my_image = Image.open(pamphlet.design)
+
+    title_font = ImageFont.truetype(pamphlet.font_file, 40)
+
+    w,h = title_font.getsize(offer.company_name)
+    W = 750
+    H = 800
+
+    image_editable = ImageDraw.Draw(my_image)
+
+    # image_editable.text((15,15), title_text, (237, 230, 211), font=title_font)
+    image_editable.text(((W-w)/2,(h)/2), offer.company_name, font=title_font, fill="black")
+
+    in_mem_file = io.BytesIO()
+
+    my_image.save(in_mem_file, format=my_image.format)
+
+    new_design = DownloadedDesigns.objects.create(user = request.user, base_pamphlet = pamphlet)
+    new_design.save()
+
+    new_design.design.save("custom-design.png",ContentFile(in_mem_file.getvalue()),save=True)
+
+    response = FileResponse(pamphlet.design)
+
+    return response

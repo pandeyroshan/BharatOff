@@ -10,8 +10,11 @@ from math import sin, cos, sqrt, atan2, radians
 from management.models import Address
 
 from management.mail_service import send_username_password_via_email
-from .models import DeviceID
+from .models import CustomerLogin, DeviceID, MonthlyWinner
 from management.firebase import send_fcm_notification
+import random
+from datetime import datetime
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 def register(request):
@@ -194,3 +197,57 @@ def create_notification_alert(request):
                 for device in all_device:
                     send_fcm_notification(device.device_id, "Offer from BharatOff", notification_text)
     return redirect("/dashboard")
+
+@user_passes_test(lambda user: user.is_superuser)
+def rewards_homepage(request):
+
+    if len(MonthlyWinner.objects.all()) >0:
+        last_winners = MonthlyWinner.objects.all()[len(MonthlyWinner.objects.all())-1]
+    else:
+        last_winners = []
+
+    all_time_winners = MonthlyWinner.objects.all()
+
+    for i in range(len(all_time_winners)):
+        all_time_winners[i].total_winners = len(all_time_winners[i].customers.all())
+        all_time_winners[i].grand_total = len(all_time_winners[i].customers.all())*int(all_time_winners[i].prize)
+        all_time_winners[i].all_winners = all_time_winners[i].customers.all()
+    
+    context = {
+        "last_winners" : last_winners.customers.all(),
+        "month_year" : last_winners.monthYear,
+        "prize" : last_winners.prize,
+        "all_time_winners" : all_time_winners,
+    }
+    return render(request, "users/winners_management.html", context=context)
+
+@user_passes_test(lambda user: user.is_superuser)
+def find_winners(request):
+    total_customer = len(CustomerLogin.objects.all())
+
+    total_winners = int(request.POST.get("total_winners"))
+    prize_money = int(request.POST.get("prize_money"))
+
+    random_customers_ids = random.sample(range(1, total_customer), total_winners)
+
+    random_customers = []
+
+    for random_customer_id in random_customers_ids:
+        random_customers.append(CustomerLogin.objects.get(id=random_customer_id))
+
+    today = datetime.today()
+
+    months = {
+        1 : "JAN", 2 : "FEB", 3 : "MAR", 
+        4 : "APR", 5 : "MAY", 6 : "JUN", 
+        7 : "JUL", 8 : "AUG", 9 : "SEP", 
+        10 : "OCT", 11 : "NOV", 12: "DEC"
+    }
+
+    current_month_year = str(months.get(today.month))+"-"+str(today.year)
+
+    monthly_winners = MonthlyWinner.objects.create(monthYear=current_month_year, prize=prize_money)
+    monthly_winners.customers.set(random_customers)
+    monthly_winners.save()
+
+    return redirect("/rewards")

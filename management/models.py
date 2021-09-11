@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 import django
 from datetime import date
 from datetime import datetime, timedelta
-
+from PIL import Image
+from django.core.exceptions import ValidationError
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -331,3 +332,40 @@ class PaymentIssue(models.Model):
     
     class Meta:
         verbose_name = "Payment Complaint"
+
+class PamphletDesign(models.Model):
+    title = models.CharField('Title of Pamphlet',max_length=50, blank=True)
+    message = models.CharField('Message on Pamphlet',max_length=100, blank=True, help_text="This message will get printed on the Pamphlet")
+    design = models.ImageField(blank=True, upload_to='img/', null=True, help_text="Uploaded image dimention must be 750X800 pixels")
+    font_file = models.FileField(blank=True)
+    total_downloads = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        print("IMAGE SAVED")
+        im = Image.open(self.design)
+        width, height = im.size # must be 750 X 800
+
+        if (width<745 or width>755) or (height<795 or height>805):
+            raise ValidationError(('Image size must be 750 X 800'))
+        
+        print(width, height)
+        super(PamphletDesign, self).save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name = "Phamplate Design"
+        verbose_name_plural = "Phamplate Design"
+
+class DownloadedDesigns(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    base_pamphlet = models.ForeignKey(PamphletDesign, on_delete=models.CASCADE, null=True)
+    design = models.ImageField(blank=True, upload_to='img/', null=True)
+
+    def __str__(self):
+        return self.user.username+"'s Design"
+    
+    class Meta:
+        verbose_name = "Downloadable Designs"
+        verbose_name_plural = "Downloadable Designs"

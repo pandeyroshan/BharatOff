@@ -70,6 +70,13 @@ urlpatterns = [
     # notification work goes down here 
     path("create-notification-alert", users_views.create_notification_alert, name="create-notification-alert"),
 
+    # mothly rewards
+    path("rewards/", users_views.rewards_homepage, name="rewards-homepage"),
+    path("allocate-winners", users_views.find_winners, name="allocate-winners"),
+
+    # image editing work
+    path("test/", management_views.image_editing, name="image-editing"),
+
     # api work goes here 
 
     path('api/all-categories/',api_views.all_categories),

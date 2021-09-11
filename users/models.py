@@ -85,6 +85,7 @@ class CustomerLogin(models.Model):
     mobile = models.CharField(max_length=15, default='XXXXXXXXXX')
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
+    coupon_code = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return str(self.user)
@@ -172,3 +173,15 @@ class DeviceID(models.Model):
     class Meta:
         verbose_name = "Device IDs"
         verbose_name_plural = "Device IDs"
+    
+class MonthlyWinner(models.Model):
+    monthYear = models.CharField(max_length=20)
+    prize = models.CharField(max_length=100, blank=True)
+    customers = models.ManyToManyField(CustomerLogin)
+
+    def __str__(self):
+        return self.monthYear
+    
+    class Meta:
+        verbose_name = "Monthly Winners"
+        verbose_name_plural = "Monthly Winners"
