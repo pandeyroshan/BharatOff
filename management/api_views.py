@@ -287,6 +287,10 @@ def get_ad_detail(request):
 
     all_coupons = Coupon.objects.all().filter(offer=ad)
 
+    coupon_history = CouponHistory.objects.all().filter(user=user)
+
+    print(coupon_history)
+
     for coupon in all_coupons:
         new_coupon_detail = {}
         new_coupon_detail["coupon_id"] = coupon.id
@@ -295,6 +299,23 @@ def get_ad_detail(request):
         new_coupon_detail["total_discount"] = coupon.total_discount
         new_coupon_detail["is_active"] = coupon.active
         new_coupon_detail["last_date"] = coupon.end_date
+
+        # check the coupon status weather it is scratched or not
+
+        is_scratched = False
+        scratch_status = "NA"
+
+        for history in coupon_history:
+            if history.coupon.id == coupon.id:
+                is_scratched = True
+
+                if history.status:
+                    scratch_status = "WINNER"
+                else:
+                    scratch_status = "NOT_A_WINNER"
+        
+        new_coupon_detail["is_scratched"] = is_scratched
+        new_coupon_detail["scratch_status"] = scratch_status
 
         context["data"][0]["coupon"].append(new_coupon_detail)
 
@@ -696,8 +717,8 @@ def scratch_coupon(request):
             })
     else:
         if random.choice([True, False]):
-            history = CouponHistory.objects.create(user=user, coupon=coupon, status=True)
-            history.save()
+            history_object = CouponHistory.objects.create(user=user, coupon=coupon, status=True)
+            history_object.save()
             return Response({
                 "message" : "SUCCESS",
                 "data" : {
@@ -709,13 +730,13 @@ def scratch_coupon(request):
                         "active" : coupon.active,
                         "minimum_purchase" : coupon.minimum_purchase,
                         "total_discount" : coupon.total_discount,
-                        "is_redeemed" : history[0].is_redeemed,
+                        "is_redeemed" : history_object.is_redeemed,
                     }
                 }
             })
         else:
-            history = CouponHistory.objects.create(user=user, coupon=coupon, status=False)
-            history.save()
+            history_object = CouponHistory.objects.create(user=user, coupon=coupon, status=False)
+            history_object.save()
             return Response({
                 "message" : "SUCCESS",
                 "data" : {
@@ -785,6 +806,7 @@ def get_coupon_history(request):
         if data.status:
             context["data"].append(
                 {
+                    "coupon_id" : data.coupon.id,
                     "coupon_code" : data.coupon.code,
                     "expiry_date" : data.coupon.end_date,
                     "minimum_purchase" : data.coupon.minimum_purchase,
@@ -831,20 +853,24 @@ def update_user_location(request):
     latitude = request.POST.get("lat")
     longitude = request.POST.get("lon")
 
-    user_profile = UserProfile.objects.get(user=user)
-    user_profile.latitude = latitude
-    user_profile.longitude = longitude
-
-
-    user_profile.save()
+    try:
+        customer_profile = CustomerLogin.objects.get(user=user)
+        customer_profile.latitude = latitude
+        customer_profile.longitude = longitude
+        customer_profile.save()
+    except:
+        customer_profile = CustomerLogin.objects.create(user=user, password="Linux@123")
+        customer_profile.latitude = latitude
+        customer_profile.longitude = longitude
+        customer_profile.save()
 
 
     return Response({
         "message" : "SUCCESS",
         "data" : {
             "user_id" : user_id,
-            "latitude" : user_profile.latitude,
-            "longitude" : user_profile.longitude
+            "latitude" : customer_profile.latitude,
+            "longitude" : customer_profile.longitude
         }
     })
 

@@ -86,6 +86,8 @@ class CustomerLogin(models.Model):
     otp = models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
     coupon_code = models.CharField(max_length=100, blank=True)
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
 
     def __str__(self):
         return str(self.user)
