@@ -68,6 +68,10 @@ def all_advertisement(request):
     lat = request.POST.get('lat')
     lon = request.POST.get('lon')
 
+    user_id = int(request.POST.get("user_id"))
+
+    user = User.objects.get(id=user_id)
+
     min_distance = 100000005
 
     all_mini_locations = MiniLocation.objects.all()
@@ -92,8 +96,6 @@ def all_advertisement(request):
             nearest_location = mini_location
     
     nearest_city = nearest_location.main_city
-
-    print(nearest_city)
 
     nearby_location = MiniLocation.objects.all().filter(main_city=nearest_city)
 
@@ -171,6 +173,8 @@ def all_advertisement(request):
 
         all_coupons = Coupon.objects.all().filter(offer=data)
 
+        coupon_history = CouponHistory.objects.all().filter(user=user)
+
         for coupon in all_coupons:
             new_coupon_detail = {}
             new_coupon_detail["coupon_id"] = coupon.id
@@ -179,6 +183,23 @@ def all_advertisement(request):
             new_coupon_detail["total_discount"] = coupon.total_discount
             new_coupon_detail["is_active"] = coupon.active
             new_coupon_detail["last_date"] = coupon.end_date
+
+            # check the coupon status weather it is scratched or not
+
+            is_scratched = False
+            scratch_status = "NA"
+
+            for history in coupon_history:
+                if history.coupon.id == coupon.id:
+                    is_scratched = True
+
+                    if history.status:
+                        scratch_status = "WINNER"
+                    else:
+                        scratch_status = "NOT_A_WINNER"
+            
+            new_coupon_detail["is_scratched"] = is_scratched
+            new_coupon_detail["scratch_status"] = scratch_status
 
             current_ad["coupons"].append(new_coupon_detail)
 
@@ -326,6 +347,8 @@ def get_search_result(request):
     lat = request.POST.get("lat")
     lon = request.POST.get("lon")
 
+    user = User.objects.get(id = int(request.POST.get("user_id")))
+
     min_distance = 100000005
 
     all_mini_locations = MiniLocation.objects.all()
@@ -406,6 +429,8 @@ def get_search_result(request):
         "data" : []
     }
 
+    coupon_history = CouponHistory.objects.all().filter(user=user)
+
     for data in searched_offers:
         current_ad = {}
         current_ad["id"] = data.id
@@ -432,6 +457,23 @@ def get_search_result(request):
             new_coupon_detail["total_discount"] = coupon.total_discount
             new_coupon_detail["is_active"] = coupon.active
             new_coupon_detail["last_date"] = coupon.end_date
+
+            # check the coupon status weather it is scratched or not
+
+            is_scratched = False
+            scratch_status = "NA"
+
+            for history in coupon_history:
+                if history.coupon.id == coupon.id:
+                    is_scratched = True
+
+                    if history.status:
+                        scratch_status = "WINNER"
+                    else:
+                        scratch_status = "NOT_A_WINNER"
+            
+            new_coupon_detail["is_scratched"] = is_scratched
+            new_coupon_detail["scratch_status"] = scratch_status
 
             current_ad["coupons"].append(new_coupon_detail)
         
@@ -516,6 +558,8 @@ def category_wise_ad(request):
     cat_id = request.POST.get('cat_id')
     lat = request.POST.get('lat')
     lon = request.POST.get('lon')
+
+    user = User.objects.get(id = int(request.POST.get("user_id")))
     
     min_distance = 100000005
 
@@ -570,6 +614,8 @@ def category_wise_ad(request):
         "data" : []
     }
 
+    coupon_history = CouponHistory.objects.all().filter(user=user)
+
     for data in all_offers:
         current_ad = {}
         current_ad["id"] = data.id
@@ -596,6 +642,23 @@ def category_wise_ad(request):
             new_coupon_detail["total_discount"] = coupon.total_discount
             new_coupon_detail["is_active"] = coupon.active
             new_coupon_detail["last_date"] = coupon.end_date
+
+            # check the coupon status weather it is scratched or not
+
+            is_scratched = False
+            scratch_status = "NA"
+
+            for history in coupon_history:
+                if history.coupon.id == coupon.id:
+                    is_scratched = True
+
+                    if history.status:
+                        scratch_status = "WINNER"
+                    else:
+                        scratch_status = "NOT_A_WINNER"
+            
+            new_coupon_detail["is_scratched"] = is_scratched
+            new_coupon_detail["scratch_status"] = scratch_status
 
             current_ad["coupons"].append(new_coupon_detail)
         
