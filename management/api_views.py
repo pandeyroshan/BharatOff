@@ -699,7 +699,10 @@ def create_user_with_phone_number(request):
     URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&response=json".format(customer_profile.mobile,"Welcome {0}, your OTP for bharatoff account is {1}".format(customer_profile.mobile, customer_profile.otp))
     
     import requests
-    requests.get(URL)
+    response = requests.get(URL)
+
+    print(response)
+    print(response.text)
 
     return Response({"message":"SUCCESS"})
 

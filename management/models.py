@@ -369,3 +369,18 @@ class DownloadedDesigns(models.Model):
     class Meta:
         verbose_name = "Downloadable Designs"
         verbose_name_plural = "Downloadable Designs"
+
+class DefaultDesign(models.Model):
+    design = models.ImageField('Default Design', upload_to='img/', blank=True, null=True)
+
+    def __str__(self):
+        return "Default Design"
+    
+    def save(self, *args, **kwargs):
+        if len(DefaultDesign.objects.all()) > 0:
+            raise ValidationError(('Only 1 default design is allowed'))
+        super(DefaultDesign, self).save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name = "Default Design"
+        verbose_name_plural = "Default Design"

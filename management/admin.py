@@ -21,7 +21,8 @@ from management.models import (
     SocialAccounts,
     PaymentIssue,
     PamphletDesign,
-    DownloadedDesigns
+    DownloadedDesigns,
+    DefaultDesign
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -146,3 +147,4 @@ admin.site.register(SocialAccounts)
 admin.site.register(PaymentIssue)
 admin.site.register(PamphletDesign)
 admin.site.register(DownloadedDesigns)
+admin.site.register(DefaultDesign)

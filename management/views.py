@@ -16,7 +16,8 @@ from .models import (
     CouponHistory,
     Discount,
     ShopDetails,
-    DownloadedDesigns
+    DownloadedDesigns,
+    DefaultDesign
 )
 
 from users.models import (
@@ -27,6 +28,9 @@ from users.models import (
     NotificationAlert
 )
 import datetime
+
+from datetime import timedelta
+from datetime import datetime
 
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
@@ -927,6 +931,10 @@ def register_shopkeeper(request):
             for j in range(i+1):
                 all_shop_details[j].covered_under_monthly_reward = True
                 all_shop_details[j].save()
+        
+        # now as the shop is registered, now register the same shop in the offer section 
+
+        make_offer_without_img(shop.id)
 
         return render(request, 'management/shop-registration-success.html', {'shop_name' : request.POST.get('shopName')})
     
@@ -1246,6 +1254,151 @@ def approve_design(request):
     
     return HttpResponse("Success")
 
+def make_offer_without_img(shop_id):
+    # this function will be called from the register_shopkeeper() function
+    default_design = DefaultDesign.objects.all()[0]
+
+    shop_id = int(shop_id)
+    shop = ShopDetails.objects.get(id=shop_id)
+    salesperson = SalesPerson.objects.get(user=shop.created_by)
+
+    shop.design_approved = True
+    shop.save()
+
+    # create a offer
+
+    # for Country
+    if shop.package_amount == 100000:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+        cities = CityData.objects.all()
+        minilocations = MiniLocation.objects.all()
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for State
+    if shop.package_amount == 10000:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+
+        state = StateData.objects.get(cities=salesperson.city)
+        cities = state.cities.all()
+        minilocations = []
+
+        for city in cities:
+            minilocations += MiniLocation.objects.all().filter(main_city=city)
+        
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+
+    # for city
+    if shop.package_amount == 2999:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+
+        cities = [salesperson.city,]
+        minilocations = MiniLocation.objects.all().filter(main_city=salesperson.city)
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for Mini Location
+    if shop.package_amount == 199:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+
+        cities = [salesperson.city,]
+        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+
+    # for Street vendors
+    if shop.package_amount == 99:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+
+        cities = [salesperson.city,]
+        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.save()
+    
+    # give reward to the freelancer
+
+    
+
+    # create coupons
+
+    all_discount = shop.discounts.all()
+
+    for discount in all_discount:
+        coupon = Coupon.objects.create(
+            user = User.objects.get(email=shop.email_address),
+            code = "GET" + str(discount.discount),
+            offer = offer,
+            total_coupon = shop.total_eligible_customer,
+            minimum_purchase = discount.total_purchase,
+            total_discount = discount.discount,
+            end_date = datetime.datetime.now()+timedelta(days=365)
+        )
+
+        coupon.save()
+    
+    return HttpResponse("Success")
+
 def reject_with_comment(request):
     shop_id = int(request.POST.get("shop_id"))
     comment = request.POST.get("comment")
@@ -1334,3 +1487,10 @@ def image_editing(request):
     response = FileResponse(pamphlet.design)
 
     return response
+
+def make_coupons_manually(request):
+    all_coupons = Coupon.objects.all()
+
+    for coupon in all_coupons:
+        pass
+    pass
