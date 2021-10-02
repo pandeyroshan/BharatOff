@@ -166,6 +166,10 @@ def create_notification_alert(request):
     if request.method == 'POST':
         offer = Files.objects.get(user=request.user)
         minilocations = offer.MiniLocation.all()
+
+        print("Target Minilocations: ")
+        print(minilocations)
+
         notification_text = request.POST.get("notification_text")
 
         notification_alert = NotificationAlert.objects.create(sent_by=request.user, text=notification_text)
@@ -174,7 +178,7 @@ def create_notification_alert(request):
 
         # send the notification to all users 
 
-        all_user_profiles = UserProfile.objects.all()
+        all_user_profiles = CustomerLogin.objects.all() # get all the customers
 
         print("All users: ", all_user_profiles)
 
@@ -185,6 +189,7 @@ def create_notification_alert(request):
             print("location: ", minilocation)
 
             if minilocation in minilocations:
+                print(str(user_profile)+" | "+str(minilocation))
                 # add the notification
                 user_notification = UserNotification.objects.create(target_user = user_profile.user, notification_text = notification_text)
                 user_notification.save()
