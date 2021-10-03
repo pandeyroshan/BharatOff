@@ -119,7 +119,7 @@ class Files(models.Model):
     facebook_link = models.URLField('Facebook Link',max_length=2000, blank=True)
     instagram_link = models.URLField('Instagram Link',max_length=2000, blank=True)
     youtube_link = models.URLField('Youtube Link',max_length=2000, blank=True)
-    keywords = models.TextField(blank=True)
+    keywords = models.TextField(help_text='Provide comma-seperated keywords. Example: mobile, smartphone, charger, earphone',blank=True)
     counter = models.IntegerField(default=0)
     active_image = models.IntegerField(default=0)
     last_date = models.DateField(default=django.utils.timezone.now)

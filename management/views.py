@@ -1285,6 +1285,8 @@ def make_offer_without_img(shop_id):
         offer.city.set(cities)
         offer.MiniLocation.set(minilocations)
 
+        offer.active = True
+
         offer.save()
 
     # for State
@@ -1310,6 +1312,8 @@ def make_offer_without_img(shop_id):
         offer.city.set(cities)
         offer.MiniLocation.set(minilocations)
 
+        offer.active = True
+
         offer.save()
 
 
@@ -1332,6 +1336,8 @@ def make_offer_without_img(shop_id):
         offer.city.set(cities)
         offer.MiniLocation.set(minilocations)
 
+        offer.active = True
+
         offer.save()
 
     # for Mini Location
@@ -1353,6 +1359,8 @@ def make_offer_without_img(shop_id):
         offer.city.set(cities)
         offer.MiniLocation.set(minilocations)
 
+        offer.active = True
+
         offer.save()
 
     # for Street vendors
@@ -1373,6 +1381,8 @@ def make_offer_without_img(shop_id):
 
         offer.city.set(cities)
         offer.MiniLocation.set(minilocations)
+
+        offer.active = True
 
         offer.save()
     
