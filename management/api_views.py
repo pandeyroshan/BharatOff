@@ -372,9 +372,9 @@ def get_search_result(request):
             min_distance = distance
             nearest_location = mini_location
 
-    raw_keywords = request.POST.get("keywords")
+    raw_keywords_from_user = request.POST.get("keywords")
 
-    keywords = raw_keywords.split(",")
+    keywords = raw_keywords_from_user.split(",")
 
     for i in range(len(keywords)):
         keywords[i] = keywords[i].strip()
@@ -399,6 +399,9 @@ def get_search_result(request):
             if key in available_keywords:
                 searched_offers.append(offer)
                 break
+        
+        if raw_keywords_from_user.lower() == offer.company_name.lower():
+            searched_offers.append(offer)
     
     for i in range(len(searched_offers)):
         if searched_offers[i].active_image == 0:
