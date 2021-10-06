@@ -1113,6 +1113,7 @@ def forward_to_freelancer(request):
     return HttpResponse("Success")
 
 def approve_design(request):
+    print("CONTROLL HERE")
     shop_id = int(request.GET.get("shop_id"))
     shop = ShopDetails.objects.get(id=shop_id)
     salesperson = SalesPerson.objects.get(user=shop.created_by)
@@ -1120,137 +1121,141 @@ def approve_design(request):
     shop.design_approved = True
     shop.save()
 
+    offer = Files.objects.get(company_name = shop.shop_name)
+    offer.img = shop.final_pamphlet
+    offer.save()
+
     # create a offer
 
     # for Country
-    if shop.package_amount == 100000:
-        offer = Files.objects.create(
-            comes_under = shop.created_by,
-            user = User.objects.get(email=shop.email_address),
-            company_name=shop.shop_name,
-            category = shop.business_category,
-            heading = "Best Offer of the Month",
-            phone_number = shop.phone_number,
-            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = shop.final_pamphlet
-        )
-        cities = CityData.objects.all()
-        minilocations = MiniLocation.objects.all()
+    # if shop.package_amount == 100000:
+    #     offer = Files.objects.create(
+    #         comes_under = shop.created_by,
+    #         user = User.objects.get(email=shop.email_address),
+    #         company_name=shop.shop_name,
+    #         category = shop.business_category,
+    #         heading = "Best Offer of the Month",
+    #         phone_number = shop.phone_number,
+    #         whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+    #         img = shop.final_pamphlet
+    #     )
+    #     cities = CityData.objects.all()
+    #     minilocations = MiniLocation.objects.all()
 
-        offer.city.set(cities)
-        offer.MiniLocation.set(minilocations)
+    #     offer.city.set(cities)
+    #     offer.MiniLocation.set(minilocations)
 
-        offer.save()
+    #     offer.save()
 
-    # for State
-    if shop.package_amount == 10000:
-        offer = Files.objects.create(
-            comes_under = shop.created_by,
-            user = User.objects.get(email=shop.email_address),
-            company_name=shop.shop_name,
-            category = shop.business_category,
-            heading = "Best Offer of the Month",
-            phone_number = shop.phone_number,
-            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = shop.final_pamphlet
-        )
+    # # for State
+    # if shop.package_amount == 10000:
+    #     offer = Files.objects.create(
+    #         comes_under = shop.created_by,
+    #         user = User.objects.get(email=shop.email_address),
+    #         company_name=shop.shop_name,
+    #         category = shop.business_category,
+    #         heading = "Best Offer of the Month",
+    #         phone_number = shop.phone_number,
+    #         whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+    #         img = shop.final_pamphlet
+    #     )
 
-        state = StateData.objects.get(cities=salesperson.city)
-        cities = state.cities.all()
-        minilocations = []
+    #     state = StateData.objects.get(cities=salesperson.city)
+    #     cities = state.cities.all()
+    #     minilocations = []
 
-        for city in cities:
-            minilocations += MiniLocation.objects.all().filter(main_city=city)
+    #     for city in cities:
+    #         minilocations += MiniLocation.objects.all().filter(main_city=city)
         
-        offer.city.set(cities)
-        offer.MiniLocation.set(minilocations)
+    #     offer.city.set(cities)
+    #     offer.MiniLocation.set(minilocations)
 
-        offer.save()
+    #     offer.save()
 
 
-    # for city
-    if shop.package_amount == 2999:
-        offer = Files.objects.create(
-            comes_under = shop.created_by,
-            user = User.objects.get(email=shop.email_address),
-            company_name=shop.shop_name,
-            category = shop.business_category,
-            heading = "Best Offer of the Month",
-            phone_number = shop.phone_number,
-            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = shop.final_pamphlet
-        )
+    # # for city
+    # if shop.package_amount == 2999:
+    #     offer = Files.objects.create(
+    #         comes_under = shop.created_by,
+    #         user = User.objects.get(email=shop.email_address),
+    #         company_name=shop.shop_name,
+    #         category = shop.business_category,
+    #         heading = "Best Offer of the Month",
+    #         phone_number = shop.phone_number,
+    #         whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+    #         img = shop.final_pamphlet
+    #     )
 
-        cities = [salesperson.city,]
-        minilocations = MiniLocation.objects.all().filter(main_city=salesperson.city)
+    #     cities = [salesperson.city,]
+    #     minilocations = MiniLocation.objects.all().filter(main_city=salesperson.city)
 
-        offer.city.set(cities)
-        offer.MiniLocation.set(minilocations)
+    #     offer.city.set(cities)
+    #     offer.MiniLocation.set(minilocations)
 
-        offer.save()
+    #     offer.save()
 
-    # for Mini Location
-    if shop.package_amount == 199:
-        offer = Files.objects.create(
-            comes_under = shop.created_by,
-            user = User.objects.get(email=shop.email_address),
-            company_name=shop.shop_name,
-            category = shop.business_category,
-            heading = "Best Offer of the Month",
-            phone_number = shop.phone_number,
-            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = shop.final_pamphlet
-        )
+    # # for Mini Location
+    # if shop.package_amount == 199:
+    #     offer = Files.objects.create(
+    #         comes_under = shop.created_by,
+    #         user = User.objects.get(email=shop.email_address),
+    #         company_name=shop.shop_name,
+    #         category = shop.business_category,
+    #         heading = "Best Offer of the Month",
+    #         phone_number = shop.phone_number,
+    #         whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+    #         img = shop.final_pamphlet
+    #     )
 
-        cities = [salesperson.city,]
-        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+    #     cities = [salesperson.city,]
+    #     minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
 
-        offer.city.set(cities)
-        offer.MiniLocation.set(minilocations)
+    #     offer.city.set(cities)
+    #     offer.MiniLocation.set(minilocations)
 
-        offer.save()
+    #     offer.save()
 
-    # for Street vendors
-    if shop.package_amount == 99:
-        offer = Files.objects.create(
-            comes_under = shop.created_by,
-            user = User.objects.get(email=shop.email_address),
-            company_name=shop.shop_name,
-            category = shop.business_category,
-            heading = "Best Offer of the Month",
-            phone_number = shop.phone_number,
-            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = shop.final_pamphlet
-        )
+    # # for Street vendors
+    # if shop.package_amount == 99:
+    #     offer = Files.objects.create(
+    #         comes_under = shop.created_by,
+    #         user = User.objects.get(email=shop.email_address),
+    #         company_name=shop.shop_name,
+    #         category = shop.business_category,
+    #         heading = "Best Offer of the Month",
+    #         phone_number = shop.phone_number,
+    #         whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+    #         img = shop.final_pamphlet
+    #     )
 
-        cities = [salesperson.city,]
-        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+    #     cities = [salesperson.city,]
+    #     minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
 
-        offer.city.set(cities)
-        offer.MiniLocation.set(minilocations)
+    #     offer.city.set(cities)
+    #     offer.MiniLocation.set(minilocations)
 
-        offer.save()
+    #     offer.save()
     
-    # give reward to the freelancer
+    # # give reward to the freelancer
 
     
 
-    # create coupons
+    # # create coupons
 
-    all_discount = shop.discounts.all()
+    # all_discount = shop.discounts.all()
 
-    for discount in all_discount:
-        coupon = Coupon.objects.create(
-            user = User.objects.get(email=shop.email_address),
-            code = "GET" + str(discount.discount),
-            offer = offer,
-            total_coupon = shop.total_eligible_customer,
-            minimum_purchase = discount.total_purchase,
-            total_discount = discount.discount,
-            end_date = datetime.now()+timedelta(days=365)
-        )
+    # for discount in all_discount:
+    #     coupon = Coupon.objects.create(
+    #         user = User.objects.get(email=shop.email_address),
+    #         code = "GET" + str(discount.discount),
+    #         offer = offer,
+    #         total_coupon = shop.total_eligible_customer,
+    #         minimum_purchase = discount.total_purchase,
+    #         total_discount = discount.discount,
+    #         end_date = datetime.now()+timedelta(days=365)
+    #     )
 
-        coupon.save()
+    #     coupon.save()
     
     return HttpResponse("Success")
 
@@ -1262,7 +1267,7 @@ def make_offer_without_img(shop_id):
     shop = ShopDetails.objects.get(id=shop_id)
     salesperson = SalesPerson.objects.get(user=shop.created_by)
 
-    shop.design_approved = True
+    shop.design_approved = False
     shop.save()
 
     # create a offer
