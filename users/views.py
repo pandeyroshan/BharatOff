@@ -168,9 +168,11 @@ def create_notification_alert(request):
         minilocations = offer.MiniLocation.all()
 
         print("Target Minilocations: ")
-        print(minilocations)
+        print(minilocations, end="\n\n")
 
-        notification_text = request.POST.get("notification_text")
+        notification_text = offer.company_name+" - "+request.POST.get("notification_text")
+
+        print(notification_text, end="\n")
 
         notification_alert = NotificationAlert.objects.create(sent_by=request.user, text=notification_text)
         notification_alert.minilocations.set(minilocations)
@@ -191,7 +193,6 @@ def create_notification_alert(request):
             if minilocation in minilocations:
                 print(str(user_profile)+" | "+str(minilocation))
                 # add the notification
-                notification_text = offer.company_name+": " + notification_text
                 user_notification = UserNotification.objects.create(target_user = user_profile.user, notification_text = notification_text)
                 user_notification.save()
 
