@@ -164,7 +164,7 @@ def get_closest_minilocation(user_profile):
 
 def create_notification_alert(request):
     if request.method == 'POST':
-        offer = Files.objects.get(user=request.user)
+        offer = Files.objects.all().filter(user=request.user)[0]
         minilocations = offer.MiniLocation.all()
 
         print("Target Minilocations: ")
@@ -191,6 +191,7 @@ def create_notification_alert(request):
             if minilocation in minilocations:
                 print(str(user_profile)+" | "+str(minilocation))
                 # add the notification
+                notification_text = offer.company_name+": " + notification_text
                 user_notification = UserNotification.objects.create(target_user = user_profile.user, notification_text = notification_text)
                 user_notification.save()
 
