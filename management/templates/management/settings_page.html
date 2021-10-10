@@ -82,55 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-2 mb-3">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#couponModal">Coupon Settings</button>
-
-                            <div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="couponModal" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title text-center" id="exampleModalLongTitle">Coupon Setting</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="POST" action="/save-coupon/">
-                                            {%csrf_token%}
-                                            <input name="offer_id" type="hidden" value="{{ad.id}}">
-                                            <div class="form-group">
-                                              <label for="exampleInputEmail1">Code</label>
-                                              <input required name='code' value="{{coupon.code}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Coupon Code, Ex - FLAT10">
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="exampleInputPassword1">Start Date</label>
-                                              <input required name='start-date' value="{{coupon.start_date}}" type="date" class="form-control" id="exampleInputPassword1" aria-describedby="emailHelp" placeholder="Start Date">
-                                              <small id="emailHelp" class="form-text text-muted">Earlier - {{coupon.start_date}}</small>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="exampleInputPassword1">End Date</label>
-                                              <input required name='end-date' value="{{coupon.end_date}}" type="date" class="form-control" id="exampleInputPassword1" aria-describedby="emailHelp" placeholder="Start Date">
-                                              <small id="emailHelp" class="form-text text-muted">Earlier - {{coupon.end_date}}</small>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Total Coupons</label>
-                                                <input required name='total-coupon' value="{{coupon.total_coupon}}" type="number" class="form-control" id="exampleInputPassword1" placeholder="Total Coupons">
-                                            </div>
-                                            <div class="form-check">
-                                              <input name='active' type="checkbox" class="form-check-input" id="exampleCheck1">
-                                              <label class="form-check-label" for="exampleCheck1">Active</label>
-                                            </div>
-                                        
-                                    </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
@@ -532,6 +484,103 @@
                                                     </td>
                                                 </tr>
                                             </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4" id="myRewards">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                My Coupons
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">Coupon Code</th>
+                                                <th class="text-center">Start Date</th>
+                                                <th class="text-center">End Date</th>
+                                                <th class="text-center">Total Coupon</th>
+                                                <th class="text-center">Minimum Purchase</th>
+                                                <th class="text-center">Total Discount</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="text-center">S.No.</th>
+                                                <th class="text-center">Coupon Code</th>
+                                                <th class="text-center">Start Date</th>
+                                                <th class="text-center">End Date</th>
+                                                <th class="text-center">Total Coupon</th>
+                                                <th class="text-center">Minimum Purchase</th>
+                                                <th class="text-center">Total Discount</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            {% for coupon in coupons %}
+                                                <tr>
+                                                    <td class="text-center">{{forloop.counter}}.</td>
+                                                    <td class="text-center">{{coupon.code}}</td>
+                                                    <td class="text-center">{{coupon.start_date}}</td>
+                                                    <td class="text-center">{{coupon.end_date}}</td>
+                                                    <td class="text-center">{{coupon.total_coupon}}</td>
+                                                    <td class="text-center">{{coupon.minimum_purchase}}</td>
+                                                    <td class="text-center">{{coupon.total_discount}}</td>
+                                                    {%if coupon.active%}
+                                                        <td class="text-center text-success">Active</td>
+                                                    {%else%}
+                                                        <td class="text-center text-danger">Deactive</td>
+                                                    {%endif%}
+                                                    <td class="text-center"  data-toggle="modal" data-target="#exampleModal{{coupon.id}}">Manage</td>
+                                                    
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal{{coupon.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{coupon.code}}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form>
+                                                                    <div class="form-group">
+                                                                      <input type="datetime-local" class="form-control" name="startdate" placeholder="Start Date">
+                                                                      <small class="form-text text-muted">Start Date: Previously set to {{coupon.start_date}}</small>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                      <input type="datetime-local" class="form-control" name="enddate" placeholder="End Date">
+                                                                      <small class="form-text text-muted">End Date: Previously set to {{coupon.end_date}}</small>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                      <input type="number" class="form-control" name="minimumPurchase" placeholder="Minimum Purchase" value="{{coupon.minimum_purchase}}">
+                                                                      <small class="form-text text-muted">Minimum Purchase</small>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                      <input type="number" class="form-control" name="discount" placeholder="Discount" value="{{coupon.total_discount}}">
+                                                                      <small class="form-text text-muted">Total Discount</small>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                      <input type="number" class="form-control" name="totalCoupon" placeholder="Total Coupon" value="{{coupon.total_coupon}}">
+                                                                      <small class="form-text text-muted">Total Coupon</small>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </tr>
+                                            {%endfor%}
                                         </tbody>
                                     </table>
                                 </div>

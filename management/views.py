@@ -608,10 +608,8 @@ def ad_setting(request, id):
             'active' : str(file.active_image),
             'active_option' : str(file.change_at),
         }
-        try:
-            context['coupon'] = Coupon.objects.get(offer = Files.objects.get( id = int(id)))
-        except:
-            pass
+        context['coupons'] = Coupon.objects.all().filter(user=Files.objects.get( id = int(id)).user)
+        
         return render(request,'management/settings_page.html',context)
     else:
         return redirect('/dashbaord/')
