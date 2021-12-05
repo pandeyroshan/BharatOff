@@ -384,3 +384,13 @@ class DefaultDesign(models.Model):
     class Meta:
         verbose_name = "Default Design"
         verbose_name_plural = "Default Design"
+
+class TermsCondition(models.Model):
+    text = models.TextField()
+
+    def __str__(self):
+        return "Terms and Condition"
+    
+    class Meta:
+        verbose_name = "Terms and Condition"
+        verbose_name_plural = "Terms and Condition"

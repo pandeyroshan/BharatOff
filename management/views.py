@@ -17,7 +17,8 @@ from .models import (
     Discount,
     ShopDetails,
     DownloadedDesigns,
-    DefaultDesign
+    DefaultDesign,
+    TermsCondition
 )
 
 from users.models import (
@@ -701,6 +702,8 @@ def sales_dashboard(request):
 
         for reward in my_rewards:
             total_reward_profit += reward.reward
+
+        terms_condition = TermsCondition.objects.all()[0]
         
         context = {
             'all_shops' : all_shop_details,
@@ -710,7 +713,8 @@ def sales_dashboard(request):
             'total_profit' : round(total_profit,2)+int(total_reward_profit),
             'my_rewards' : RewardHistory.objects.all().filter(user=request.user),
             'total_rewards' : int(total_reward_profit),
-            'total_share' : round(total_profit,2)
+            'total_share' : round(total_profit,2),
+            'terms_condition_text' : terms_condition.text.strip()
         }
         return render(request, 'management/sales_dashboard.html', context=context)
 
