@@ -125,6 +125,9 @@ class Files(models.Model):
     last_date = models.DateField(default=django.utils.timezone.now)
     rating = models.FloatField('Rating', default=5)
     rated_by = models.ManyToManyField(User, related_name='rated_by', blank=True)
+    slider_image1 = models.ImageField('Slider Image 1',upload_to='img/', blank=True)
+    slider_image2 = models.ImageField('Slider Image 2',upload_to='img/', blank=True)
+    slider_image3 = models.ImageField('Slider Image 3',upload_to='img/', blank=True)
 
     def __str__(self):
         return str(self.id)

@@ -302,7 +302,10 @@ def get_ad_detail(request):
     context["data"][0]["instagram_link"] = ad.instagram_link
     context["data"][0]["youtube_link"] = ad.youtube_link
     context["data"][0]["image_link"] = str(ad.real_image)
-    context["data"][0]["rating"] = str(ad.rating)
+    context["data"][0]["slider_image1_link"] = str(ad.slider_image1)
+    context["data"][0]["slider_image2_link"] = str(ad.slider_image1)
+    context["data"][0]["slider_image3_link"] = str(ad.slider_image1)
+    context["data"][0]["rating"] = str(ad.rating) # slider_image1
 
     context["data"][0]["coupon"] = []
 

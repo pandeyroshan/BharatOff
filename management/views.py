@@ -1370,6 +1370,29 @@ def make_offer_without_img(shop_id):
 
         offer.save()
 
+    # for Mini Location - 299
+    if shop.package_amount == 299:
+        offer = Files.objects.create(
+            comes_under = shop.created_by,
+            user = User.objects.get(email=shop.email_address),
+            company_name=shop.shop_name,
+            category = shop.business_category,
+            heading = "Best Offer of the Month",
+            phone_number = shop.phone_number,
+            whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
+            img = default_design.design
+        )
+
+        cities = [salesperson.city,]
+        minilocations = [MiniLocation.objects.get(name=shop.minilocation),]
+
+        offer.city.set(cities)
+        offer.MiniLocation.set(minilocations)
+
+        offer.active = True
+
+        offer.save()
+
     # for Street vendors
     if shop.package_amount == 99:
         offer = Files.objects.create(
