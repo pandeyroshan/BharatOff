@@ -17,7 +17,15 @@ def send_invoice_details(name, phone_number, invoice_number, package_amount):
 
     print(response)
 
+def send_enquiry_text(shopkeeper_name,shopkeeper_phone_number, customer_phone_number):
+    # DLT Template ID - 1207163854045918561
+    URL = "http://sms.codicians.in/api/sendhttp.php?authkey=7322A5kha4jntu5ff1a099P6&mobiles={0}&message={1}&sender=BHROFF&route=4&country=91&DLT_TE_ID=1207163854045918561&response=json".format(shopkeeper_phone_number, "Hi {0},%0ASomeone with {1} enquired about your shop and products in BharatOff App.%0A%0ATeam,%0ABharatOff".format(shopkeeper_name, customer_phone_number))
+    response = requests.get(URL)
+
+    print(response.text)
+
 
 if __name__ == '__main__':
-    send_username_password("Roshan Pandey", "7440804918", "roshan", "Linux@123")
-    send_invoice_details("Roshan Pandey", "7440804918", "IN20210716001", "199")
+    # send_username_password("Roshan Pandey", "7440804918", "roshan", "Linux@123")
+    # send_invoice_details("Roshan Pandey", "9752315423", "IN20210716001", "199")
+    send_enquiry_text("Roshan Pandey", "9752315423", "9752315423")

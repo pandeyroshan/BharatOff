@@ -10,6 +10,7 @@ import random
 from users.models import UserProfile, DeviceID
 from management.models import Category
 from django.contrib.auth.models import User
+from sms_delivery import send_enquiry_text
 
 from .models import (
     CityData, 
@@ -986,4 +987,16 @@ def enroll_device_id(request):
             "user_id" : user_id,
             "device_id" : device_id
         }
+    })
+
+@api_view(["POST"])
+def send_enquiry_alert(request):
+    shopkeeper_name = request.POST.get('shopkeeper_name')
+    shopkeeper_phone_number = request.POST.get('shopkeeper_phone_number')
+    customer_phone_number = request.POST.get('customer_phone_number')
+
+    send_enquiry_text(shopkeeper_name, shopkeeper_phone_number, customer_phone_number)
+
+    return Response({
+        "message" : "SUCCESS"
     })
