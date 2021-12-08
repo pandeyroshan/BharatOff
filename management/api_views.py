@@ -10,11 +10,12 @@ import random
 from users.models import UserProfile, DeviceID
 from management.models import Category
 from django.contrib.auth.models import User
-from sms_delivery import send_enquiry_text
+from . import sms_delivery
 
 from .models import (
     CityData, 
-    Address, 
+    Address,
+    ShopDetails, 
     StateData, 
     Visitors, 
     Files, 
@@ -270,6 +271,10 @@ def get_ad_detail(request):
     ad = Files.objects.get(id=int(request.POST.get("ad_id")))
     user = User.objects.get(id = int(request.POST.get("user_id")))
 
+    shop_detail = ShopDetails.objects.all().filter(shop_name=ad.company_name)[0]
+
+    print(shop_detail.owner_name)
+
     if ad.active_image == 0:
         ad.real_image = ad.img
     elif ad.active_image == 1:
@@ -306,7 +311,12 @@ def get_ad_detail(request):
     context["data"][0]["slider_image1_link"] = str(ad.slider_image1)
     context["data"][0]["slider_image2_link"] = str(ad.slider_image1)
     context["data"][0]["slider_image3_link"] = str(ad.slider_image1)
-    context["data"][0]["rating"] = str(ad.rating) # slider_image1
+    context["data"][0]["rating"] = str(ad.rating)
+
+    if shop_detail:
+        context["data"][0]["shopkeeper_name"] = str(shop_detail.owner_name)
+        context["data"][0]["address"] = str(shop_detail.address)
+        context["data"][0]["products"] = str(shop_detail.products)
 
     context["data"][0]["coupon"] = []
 
@@ -995,7 +1005,7 @@ def send_enquiry_alert(request):
     shopkeeper_phone_number = request.POST.get('shopkeeper_phone_number')
     customer_phone_number = request.POST.get('customer_phone_number')
 
-    send_enquiry_text(shopkeeper_name, shopkeeper_phone_number, customer_phone_number)
+    sms_delivery.send_enquiry_text(shopkeeper_name, shopkeeper_phone_number, customer_phone_number)
 
     return Response({
         "message" : "SUCCESS"
