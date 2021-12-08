@@ -1284,7 +1284,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
         cities = CityData.objects.all()
         minilocations = MiniLocation.objects.all()
@@ -1306,7 +1309,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
 
         state = StateData.objects.get(cities=salesperson.city)
@@ -1334,7 +1340,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
 
         cities = [salesperson.city,]
@@ -1357,7 +1366,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
 
         cities = [salesperson.city,]
@@ -1380,7 +1392,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
 
         cities = [salesperson.city,]
@@ -1403,7 +1418,10 @@ def make_offer_without_img(shop_id):
             heading = "Best Offer of the Month",
             phone_number = shop.phone_number,
             whatsapp_link = "https://wa.me/91"+str(shop.whatsapp_number),
-            img = default_design.design
+            img = default_design.design,
+            slider_image1 = shop.image_file2,
+            slider_image2 = shop.image_file3,
+            slider_image3 = shop.image_file4
         )
 
         cities = [salesperson.city,]
