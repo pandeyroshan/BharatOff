@@ -28,4 +28,4 @@ def send_enquiry_text(shopkeeper_name,shopkeeper_phone_number, customer_phone_nu
 if __name__ == '__main__':
     # send_username_password("Roshan Pandey", "7440804918", "roshan", "Linux@123")
     # send_invoice_details("Roshan Pandey", "9752315423", "IN20210716001", "199")
-    send_enquiry_text("Roshan Pandey", "9752315423", "9752315423")
+    send_enquiry_text("Simran Manjhi", "7903820334", "9752315423")

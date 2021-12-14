@@ -26,7 +26,8 @@ from .models import (
     Resources, 
     Coupon, 
     CouponHistory, 
-    PaymentIssue
+    PaymentIssue,
+    EnquiryLog
     )
 from .views import schedule_refresh
 
@@ -36,7 +37,7 @@ import string
 from django.views.decorators.csrf import csrf_exempt
 from math import sin, cos, sqrt, atan2, radians
 import random
-import datetime
+from django.utils.timezone import datetime
 from django.contrib.auth.models import User
 from wsgiref.util import FileWrapper
 import mimetypes
@@ -1001,12 +1002,54 @@ def enroll_device_id(request):
 
 @api_view(["POST"])
 def send_enquiry_alert(request):
+    user_id = request.POST.get("user_id")
+    shop_id = request.POST.get("shop_id")
+
+    user = User.objects.all().filter(id = int(user_id))[0]
+    shop = Files.objects.all().filter(id = shop_id)[0]
+    
     shopkeeper_name = request.POST.get('shopkeeper_name')
     shopkeeper_phone_number = request.POST.get('shopkeeper_phone_number')
     customer_phone_number = request.POST.get('customer_phone_number')
 
     sms_delivery.send_enquiry_text(shopkeeper_name, shopkeeper_phone_number, customer_phone_number)
 
+    enquiry_log = EnquiryLog.objects.create(user = user, shop=shop)
+    enquiry_log.save()
+
     return Response({
         "message" : "SUCCESS"
     })
+
+@api_view(["POST"])
+def check_if_eligible_for_today(request):
+    user_id = request.POST.get("user_id")
+    shop_id = request.POST.get("shop_id")
+
+    user = User.objects.all().filter(id = int(user_id))[0]
+    shop = Files.objects.all().filter(id = shop_id)[0]
+
+    today = datetime.today()
+
+    enquiry_log = EnquiryLog.objects.all().filter(user = user, shop = shop, date = today)[0]
+
+    if enquiry_log:
+        return Response({
+            "message" : "SUCCESS",
+            "data" : {
+                "user_id" : user_id,
+                "shop_id" : shop_id,
+                "status_code" : 0,
+                "status_log" : "NOT_ELIGIBLE"
+            }
+        })
+    else:
+        return Response({
+            "message" : "SUCCESS",
+            "data" : {
+                "user_id" : user_id,
+                "shop_id" : shop_id,
+                "status_code" : 1,
+                "status_log" : "ELIGIBLE"
+            }
+        })

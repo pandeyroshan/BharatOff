@@ -397,3 +397,15 @@ class TermsCondition(models.Model):
     class Meta:
         verbose_name = "Terms and Condition"
         verbose_name_plural = "Terms and Condition"
+
+class EnquiryLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Files, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username + " on " + str(self.date) + " to " + self.shop.company_name
+    
+    class Meta:
+        verbose_name = "Enquiry Logs"
+        verbose_name_plural = "Enquiry Logs"

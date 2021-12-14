@@ -23,7 +23,8 @@ from management.models import (
     PamphletDesign,
     DownloadedDesigns,
     DefaultDesign,
-    TermsCondition
+    TermsCondition,
+    EnquiryLog
 )
 
 admin.site.site_header = "Bharatoff Administration"
@@ -152,3 +153,4 @@ admin.site.register(PamphletDesign)
 admin.site.register(DownloadedDesigns)
 admin.site.register(DefaultDesign)
 admin.site.register(TermsCondition)
+admin.site.register(EnquiryLog)

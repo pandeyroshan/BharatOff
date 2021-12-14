@@ -99,6 +99,7 @@ urlpatterns = [
     path('api/get-notification', api_views.get_notification),
     path('api/enroll-device-id/', api_views.enroll_device_id),
     path('api/send-enquiry-alert/', api_views.send_enquiry_alert),
+    path('api/check-enquiry-status/', api_views.check_if_eligible_for_today),
 
 
     # path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
