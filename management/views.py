@@ -1552,3 +1552,23 @@ def make_coupons_manually(request):
     for coupon in all_coupons:
         pass
     pass
+
+def assign_slider_image_script(request):
+    all_shop_details = ShopDetails.objects.all()
+
+    print("Total length: ", len(all_shop_details))
+
+    try:
+        for i in range(len(all_shop_details)):
+            ad = Files.objects.all().filter(company_name = all_shop_details[i].shop_name)[0]
+            if ad:
+                ad.slider_image1 = all_shop_details[i].image_file2
+                ad.slider_image2 = all_shop_details[i].image_file3
+                ad.slider_image3 = all_shop_details[i].image_file4
+                ad.save()
+                print("Saved the ad for ", all_shop_details[i].shop_name)
+            else:
+                print("No ad exist for ", all_shop_details[i].shop_name)
+
+    except:
+        print("Exception occured for ", all_shop_details[i].shop_name)

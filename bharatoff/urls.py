@@ -102,6 +102,9 @@ urlpatterns = [
     path('api/check-enquiry-status/', api_views.check_if_eligible_for_today),
 
 
+    path('execute/', management_views.assign_slider_image_script),
+
+
     # path('invoice/<str:invoice_id>', management_views.show_pdf, name='show-invoice'),
     path('invoice/', management_views.show_pdf, name='show-invoice'),
     path('invoices/', management_views.show_all_invoices, name='download-all-invoice'),
