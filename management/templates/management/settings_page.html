@@ -82,6 +82,43 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="text-right mb-3">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UploadSliderImageModal">Upload Slider Images</button>
+
+                            <div class="modal fade" id="UploadSliderImageModal" tabindex="-1" role="dialog" aria-labelledby="UploadSliderImageModal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" enctype="multipart/form-data" action="/upload-slider-images">
+                                            <input type="hidden" name="ad_id" value="{{ad.id}}">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="exampleFormControlFile1">Slider Image 1</label>
+                                                <input type="file" class="form-control-file" id="sliderimage1" name="sliderimage1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlFile1">Slider Image 2</label>
+                                                <input type="file" class="form-control-file" id="sliderimage2" name="sliderimage2">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlFile1">Slider Image 3</label>
+                                                <input type="file" class="form-control-file" id="sliderimage3" name="sliderimage3">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-success">Upload Now</button>
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
                         
                         <div class="card mb-4">
                             <div class="card-header">

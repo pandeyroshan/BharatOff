@@ -52,6 +52,7 @@ urlpatterns = [
 
     path('category/<int:cid>/<int:mlid>/', management_views.category, name='category'),
     path('settings/<int:id>/', management_views.ad_setting, name='setting'),
+    path('upload-slider-images', management_views.upload_slider_images, name="upload-slider-images"),
 
     path('access/abort/',management_views.abort_admin_access, name='abort'),
     path('access/allow/',management_views.allow_admin_access, name='allow'),

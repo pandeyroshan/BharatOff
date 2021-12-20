@@ -1572,3 +1572,17 @@ def assign_slider_image_script(request):
 
     except:
         print("Exception occured for ", all_shop_details[i].shop_name)
+
+def upload_slider_images(request):
+    ad_id = int(request.POST.get("ad_id"))
+
+    ad = Files.objects.get(id=ad_id)
+
+    if 'sliderimage1' in request.FILES:
+            ad.slider_image1.save(request.FILES["sliderimage1"].name, request.FILES["sliderimage1"])
+    if 'sliderimage2' in request.FILES:
+            ad.slider_image2.save(request.FILES["sliderimage2"].name, request.FILES["sliderimage2"])
+    if 'sliderimage3' in request.FILES:
+            ad.slider_image3.save(request.FILES["sliderimage3"].name, request.FILES["sliderimage3"])
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
