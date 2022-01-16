@@ -298,6 +298,8 @@ class ShopDetails(models.Model):
     design_approved = models.BooleanField(default=False)
     freelancer_profit = models.IntegerField(default=0)
     designed_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="designed_by")
+    latitude = models.FloatField(blank=True, default=0.0)
+    longitude = models.FloatField(blank=True, default=0.0)
 
     def __str__(self):
         return self.shop_name

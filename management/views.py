@@ -772,7 +772,9 @@ def register_shopkeeper(request):
             payment_verified = False,
             invoice_no = invoice_number,
             sales_profit = int(request.POST.get('packageAmount'))*((salesperson.share)/100.0)*0.82,
-            forward_to_freelancer = True
+            forward_to_freelancer = True,
+            latitude = request.POST.get('latitude'),
+            longitude = request.POST.get('longitude')
         )
 
         if 'file1' in request.FILES:
