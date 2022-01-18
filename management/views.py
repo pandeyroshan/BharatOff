@@ -1289,7 +1289,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
         cities = CityData.objects.all()
         minilocations = MiniLocation.objects.all()
@@ -1314,7 +1315,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
 
         state = StateData.objects.get(cities=salesperson.city)
@@ -1345,7 +1347,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
 
         cities = [salesperson.city,]
@@ -1371,7 +1374,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
 
         cities = [salesperson.city,]
@@ -1397,7 +1401,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
 
         cities = [salesperson.city,]
@@ -1423,7 +1428,8 @@ def make_offer_without_img(shop_id):
             img = default_design.design,
             slider_image1 = shop.image_file2,
             slider_image2 = shop.image_file3,
-            slider_image3 = shop.image_file4
+            slider_image3 = shop.image_file4,
+            location = "https://maps.google.com/?q="+str(shop.latitude)+str(shop.longitude)
         )
 
         cities = [salesperson.city,]
