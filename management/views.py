@@ -434,7 +434,7 @@ def dashboard(request):
 
             my_notification_text = notification.text
 
-            if delta.days>=7:
+            if delta.days>=1:
                 give_create_notification_option = True
             pass
 
