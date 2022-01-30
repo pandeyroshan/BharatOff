@@ -741,7 +741,16 @@ def register_shopkeeper(request):
             discount.save()
             discount_list.append(discount)
 
-        invoice_number = "INV/BOFF/"+ str(1001 + len(ShopDetails.objects.all()))
+        # before 
+        # invoice_number = "INV/BOFF/"+ str(1001 + len(ShopDetails.objects.all()))0
+        # new invoice number goes below
+
+        if(len(ShopDetails.objects.all()) - 607 < 10):
+            invoice_number = "INV/BOFF/"+str(00) + str(len(ShopDetails.objects.all()) - 607+1)
+        elif(len(ShopDetails.objects.all()) - 607 < 10):
+            invoice_number = "INV/BOFF/"+str(0) + str(len(ShopDetails.objects.all()) - 607+1)
+        else:
+            invoice_number = "INV/BOFF/" + str(len(ShopDetails.objects.all()) - 607+1)
 
         salesperson = SalesPerson.objects.get(user = request.user)
 
