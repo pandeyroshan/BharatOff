@@ -662,11 +662,15 @@ def download_image(request,id):
 
 def save_coupon(request):
     schedule_refresh()
-    coupon, _ = Coupon.objects.get_or_create(user = request.user, offer = Files.objects.get( id = int(request.POST.get('offer_id'))))
-    coupon.code = request.POST.get('code')
-    coupon.start_date = request.POST.get('start-date')
-    coupon.end_date = request.POST.get('end-date')
-    coupon.total_coupon = request.POST.get('total-coupon')
+    coupon = Coupon.objects.get(id = int(request.POST.get("coupon-id")))
+
+    if request.POST.get("code") != None:
+        coupon.code = request.POST.get('code')
+    coupon.start_date = request.POST.get('startdate')
+    coupon.end_date = request.POST.get('enddate')
+    coupon.minimum_purchase = int(request.POST.get('minimumPurchase'))
+    coupon.total_discount = int(request.POST.get('discount'))
+    coupon.total_coupon = request.POST.get('totalCoupon')
 
     if request.POST.get('active'):
         coupon.active = True

@@ -589,13 +589,17 @@
                                                             </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form>
+                                                                <form method="post" action="/save-coupon">
+                                                                    {%csrf_token%}
                                                                     <div class="form-group">
-                                                                      <input type="datetime-local" class="form-control" name="startdate" placeholder="Start Date">
+                                                                        <input type="hidden" name="coupon-id" value="{{coupon.id}}">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                      <input type="datetime-local" class="form-control" name="startdate" placeholder="Start Date" required>
                                                                       <small class="form-text text-muted">Start Date: Previously set to {{coupon.start_date}}</small>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                      <input type="datetime-local" class="form-control" name="enddate" placeholder="End Date">
+                                                                      <input type="datetime-local" class="form-control" name="enddate" placeholder="End Date" required>
                                                                       <small class="form-text text-muted">End Date: Previously set to {{coupon.end_date}}</small>
                                                                     </div>
                                                                     <div class="form-group">
@@ -609,6 +613,11 @@
                                                                     <div class="form-group">
                                                                       <input type="number" class="form-control" name="totalCoupon" placeholder="Total Coupon" value="{{coupon.total_coupon}}">
                                                                       <small class="form-text text-muted">Total Coupon</small>
+                                                                    </div>
+                                                                    
+                                                                    <div class="form-group">
+                                                                        <input type="checkbox" id="vehicle3" name="active" value="1s">
+                                                                        <small class="form-text text-muted">Check to activate the coupon</small>
                                                                     </div>
                                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                                 </form>

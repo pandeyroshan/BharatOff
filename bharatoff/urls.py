@@ -61,7 +61,7 @@ urlpatterns = [
     path('image/', management_views.image_resource, name='resources'),
     path('download/<int:id>/',management_views.download_image, name='download'),
 
-    path('save-coupon/', management_views.save_coupon, name='save-coupon'),
+    path('save-coupon', management_views.save_coupon, name='save-coupon'),
 
     # sales dashboard 
 
