@@ -978,6 +978,7 @@ def shop_registration_successful(request):
 def show_pdf(request):
     invoice_id = request.GET.get("invoice-number")
     shop = ShopDetails.objects.get(invoice_no=invoice_id)
+    print(invoice_id)
     buffer = io.BytesIO()
 
     p = canvas.Canvas(buffer)
@@ -985,13 +986,14 @@ def show_pdf(request):
     p.setFont("Helvetica", 20, leading=None)
     p.setFillColorRGB(1, 0.35294117647, 0)
 
-    p.drawString(270, 800, "Bharat")
+    p.drawString(150, 800, "Bharat")
 
     p.setFillColorRGB(0, 0, 0)
-    p.drawString(330, 800, "Off")
+    p.drawString(210, 800, "Off Digital Services Pvt. Ltd.")
 
-    p.setFont("Helvetica", 15, leading=None)
-    p.drawString(50, 780, "3rd Floor, Shop no-45, Magneto Mall, Labhandi Road, Raipur (C.G.) - 492002")
+    p.setFont("Helvetica", 13, leading=None)
+    p.drawString(30, 780, "#1201/343 & 1207/1/343/1, 9th Main, 7th Sector, HSR Layout, Bengalore, Karnataka - 560102")
+    # p.drawString(50, 780, "3rd Floor, Shop no-45, Magneto Mall, Labhandi Road, Raipur (C.G.) - 492002")
 
     p.line(10, 770, 585, 770)
 
@@ -1001,7 +1003,7 @@ def show_pdf(request):
     p.setFont("Helvetica", 12, leading=None)
 
     p.drawString(480, 715, "Date: "+str(shop.date_of_registration))
-    p.drawString(420, 700, "GST No: 22FIAPS9006P1ZU")
+    p.drawString(420, 700, "GST No: 29AAKCB4229M1Z7")
 
     p.drawString(20, 670, "Invoice Number: "+invoice_id)
 
