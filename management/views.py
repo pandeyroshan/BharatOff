@@ -750,11 +750,11 @@ def register_shopkeeper(request):
         # new invoice number goes below
 
         if(len(ShopDetails.objects.all()) - 607 < 10):
-            invoice_number = "INV/BOFF/"+str(00) + str(len(ShopDetails.objects.all()) - 607+1)
+            invoice_number = "INV/BOFF/"+str(00) + str(len(ShopDetails.objects.all()) - 607)
         elif(len(ShopDetails.objects.all()) - 607 < 10):
-            invoice_number = "INV/BOFF/"+str(0) + str(len(ShopDetails.objects.all()) - 607+1)
+            invoice_number = "INV/BOFF/"+str(0) + str(len(ShopDetails.objects.all()) - 607)
         else:
-            invoice_number = "INV/BOFF/" + str(len(ShopDetails.objects.all()) - 607+1)
+            invoice_number = "INV/BOFF/" + str(len(ShopDetails.objects.all()) - 607)
 
         salesperson = SalesPerson.objects.get(user = request.user)
 
