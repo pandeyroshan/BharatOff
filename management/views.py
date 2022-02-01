@@ -992,7 +992,7 @@ def show_pdf(request):
     p.drawString(210, 800, "Off Digital Services Pvt. Ltd.")
 
     p.setFont("Helvetica", 13, leading=None)
-    p.drawString(30, 780, "#1201/343 & 1207/1/343/1, 9th Main, 7th Sector, HSR Layout, Bengalore, Karnataka - 560102")
+    p.drawString(30, 780, "#1207/343 & 1207/1/343/1, 9th Main, 7th Sector, HSR Layout, Bengalore, Karnataka - 560102")
     # p.drawString(50, 780, "3rd Floor, Shop no-45, Magneto Mall, Labhandi Road, Raipur (C.G.) - 492002")
 
     p.line(10, 770, 585, 770)
