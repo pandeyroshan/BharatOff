@@ -978,7 +978,16 @@ def shop_registration_successful(request):
 def show_pdf(request):
     invoice_id = request.GET.get("invoice-number")
     shop = ShopDetails.objects.get(invoice_no=invoice_id)
-    print(invoice_id)
+    print(type(shop.date_of_registration))
+    date_of_new_gst_number = datetime.date(2022, 2, 1)
+
+    print(date_of_new_gst_number > shop.date_of_registration)
+
+    if date_of_new_gst_number <= shop.date_of_registration:
+        comes_under_new_gst_number = False
+    else:
+        comes_under_new_gst_number = True
+
     buffer = io.BytesIO()
 
     p = canvas.Canvas(buffer)
@@ -992,7 +1001,7 @@ def show_pdf(request):
     p.drawString(210, 800, "Off Digital Services Pvt. Ltd.")
 
     p.setFont("Helvetica", 13, leading=None)
-    p.drawString(30, 780, "#1201/343 & 1207/1/343/1, 9th Main, 7th Sector, HSR Layout, Bengalore, Karnataka - 560102")
+    p.drawString(30, 780, "#1207/343 & 1207/1/343/1, 9th Main, 7th Sector, HSR Layout, Bengalore, Karnataka - 560102")
     # p.drawString(50, 780, "3rd Floor, Shop no-45, Magneto Mall, Labhandi Road, Raipur (C.G.) - 492002")
 
     p.line(10, 770, 585, 770)

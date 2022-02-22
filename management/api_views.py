@@ -389,12 +389,12 @@ def get_search_result(request):
 
     raw_keywords_from_user = request.POST.get("keywords")
 
-    keywords = raw_keywords_from_user.split(",")
+    searched_keywords = raw_keywords_from_user.split(",")
 
-    for i in range(len(keywords)):
-        keywords[i] = keywords[i].strip()
+    for i in range(len(searched_keywords)):
+        searched_keywords[i] = searched_keywords[i].strip()
 
-    keywords = [x.lower() for x in keywords]
+    searched_keywords = [x.lower() for x in searched_keywords]
     
     all_offers = Files.objects.all().filter(city = nearest_location.main_city, active=True)
 
@@ -410,13 +410,20 @@ def get_search_result(request):
         for i in range(len(available_keywords)):
             available_keywords[i] = available_keywords[i].strip()
         
-        for key in keywords:
+        for key in searched_keywords:
             if key in available_keywords:
                 searched_offers.append(offer)
                 break
         
         if raw_keywords_from_user.lower() == offer.company_name.lower():
             searched_offers.append(offer)
+        
+        for keyword in searched_keywords:
+            if keyword in list(map(str.lower, offer.company_name.split(" "))):
+                searched_offers.append(offer)
+            
+            if keyword == offer.category.name.lower():
+                searched_offers.append(offer)
     
     for i in range(len(searched_offers)):
         if searched_offers[i].active_image == 0:
