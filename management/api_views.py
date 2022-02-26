@@ -417,13 +417,29 @@ def get_search_result(request):
         
         if raw_keywords_from_user.lower() == offer.company_name.lower():
             searched_offers.append(offer)
-        
+
         for keyword in searched_keywords:
             if keyword in list(map(str.lower, offer.company_name.split(" "))):
                 searched_offers.append(offer)
+                break
+            
+            try:
+                shop_detail = ShopDetails.objects.all().filter(shop_name=offer.company_name)[0]
+
+                shop_detail_product_list = list(map(str.lower, shop_detail.products.split(",")))
+
+                for i in range(len(shop_detail_product_list)):
+                    shop_detail_product_list[i] = shop_detail_product_list[i].strip()
+
+                if keyword in shop_detail_product_list:
+                    searched_offers.append(offer)
+                    break       
+            except:
+                print("NO SHOP DETAILS EXIST")    
             
             if keyword == offer.category.name.lower():
                 searched_offers.append(offer)
+                break
     
     for i in range(len(searched_offers)):
         if searched_offers[i].active_image == 0:
