@@ -1574,7 +1574,7 @@ def image_editing(request):
 
     new_design.design.save("custom-design.png",ContentFile(in_mem_file.getvalue()),save=True)
 
-    response = FileResponse(pamphlet.design)
+    response = FileResponse(new_design.design)
 
     return response
 

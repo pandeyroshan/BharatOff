@@ -76,7 +76,7 @@ urlpatterns = [
     path("allocate-winners", users_views.find_winners, name="allocate-winners"),
 
     # image editing work
-    path("test/", management_views.image_editing, name="image-editing"),
+    path("get-my-poster/", management_views.image_editing, name="image-editing"),
 
     # api work goes here 
 
