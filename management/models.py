@@ -5,6 +5,10 @@ from datetime import date
 from datetime import datetime, timedelta
 from PIL import Image
 from django.core.exceptions import ValidationError
+from multiprocessing import Process
+from .mail_service import send_email_alert_to_all_shopkeepers
+import threading
+
 
 CHOICES_CATEGORY = [
     ('1' , 'Fashion'),
@@ -343,20 +347,32 @@ class PamphletDesign(models.Model):
     message = models.CharField('Message on Pamphlet',max_length=100, blank=True, help_text="This message will get printed on the Pamphlet")
     design = models.ImageField(blank=True, upload_to='img/', null=True, help_text="Uploaded image dimention must be 750X800 pixels")
     font_file = models.FileField(blank=True)
+    copy_font_file = models.FileField(blank=True)
+    copy2_font_file = models.FileField(blank=True)
     total_downloads = models.IntegerField(default=0)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
     
     def save(self, *args, **kwargs):
-        print("IMAGE SAVED")
         im = Image.open(self.design)
+        self.copy_font_file = self.font_file
+        self.copy2_font_file = self.font_file
         width, height = im.size # must be 750 X 800
 
         if (width<745 or width>755) or (height<795 or height>805):
             raise ValidationError(('Image size must be 750 X 800'))
         
-        print(width, height)
+        all_email_list = []
+        all_offers = Files.objects.all()
+        
+        for offer in all_offers:
+            if len(offer.user.email) > 5:
+                all_email_list.append(offer.user.email)
+        
+        p = Process(target=send_email_alert_to_all_shopkeepers, args=(all_email_list,))
+        p.start()
         super(PamphletDesign, self).save(*args, **kwargs)
     
     class Meta:

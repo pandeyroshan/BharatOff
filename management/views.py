@@ -1535,6 +1535,7 @@ def upload_design(request):
     design_comment.save()
     return redirect("/view-shop-details-freelancer/?shop_id="+str(shop_id))
 
+@login_required
 def update_social_media_links(request):
     offer = Files.objects.get(user=request.user)
 
@@ -1547,23 +1548,31 @@ def update_social_media_links(request):
 
     return redirect("/dashboard")
 
+@login_required
 def image_editing(request):
-    pamphlet = PamphletDesign.objects.all()[0]
+    pamphlet = PamphletDesign.objects.all().filter(active=True)[0]
     
     offer = Files.objects.get(user=request.user)
 
     my_image = Image.open(pamphlet.design)
 
     title_font = ImageFont.truetype(pamphlet.font_file, 40)
+    address_font = ImageFont.truetype(pamphlet.copy_font_file, 20)
+    phone_font = ImageFont.truetype(pamphlet.copy2_font_file, 20)
+
+    shop_details = ShopDetails.objects.get(shop_name = offer.company_name)
 
     w,h = title_font.getsize(offer.company_name)
+    address_width,address_height = address_font.getsize(shop_details.address)
+    phone_width, phone_height = phone_font.getsize("For best offers call on +91-"+shop_details.phone_number)
     W = 750
     H = 800
 
     image_editable = ImageDraw.Draw(my_image)
 
-    # image_editable.text((15,15), title_text, (237, 230, 211), font=title_font)
     image_editable.text(((W-w)/2,(h)/2), offer.company_name, font=title_font, fill="black")
+    image_editable.text(((W-address_width)/2,((h+address_height)/2)+30), shop_details.address, font=address_font, fill="black")
+    image_editable.text(((W-phone_width)/2,((H+phone_height)/2)+300), "For best offers call on +91-"+shop_details.phone_number, font=address_font, fill="black")
 
     in_mem_file = io.BytesIO()
 

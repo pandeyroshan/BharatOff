@@ -128,6 +128,11 @@ class ShopDetailsAdmin(admin.ModelAdmin):
     list_filter = ('payment_verified', 'date_of_registration', 'package_amount')
     readonly_fields = ('created_by', 'discounts')
 
+class PhamphletDesignAdmin(admin.ModelAdmin):
+    model = PamphletDesign
+    exclude = ('copy_font_file','copy2_font_file')
+    list_display = ('title','active')
+
 admin.site.register(CityData,CityAdmin)
 admin.site.register(Files,FilesAdmin)
 
@@ -149,7 +154,7 @@ admin.site.register(CouponHistory, CouponHistoryAdmin)
 admin.site.register(ShopDetails, ShopDetailsAdmin)
 admin.site.register(SocialAccounts)
 admin.site.register(PaymentIssue)
-admin.site.register(PamphletDesign)
+admin.site.register(PamphletDesign, PhamphletDesignAdmin)
 admin.site.register(DownloadedDesigns)
 admin.site.register(DefaultDesign)
 admin.site.register(TermsCondition)
