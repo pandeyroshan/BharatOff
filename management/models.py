@@ -366,12 +366,14 @@ class PamphletDesign(models.Model):
         
         all_email_list = []
         all_offers = Files.objects.all()
+        all_users = []
         
         for offer in all_offers:
             if len(offer.user.email) > 5:
                 all_email_list.append(offer.user.email)
-        
-        p = Process(target=send_email_alert_to_all_shopkeepers, args=(all_email_list,))
+                all_users.append(offer.user)
+
+        p = Process(target=send_email_alert_to_all_shopkeepers, args=(all_users, self.title))
         p.start()
         super(PamphletDesign, self).save(*args, **kwargs)
     

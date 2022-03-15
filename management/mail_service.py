@@ -5,11 +5,8 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import date
-from datetime import datetime
 from datetime import timedelta
 import time
-
-
 
 def send_invoice_and_credentials(username, password, shop_name, email_address):
     subject = "BharatOff - Invoice Mailer"
@@ -1393,11 +1390,11 @@ def send_username_password_via_email(username, username_password, email):
             sender_email, receiver_email, message.as_string()
         )
 
-def send_email_alert_to_all_shopkeepers(email_list):
-    for email in email_list:
+def send_email_alert_to_all_shopkeepers(all_users, title):
+    for user in all_users:
         print("Sending email")
         sender_email = "Info@bharatoff.com" #"contact@bharatoff.com"
-        receiver_email = email
+        receiver_email = user.email
         password = "jtyrjtclwsizuxom" #"@Bharat8602950609"
 
         message = MIMEMultipart("alternative")
@@ -1617,7 +1614,7 @@ def send_email_alert_to_all_shopkeepers(email_list):
                 
         <div align="center">
         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:'Montserrat',sans-serif;"><tr><td style="font-family:'Montserrat',sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:65px; v-text-anchor:middle; width:226px;" arcsize="49%" stroke="f" fillcolor="#ff5500"><w:anchorlock/><center style="color:#FFF;font-family:'Montserrat',sans-serif;"><![endif]-->
-            <a href="https://www.bharatoff.com/get-my-poster/" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFF; background-color: #ff5500; border-radius: 32px; -webkit-border-radius: 32px; -moz-border-radius: 32px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
+            <a href="https://www.bharatoff.com/get-my-poster/?phamplet-title="""+title+"&user-id="+str(user.id)+"""" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFF; background-color: #ff5500; border-radius: 32px; -webkit-border-radius: 32px; -moz-border-radius: 32px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
             <span style="display:block;padding:10px 30px;line-height:150%;"><span style="font-size: 30px; line-height: 45px;">Download Design</span></span>
             </a>
         <!--[if mso]></center></v:roundrect></td></tr></table><![endif]-->
@@ -1698,7 +1695,7 @@ def send_email_alert_to_all_shopkeepers(email_list):
                 sender_email, receiver_email, message.as_string()
             )
         
-        print("Sent successfully to: "+email)
+        print("Sent successfully to: "+user.email)
 
 if __name__ == '__main__':
     # send_invoice_and_credentials("roshan", "Linuz@123", "ABC Shop", "jd7june1999@gmail.com")

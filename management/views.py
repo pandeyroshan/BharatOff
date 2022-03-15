@@ -1548,11 +1548,13 @@ def update_social_media_links(request):
 
     return redirect("/dashboard")
 
-@login_required
 def image_editing(request):
-    pamphlet = PamphletDesign.objects.all().filter(active=True)[0]
+    phamplet_title = request.GET.get("phamplet-title")
+    user_id = int(request.GET.get("user-id"))
+
+    pamphlet = PamphletDesign.objects.get(title=phamplet_title)
     
-    offer = Files.objects.get(user=request.user)
+    offer = Files.objects.get(user=User.objects.get(id=int(user_id)))
 
     my_image = Image.open(pamphlet.design)
 
