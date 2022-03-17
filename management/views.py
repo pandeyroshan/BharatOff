@@ -1551,6 +1551,8 @@ def update_social_media_links(request):
 def image_editing(request):
     phamplet_title = request.GET.get("phamplet-title")
     user_id = int(request.GET.get("user-id"))
+    
+    user = User.objects.get(id=int(user_id))
 
     pamphlet = PamphletDesign.objects.get(title=phamplet_title)
     
@@ -1580,7 +1582,7 @@ def image_editing(request):
 
     my_image.save(in_mem_file, format=my_image.format)
 
-    new_design = DownloadedDesigns.objects.create(user = request.user, base_pamphlet = pamphlet)
+    new_design = DownloadedDesigns.objects.create(user = user, base_pamphlet = pamphlet)
     new_design.save()
 
     new_design.design.save("custom-design.png",ContentFile(in_mem_file.getvalue()),save=True)
